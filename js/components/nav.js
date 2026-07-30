@@ -8,10 +8,10 @@ export function Navbar(){
 
     
       <div class="connect">
-       <a href="#" class="selected">Home</a>
+       <a href="index.html" class="selected">Home</a>
       <a href="">Categories</a>
-      <a href="">Sign In </a>
-      <a href="">Login  </a>
+      <a href="SignIn.html">Sign In </a>
+      <a href="login.html">Login  </a>
 
       <div>
 
