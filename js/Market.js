@@ -21,7 +21,7 @@ function renderProducts(productsArray){
 
                 <p>${product.location}</p>
 
-                <button>View Details</button>
+                <button class="details-btn" data-id="${product.id}">View Details</button>
 
             </div>
 
@@ -34,3 +34,20 @@ function renderProducts(productsArray){
 const userProducts = JSON.parse(localStorage.getItem("products")) || [];
 const allProducts = [...products, ...userProducts];
 renderProducts(allProducts);
+
+
+
+
+const detailsButtons = document.querySelectorAll(".details-btn");
+
+detailsButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        const id = button.dataset.id;
+
+        window.location.href = `product.html?id=${id}`;
+
+    });
+
+});

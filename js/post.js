@@ -1,5 +1,5 @@
 const postBtn = document.getElementById("postBtn");
-
+const explore = document.getElementById("startexploring");
 if (postBtn) {
     postBtn.addEventListener("click", () => {
         console.log("Button clicked!");
@@ -8,6 +8,15 @@ if (postBtn) {
 }
 
 
+if(explore) {
+    explore.addEventListener("click" , ()=>{
+       console.log("Explore Button clicked!");
+        window.location.href="Market.html"
+    }
+
+)
+}
+
 
 
 const form = document.getElementById('productForm');
@@ -15,7 +24,7 @@ const form = document.getElementById('productForm');
 form.addEventListener('submit', (e) => {
               e.preventDefault(); 
 
-                               console.log('Form submitted');
+                        console.log('Form submitted');
 
                         const title = document.getElementById('title').value;
                         const price = document.getElementById('price').value;
@@ -25,7 +34,7 @@ form.addEventListener('submit', (e) => {
                         const seller = document.getElementById('seller').value;
                         const description = document.getElementById('description').value;
                         const phone = document.getElementById('phone').value;
-
+                        
                         const imageFile = document.getElementById('image').files[0];
                         if (!imageFile) {
                             alert("Please select an image.");
