@@ -1,0 +1,34 @@
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+   background-color: hsl(244, 88%, 16%);
+   border-radius: 15px;
+}
+
+.logo h2{
+    color: #c2cde4;
+     cursor: pointer;
+}
+
+.connect{
+    display: flex;
+    padding: 15px;
+    gap: 20px;
+}
+.connect a{
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 8px;
+}
+.connect a:hover{
+   background: hwb(221 15% 35%);
+}
+
+.selected{
+    background-color: hwb(221 15% 35%);
+    color: white;
+}
