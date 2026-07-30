@@ -28,7 +28,7 @@
    background: hwb(221 15% 35%);
 }
 
-.selected{
+.active{
     background-color: hwb(221 15% 35%);
     color: white;
 }

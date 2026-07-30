@@ -1,5 +1,5 @@
 export function Navbar(){
-    return `
+    return  `
     <nav class="navbar">
 
       <div class="logo">
@@ -8,8 +8,8 @@ export function Navbar(){
 
     
       <div class="connect">
-       <a href="index.html" class="selected">Home</a>
-      <a href="">Categories</a>
+      <a href="index.html">Home</a>
+      <a href="Market.html">Market</a>
       <a href="SignIn.html">Sign In </a>
       <a href="login.html">Login  </a>
 

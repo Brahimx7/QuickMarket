@@ -1,0 +1,148 @@
+body{
+   
+     background-color: hsl(244, 88%, 8%);
+    color: white;
+}
+
+.market{
+
+    max-width:1200px;
+
+    margin:120px auto;
+
+    padding:5px 20px;
+}
+
+.market-header{
+
+    text-align:center;
+
+    margin-bottom:60px;
+}
+
+.market-header h1{
+
+    font-size:3rem;
+
+    margin-bottom:15px;
+}
+
+.market-header p{
+
+    color:#c5c5d8;
+
+    margin-bottom:35px;
+}
+
+.search-box{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+}
+
+.search-box input{
+
+    width:550px;
+
+    max-width:100%;
+
+    height:55px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:30px;
+
+    padding:0 20px;
+
+    background:#1e1b4d;
+
+    color:white;
+
+    font-size:1rem;
+}
+
+.search-box input::placeholder{
+
+    color:#a9a9c5;
+}
+
+.search-box button{
+
+    width:130px;
+
+    border:none;
+
+    border-radius:30px;
+
+    background:#3f6cff;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+    transition:.3s;
+}
+
+.search-box button:hover{
+
+    background:#5a7eff;
+}
+
+.categories{
+
+    margin-top:60px;
+}
+
+.categories h2{
+
+    margin-bottom:25px;
+
+    font-size:2rem;
+}
+
+.category-list{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:18px;
+}
+
+.category-btn{
+
+    padding:14px 28px;
+
+    border:none;
+
+    border-radius:30px;
+
+    background:#1d194d;
+
+    color:white;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    font-size:.95rem;
+}
+
+.category-btn:hover{
+
+    background:#3f6cff;
+}
+
+.category-btn.active{
+
+    background:#3f6cff;
+}
