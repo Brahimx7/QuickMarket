@@ -56,7 +56,7 @@ body{
     border: 1px solid grey ;
     background-color: hsl(244, 88%, 11%);
     border-radius: 12px;
-    width: 70%;
+    width: 90%;
     margin-top: 30px;
 }
 .system h2.title{
@@ -79,7 +79,7 @@ body{
       border: 1px solid grey ;
     background-color: hsl(244, 88%, 11%);
     border-radius: 12px;
-    width: 70%;
+    width: 90%;
     margin-top: 30px;
 }
 .Whychoose h2.title{
@@ -94,4 +94,138 @@ body{
      padding: 10px;
    
      
+}
+
+.main{
+    display: flex;
+}
+.left{
+    width: 70%;
+}
+.right{
+    width: 30%;
+}
+
+.sell{
+    background-color: hsl(244, 88%, 11%);
+    padding: 10px;
+    border: 1px solid grey ;
+    border-radius: 12px;
+    margin-top: 15px;
+}
+
+.sell button{
+       background-color: #2563EB;
+    color: white;
+
+    padding: 12px 28px;
+    border: none;
+    border-radius: 10px;
+
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+}
+
+.sell button:hover{
+   background-color: #1D4ED8;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+
+}
+.sell p{
+    font-size: 20px;
+}
+
+.statistics{
+        background-color: hsl(244, 88%, 11%);
+    padding: 10px;
+    border: 1px solid grey ;
+    border-radius: 12px;
+    margin-top: 25px;
+   
+}
+.statistics h2{
+    font-size: 20px;
+}
+.stat{
+     display: flex;
+     gap: 20px;
+}
+.statis1{
+    background-color: hsl(244, 88%, 14%);
+    border-radius: 12px;
+     transition: .3s;
+    width: 50%;
+     padding: 4px;
+}
+.statis1:hover{
+     transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(60,120,255,.25);
+    cursor: pointer;
+}
+.statis2{
+    background-color: hsl(244, 88%, 14%);
+    border-radius: 12px;
+     transition: .3s;
+    width: 50%;
+ margin-left: 90px;
+ padding: 4px;
+ margin-top: 8px;
+}
+.statis2:hover{
+     transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(60,120,255,.25);
+    cursor: pointer;
+}
+
+
+
+.featured-categories{
+     background-color: hsl(244, 88%, 11%);
+    padding: 10px;
+    border: 1px solid grey ;
+    border-radius: 12px;
+    margin-top: 25px;
+}
+
+.featured-categories h2{
+    color: #8b8cff;
+    font-size: 1.5rem;
+    margin-bottom: 18px;
+}
+
+.category-grid{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 12px;
+}
+
+.category-card{
+    background: #19105d;
+    border-radius: 12px;
+    padding: 14px;
+    cursor: pointer;
+    transition: .3s ease;
+    text-align: center;
+    border: 1px solid transparent;
+}
+
+.category-card span{
+    font-size: 1.5rem;
+}
+
+.category-card h3{
+    margin-top: 8px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.category-card:hover{
+    transform: translateY(-4px);
+    border-color: #3f7cff;
+    box-shadow: 0 8px 18px rgba(63,124,255,.2);
 }
