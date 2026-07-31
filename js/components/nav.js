@@ -11,7 +11,7 @@ export function Navbar(){
       <a href="index.html">Home</a>
       <a href="Market.html">Market</a>
       <a href="SignIn.html">Sign In </a>
-      <a href="login.html">Login  </a>
+      <a href="Login.html">Login  </a>
 
       <div>
 
