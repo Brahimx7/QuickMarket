@@ -3,7 +3,7 @@
 
     display: grid;
 
-    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    grid-template-columns: repeat(4, 250px);
 
     gap: 30px;
     
@@ -97,4 +97,9 @@
 
     background: #5d82ff;
 
+}
+
+#prod{
+    margin-top: 25px;
+    font-size: 35px;
 }

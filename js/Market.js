@@ -7,6 +7,18 @@ function renderProducts(productsArray){
 
     productsGrid.innerHTML = "";
 
+     const title = document.getElementById("prod");
+
+            if(productsArray.length === 0){
+
+                  title.textContent = "No Products available";
+                        return;
+
+                       }else{
+
+                            title.textContent = "Products";
+                          }
+
     productsArray.forEach(product => {
 
         productsGrid.innerHTML += `
@@ -58,9 +70,38 @@ detailsButtons.forEach(button => {
 
 const buttons = document.querySelectorAll(".category-btn");
 
+
+
 buttons.forEach(button => {
 button.addEventListener("click" , () =>{
     buttons.forEach(btn => btn.classList.remove("active"));
     button.classList.add("active");
 });
+});
+
+
+
+
+buttons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        const category = button.textContent;
+
+        if(category === "All"){
+
+            renderProducts(allProducts);
+
+        }else{
+
+            const filteredProducts = allProducts.filter(product => {
+                return product.category === category;
+            });
+
+            renderProducts(filteredProducts);
+
+        }
+
+    });
+
 });
