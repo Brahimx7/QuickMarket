@@ -237,6 +237,7 @@ body{
     .main{
     display: flex;
     flex-direction: column;
+    width: 100%;
        }
     .intro{
         display: flex;
@@ -258,5 +259,18 @@ body{
 .Whychoose{
     width: 100%;
     
+}
+
+.arg{
+    display: grid;
+   grid-template-columns: repeat(2,50%);
+   
+     
+}
+
+.expl{
+     display: grid;
+   grid-template-columns: repeat(2,50%);
+   
 }
 }

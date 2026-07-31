@@ -160,7 +160,7 @@ body{
       }
       .search-box input{
 
-        width: 300px;
+        width: 350px;
       }
       .search-box button{
         width: 200px;
@@ -176,8 +176,9 @@ body{
 
            display: grid;
            grid-template-columns: repeat(3,105px);
-          padding: 7px;
-         gap:15px;
+          padding: 4px;
+         gap:10px;
+         margin-right: 8px;
        }
 
 }
