@@ -10,7 +10,7 @@
 <body>
     
          <div id="nav"></div>
-         
+
     <div class="signup-page">
 
     <div class="signup-card">
@@ -23,30 +23,30 @@
 
         <p>Join QuickMarket and start buying or selling today.</p>
 
-        <form>
+        <form id="signinform">
 
             <input
                 type="text"
-                placeholder="Full Name">
+                placeholder="Full Name" id="username" required>
 
             <input
                 type="email"
-                placeholder="Email Address">
+                placeholder="Email Address" id="useremail" required> 
               <div class="password">
                                     <input
                                            type="password"
-                                    placeholder="Password" id="pass">
+                                    placeholder="Password" id="pass" required>
                           <input type="checkbox" id="showpass">
               </div>
 
               <div class="confirmpassword">
                                     <input
                                            type="password"
-                                    placeholder="Confirm Password" id="confpass">
+                                    placeholder="Confirm Password" id="confpass" required>
                           <input type="checkbox" id="showconfpass">
               </div>
            
-            <button>
+            <button type="submit">
                 Sign Up
             </button>
 
@@ -62,5 +62,6 @@
 </div>
 
 <script type="module" src="./js/main.js"></script>
+<script type="module" src="./js/signin.js"></script>
 </body>
 </html>

@@ -1,21 +1,16 @@
 const postBtn = document.getElementById("postBtn");
-const explore = document.getElementById("startexploring");
+const currentuser = localStorage.getItem("currentUser");
 if (postBtn) {
     postBtn.addEventListener("click", () => {
         console.log("Button clicked!");
+        if(!currentuser){
+        window.alert("you have to sign up");
+        return;
+    }
         window.location.href = "postproduct.html";
     });
 }
 
-
-if(explore) {
-    explore.addEventListener("click" , ()=>{
-       console.log("Explore Button clicked!");
-        window.location.href="Market.html"
-    }
-
-)
-}
 
 
 
@@ -23,7 +18,10 @@ const form = document.getElementById('productForm');
 
 form.addEventListener('submit', (e) => {
               e.preventDefault(); 
-
+                 if(!currentuser){
+        window.alert("you have to sign up");
+        return;
+    }
                         console.log('Form submitted');
 
                         const title = document.getElementById('title').value;

@@ -14,26 +14,27 @@
 
    
 
-    <div class="login-card">
+    <form class="login-card" id="loginform">
 
         <h1>Welcome Back</h1>
 
         <p>login to continue to QuickMarket.</p>
 
-        <input type="email" placeholder="Email">
+        <input type="email" placeholder="Email" id="loginemail" required>
 
-        <input type="password" placeholder="Password">
+        <input type="password" placeholder="Password" id="loginpassword" required>
 
-        <button>Login</button>
+        <button type="submit">Login</button>
 
         <span>
             Don't have an account?
             <a href="SignIn.html">Sign Up</a>
         </span>
 
-    </div>
+    </form>
 
     <script type="module" src="./js/main.js"></script>
+    <script type="module" src="./js/login.js"></script>
 </div>
 </body>
 </html>

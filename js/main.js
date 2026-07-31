@@ -1,7 +1,7 @@
 import { Navbar }  from './components/nav.js'
 import { Footer } from "./components/footer.js";
 
-
+import { products } from './data/products.js'
 
 const nav = document.getElementById("nav");
 const foot = document.getElementById("foot");
@@ -52,3 +52,40 @@ if (confpassword && toggle2) {
 
 }
 
+
+
+const explore = document.getElementById("startexploring");
+if(explore) {
+    explore.addEventListener("click" , ()=>{
+       console.log("Explore Button clicked!");
+        window.location.href="Market.html"
+    }
+
+)
+}
+
+const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+const signupLink = document.getElementById("signupLink");
+const loginLink = document.getElementById("loginLink");
+
+if (currentUser) {
+
+    loginLink.textContent = "Logout";
+    signupLink.textContent = `👤${currentUser.username}`;
+
+     loginLink.addEventListener("click" , (e)=>{
+       e.preventDefault();
+        localStorage.removeItem("currentUser");
+        window.location.href="index.html";
+    });
+
+}
+
+const users = JSON.parse(localStorage.getItem("usersdata")) || [];
+const userproducts = JSON.parse(localStorage.getItem("products")) || [];
+const usersNumber = document.getElementById("usersCount");
+const productsNumber = document.getElementById("productsCount");
+
+const Allproducts = [...userproducts,...products];
+usersNumber.textContent = users.length;
+productsNumber.textContent = Allproducts.length; 
