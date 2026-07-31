@@ -103,3 +103,20 @@
     margin-top: 25px;
     font-size: 35px;
 }
+
+@media (max-width: 768px) {
+    #prod{
+   text-align: center;
+     }
+     
+    .products-grid{
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 170px);
+
+    gap: 16px;
+     }
+
+
+}

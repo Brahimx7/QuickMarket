@@ -32,3 +32,28 @@
     background-color: hwb(221 15% 35%);
     color: white;
 }
+
+
+
+@media (max-width: 768px) {
+    
+    .navbar{
+    padding: 1px;
+   background-color: hsl(244, 88%, 16%);
+   border-radius: 15px;
+}
+
+.connect{
+    
+    padding: 1px;
+    gap: 5px;
+}
+.logo h2{
+    font-size: 15px;
+}
+.connect a{
+    font-size: 15px;
+    padding: 10px;
+}
+
+}

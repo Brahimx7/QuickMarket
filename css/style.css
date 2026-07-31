@@ -229,3 +229,34 @@ body{
     border-color: #3f7cff;
     box-shadow: 0 8px 18px rgba(63,124,255,.2);
 }
+
+
+
+
+@media (max-width: 768px) {
+    .main{
+    display: flex;
+    flex-direction: column;
+       }
+    .intro{
+        display: flex;
+    flex-direction: column;
+    }   
+    .left{
+    width: 100%;
+         }
+     .right{
+       width: 100%;
+     } 
+
+     
+.system{
+    width: 100%;
+   
+}
+
+.Whychoose{
+    width: 100%;
+    
+}
+}

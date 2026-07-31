@@ -8,8 +8,6 @@ body{
 
     max-width:1200px;
 
-    margin:120px auto;
-
     padding:5px 20px;
 }
 
@@ -145,4 +143,41 @@ body{
 .category-btn.active{
 
     background:#3f6cff;
+}
+
+@media (max-width: 768px){
+
+    .market-header h1{
+
+        font-size:2.3rem;
+
+      }
+
+      .search-box{
+        display: flex;
+         gap:8px;
+
+      }
+      .search-box input{
+
+        width: 300px;
+      }
+      .search-box button{
+        width: 200px;
+        padding: 10px;
+      }
+
+      .categories h2{
+
+    text-align: center;
+     } 
+
+     .category-list{
+
+           display: grid;
+           grid-template-columns: repeat(3,105px);
+          padding: 7px;
+         gap:15px;
+       }
+
 }

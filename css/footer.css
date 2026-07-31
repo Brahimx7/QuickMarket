@@ -4,3 +4,9 @@ footer{
     padding: 30px;
     margin-top: 50px;
 }
+
+@media (max-width: 768px){
+    footer{
+        padding: 15px;
+    }
+}
