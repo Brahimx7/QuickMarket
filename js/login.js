@@ -1,5 +1,5 @@
 const login = document.getElementById("loginform");
-
+import { supabase } from "./supabase.js";
 login.addEventListener("submit", (e) => {
     e.preventDefault();
 

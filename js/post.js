@@ -1,27 +1,30 @@
+import { supabase } from "./supabase.js";
+
+console.log(supabase);
+console.log(supabase.storage);
+
 const postBtn = document.getElementById("postBtn");
 const currentuser = localStorage.getItem("currentUser");
-if (postBtn) {
-    postBtn.addEventListener("click", () => {
-        console.log("Button clicked!");
-        if(!currentuser){
-        window.alert("you have to sign up");
-        return;
-    }
-        window.location.href = "postproduct.html";
-    });
-}
+
 
 
 
 
 const form = document.getElementById('productForm');
 
-form.addEventListener('submit', (e) => {
-              e.preventDefault(); 
-                 if(!currentuser){
-        window.alert("you have to sign up");
-        return;
-    }
+                      form.addEventListener('submit', async (e) => {
+        /*                  const {
+                        data: { user },
+                      } = await supabase.auth.getUser();
+                      if (!user) {
+                        alert("Please log in first.");
+                        return;
+                      }*/
+                       e.preventDefault(); 
+                               /*   if(!currentuser){
+                           window.alert("you have to sign up");
+                        return;
+                              }*/
                         console.log('Form submitted');
 
                         const title = document.getElementById('title').value;
@@ -34,19 +37,39 @@ form.addEventListener('submit', (e) => {
                         const phone = document.getElementById('phone').value;
                         
                         const imageFile = document.getElementById('image').files[0];
-                        if (!imageFile) {
+                          if (!imageFile) {
                             alert("Please select an image.");
                             return;
+                          }
+console.log("1");
+                        const fileName = `${Date.now()}-${imageFile.name}`;
+console.log("2");
+                     const { error: uploadError } = await supabase.storage
+                         .from("product-images")
+                          .upload(fileName, imageFile);
+console.log("3");
+                         if (uploadError) {
+                             console.error(uploadError);
+                          alert(uploadError.message);
+                              return;
                                          }
+console.log("4");                                    
+                         const { data: imageData } = supabase.storage
+                          .from("product-images")
+                          .getPublicUrl(fileName);
+
+                        const imageUrl = imageData.publicUrl;
+                     
+                                
 
 
-                        const reader = new FileReader();
+                     //   const reader = new FileReader();
 
-                        reader.readAsDataURL(imageFile);
+                      //  reader.readAsDataURL(imageFile);
 
-                        reader.onload = () => {
-                            const imageBase64 = reader.result;
-                            console.log(imageBase64);
+                      //  reader.onload = () => {
+                         //   const imageBase64 = reader.result;
+                         //   console.log(imageBase64);
 
                             const newProduct = {
                             id: Date.now(),
@@ -56,7 +79,7 @@ form.addEventListener('submit', (e) => {
                             location,
                             seller,
                             condition,
-                            image: imageBase64,
+                            image: imageUrl,
                             description,
                             phone
                         };
@@ -67,9 +90,9 @@ form.addEventListener('submit', (e) => {
 
           localStorage.setItem("products", JSON.stringify(userProducts));
 
-           window.location.href = "market.html";
+           window.location.href = "Market.html";
 
-                                               };
+                                             
 
                                           
 });

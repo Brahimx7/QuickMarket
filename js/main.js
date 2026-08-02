@@ -63,7 +63,18 @@ if(explore) {
 
 )
 }
-
+const postBtn = document.getElementById("postBtn");
+if (postBtn) {
+    postBtn.addEventListener("click", () => {
+        console.log("Button clicked!");
+        if(!currentuser){
+        window.alert("you have to sign up");
+        return;
+    }
+        window.location.href = "postproduct.html";
+    });
+}
+/*
 const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 const signupLink = document.getElementById("signupLink");
 const loginLink = document.getElementById("loginLink");
@@ -80,12 +91,18 @@ if (currentUser) {
     });
 
 }
-
 const users = JSON.parse(localStorage.getItem("usersdata")) || [];
 const userproducts = JSON.parse(localStorage.getItem("products")) || [];
 const usersNumber = document.getElementById("usersCount");
 const productsNumber = document.getElementById("productsCount");
 
 const Allproducts = [...userproducts,...products];
-usersNumber.textContent = users.length;
-productsNumber.textContent = Allproducts.length; 
+
+
+if (usersNumber) {
+    usersNumber.textContent = users.length;
+}
+
+if (productsNumber) {
+    productsNumber.textContent = Allproducts.length;
+}*/
