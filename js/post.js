@@ -4,7 +4,7 @@ console.log(supabase);
 console.log(supabase.storage);
 
 const postBtn = document.getElementById("postBtn");
-const currentuser = localStorage.getItem("currentUser");
+//const currentuser = localStorage.getItem("currentUser");
 
 
 
@@ -25,6 +25,14 @@ const form = document.getElementById('productForm');
                            window.alert("you have to sign up");
                         return;
                               }*/
+                             const {
+                               data: { user },
+                             } = await supabase.auth.getUser();
+                        console.log(user);
+                             if (!user) {
+                               alert("Please log in first.");
+                               return;
+                                        }
                         console.log('Form submitted');
 
                         const title = document.getElementById('title').value;
@@ -60,7 +68,28 @@ console.log("4");
 
                         const imageUrl = imageData.publicUrl;
                      
-                                
+                                const { error: productError } = await supabase
+                                 .from("products")
+                                 .insert({
+                                   title,
+                                   price: Number(price),
+                                   category,
+                                   condition,
+                                   location,
+                                   seller,
+                                   description,
+                                   phone,
+                                   image: imageUrl,
+                                   user_id: user.id
+                                   });
+
+                               if (productError) {
+                                   console.error(productError);
+                                   alert(productError.message);
+                                   return;
+                               }
+
+                             
 
 
                      //   const reader = new FileReader();
@@ -71,7 +100,7 @@ console.log("4");
                          //   const imageBase64 = reader.result;
                          //   console.log(imageBase64);
 
-                            const newProduct = {
+                        /*    const newProduct = {
                             id: Date.now(),
                             title,
                             price: Number(price),
@@ -88,13 +117,9 @@ console.log("4");
           const userProducts = JSON.parse(localStorage.getItem("products")) || [];
           userProducts.push(newProduct);
 
-          localStorage.setItem("products", JSON.stringify(userProducts));
+          localStorage.setItem("products", JSON.stringify(userProducts));*/
 
-           window.location.href = "Market.html";
-
-                                             
-
-                                          
+                           window.location.href = "Market.html";
 });
 
 

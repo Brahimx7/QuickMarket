@@ -1,6 +1,6 @@
 import { Navbar }  from './components/nav.js'
 import { Footer } from "./components/footer.js";
-
+import { supabase } from "./supabase.js";
 import { products } from './data/products.js'
 
 const nav = document.getElementById("nav");
@@ -64,20 +64,25 @@ if(explore) {
 )
 }
 const postBtn = document.getElementById("postBtn");
+
+const {
+  data: { user },
+} = await supabase.auth.getUser();
+
 if (postBtn) {
     postBtn.addEventListener("click", () => {
         console.log("Button clicked!");
-        if(!currentuser){
-        window.alert("you have to sign up");
+        if (!user) {
+        alert("You have to sign in first.");
+        window.location.href = "Login.html";
         return;
-    }
+       }
         window.location.href = "postproduct.html";
     });
 }
 /*
 const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-const signupLink = document.getElementById("signupLink");
-const loginLink = document.getElementById("loginLink");
+
 
 if (currentUser) {
 
@@ -106,3 +111,39 @@ if (usersNumber) {
 if (productsNumber) {
     productsNumber.textContent = Allproducts.length;
 }*/
+
+const signupLink = document.getElementById("signupLink");
+const loginLink = document.getElementById("loginLink");
+
+
+console.log(user);
+
+if (user) {
+
+    const { data: profile, error } = await supabase
+        .from("users")
+        .select("*")
+        .eq("id", user.id)
+        .single();
+
+    if (error) {
+        console.error(error);
+    } else {
+        signupLink.textContent = `👤 ${profile.username}`;
+        loginLink.textContent = "Logout";
+    }
+
+
+    loginLink.addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    await supabase.auth.signOut();
+
+    window.location.href = "index.html";
+        });
+
+}
+
+
+
+
