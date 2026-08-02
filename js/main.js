@@ -1,7 +1,7 @@
 import { Navbar }  from './components/nav.js'
 import { Footer } from "./components/footer.js";
 import { supabase } from "./supabase.js";
-import { products } from './data/products.js'
+//import { products } from './data/products.js'
 
 const nav = document.getElementById("nav");
 const foot = document.getElementById("foot");
@@ -142,6 +142,37 @@ if (user) {
     window.location.href = "index.html";
         });
 
+}
+
+
+const { data: users, error: usersError } = await supabase
+    .from("users")
+    .select("*");
+
+if (usersError) {
+    console.error(usersError);
+}
+
+
+const { data: products, error: productsError } = await supabase
+    .from("products")
+    .select("*");
+
+if (productsError) {
+    console.error(productsError);
+}
+
+
+
+const usersNumber = document.getElementById("usersCount");
+const productsNumber = document.getElementById("productsCount");
+
+if (usersNumber) {
+    usersNumber.textContent = users.length;
+}
+
+if (productsNumber) {
+    productsNumber.textContent = products.length;
 }
 
 

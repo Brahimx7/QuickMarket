@@ -19,38 +19,38 @@ function renderProducts(productsArray){
                             title.textContent = "Products";
                           }
 
-  let html = "";
+            let html = "";
 
-productsArray.forEach(product => {
-    html += `
-        <div class="product-card">
-            <img src="${product.image}">
-            <h3>${product.title}</h3>
-            <p>$${product.price}</p>
-            <p>${product.location}</p>
-            <button class="details-btn" data-id="${product.id}">
-                View Details
-            </button>
-        </div>
-    `;
-});
+                 productsArray.forEach(product => {
+                     html += `
+                         <div class="product-card">
+                             <img src="${product.image}">
+                             <h3>${product.title}</h3>
+                             <p>$${product.price}</p>
+                             <p>${product.location}</p>
+                            <button class="details-btn" data-id="${product.id}">
+                                View Details
+                             </button>
+                         </div>
+                     `;
+                 });
 
-productsGrid.innerHTML = html;
+                 productsGrid.innerHTML = html;
 
 
-    const detailsButtons = document.querySelectorAll(".details-btn");
+                     const detailsButtons = document.querySelectorAll(".details-btn");
 
-detailsButtons.forEach(button => {
+                 detailsButtons.forEach(button => {
 
-    button.addEventListener("click", () => {
+                     button.addEventListener("click", () => {
 
-        const id = button.dataset.id;
+                         const id = button.dataset.id;
 
-        window.location.href = `product.html?id=${id}`;
+                         window.location.href = `product.html?id=${id}`;
 
-    });
+                     });
 
-});
+                 });
 
 
 

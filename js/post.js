@@ -49,19 +49,19 @@ const form = document.getElementById('productForm');
                             alert("Please select an image.");
                             return;
                           }
-console.log("1");
+
                         const fileName = `${Date.now()}-${imageFile.name}`;
-console.log("2");
+
                      const { error: uploadError } = await supabase.storage
                          .from("product-images")
                           .upload(fileName, imageFile);
-console.log("3");
+
                          if (uploadError) {
                              console.error(uploadError);
                           alert(uploadError.message);
                               return;
                                          }
-console.log("4");                                    
+                                 
                          const { data: imageData } = supabase.storage
                           .from("product-images")
                           .getPublicUrl(fileName);
