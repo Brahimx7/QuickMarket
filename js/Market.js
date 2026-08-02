@@ -1,5 +1,5 @@
-import { products } from "./data/products.js";
-
+//import { products } from "./data/products.js";
+import { supabase } from "./supabase.js";
 
 const productsGrid = document.getElementById("productsGrid");
 
@@ -19,38 +19,26 @@ function renderProducts(productsArray){
                             title.textContent = "Products";
                           }
 
-    productsArray.forEach(product => {
+  let html = "";
 
-        productsGrid.innerHTML += `
+productsArray.forEach(product => {
+    html += `
+        <div class="product-card">
+            <img src="${product.image}">
+            <h3>${product.title}</h3>
+            <p>$${product.price}</p>
+            <p>${product.location}</p>
+            <button class="details-btn" data-id="${product.id}">
+                View Details
+            </button>
+        </div>
+    `;
+});
 
-            <div class="product-card">
-
-                <img src="${product.image}">
-
-                <h3>${product.title}</h3>
-
-                <p>$${product.price}</p>
-
-                <p>${product.location}</p>
-
-                <button class="details-btn" data-id="${product.id}">View Details</button>
-
-            </div>
-
-        `;
-
-    });
-
-}
-
-const userProducts = JSON.parse(localStorage.getItem("products")) || [];
-const allProducts = [...products, ...userProducts];
-renderProducts(allProducts);
+productsGrid.innerHTML = html;
 
 
-
-
-const detailsButtons = document.querySelectorAll(".details-btn");
+    const detailsButtons = document.querySelectorAll(".details-btn");
 
 detailsButtons.forEach(button => {
 
@@ -63,6 +51,31 @@ detailsButtons.forEach(button => {
     });
 
 });
+
+
+
+}
+
+
+/*
+const userProducts = JSON.parse(localStorage.getItem("products")) || [];
+const allProducts = [...products, ...userProducts];
+renderProducts(allProducts);
+*/
+
+const { data: products, error } = await supabase
+    .from("products")
+    .select("*");
+
+if (error) {
+    console.error(error);
+} else {
+    console.log(products);
+    renderProducts(products);
+}
+
+
+
 
 
 
@@ -90,11 +103,11 @@ buttons.forEach(button => {
 
         if(category === "All"){
 
-            renderProducts(allProducts);
+            renderProducts(products);
 
         }else{
 
-            const filteredProducts = allProducts.filter(product => {
+            const filteredProducts = products.filter(product => {
                 return product.category === category;
             });
 

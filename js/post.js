@@ -90,7 +90,7 @@ console.log("4");
                                }
 
                              
-
+                         console.log("Product published successfully!");
 
                      //   const reader = new FileReader();
 
