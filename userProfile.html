@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="./css/nav.css">
+     <link rel="stylesheet" href="./css/userProfile.css">
+</head>
+
+<body>
+    <div id="nav"></div>
+
+ <div class="profile-container">
+
+    <div class="profile-header">
+
+        <div class="avatar">
+            👤
+        </div>
+
+        <div class="profile-info">
+            <h1 id="profileUsername">Ahmed Chakir</h1>
+
+            <div class="info-box">
+                <h3>Email</h3>
+                <p id="profilemail">ahmed@gmail.com</p>
+            </div>
+
+            <div class="info-box">
+                <h3>Products Posted</h3>
+                <p><span id="profileproducts">0</span></p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <h2>Your Products</h2>
+
+    <div id="userproducts" class="userproducts"></div>
+
+</div>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script type="module" src="js/supabase.js"></script>
+<script type="module" src="./js/main.js"></script>
+<script type="module" src="./js/userProfile.js"></script>
+</body>
+
+</html>

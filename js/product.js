@@ -31,15 +31,5 @@ if (productError) {
     productCategory.textContent = product.category;
 }
 
-
-productImage.src = product.image;
-productTitle.textContent = product.title;
-productPrice.textContent = `$${product.price}`;
-productDescription.textContent = product.description;
-productCondition.textContent = product.condition;
-productLocation.textContent = product.location;
-sellerName.textContent = product.seller;
-sellerPhone.textContent = product.phone;
-productCategory.textContent = product.category;
 console.log("ID from URL:", id);
 console.log("Product:", product);

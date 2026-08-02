@@ -104,19 +104,36 @@
     font-size: 35px;
 }
 
+
+
 @media (max-width: 768px) {
+
     #prod{
-   text-align: center;
-     }
-     
+        text-align: center;
+    }
+
     .products-grid{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
 
-    display: grid;
+    .product-card img{
+        height: 160px;
+    }
 
-    grid-template-columns: repeat(2, 170px);
+    .product-card h3{
+        font-size: 1rem;
+    }
 
-    gap: 16px;
-     }
+    .product-card p{
+        font-size: .9rem;
+    }
 
+    .product-card button{
+        margin: 15px;
+        height: 40px;
+        font-size: .9rem;
+    }
 
 }

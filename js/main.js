@@ -130,6 +130,7 @@ if (user) {
         console.error(error);
     } else {
         signupLink.textContent = `👤 ${profile.username}`;
+        signupLink.href = "userProfile.html";
         loginLink.textContent = "Logout";
     }
 
