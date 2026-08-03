@@ -51,6 +51,6 @@ if (userError) {
     alert(userError.message);
     return;
 }
-
+ await supabase.auth.signOut();
 window.location.href = "Login.html";
 });

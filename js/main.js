@@ -125,7 +125,8 @@ if (user) {
         .select("*")
         .eq("id", user.id)
         .single();
-
+  
+        await supabase.auth.signOut();
     if (error) {
         console.error(error);
     } else {
@@ -138,7 +139,7 @@ if (user) {
     loginLink.addEventListener("click", async (e) => {
     e.preventDefault();
 
-    await supabase.auth.signOut();
+   
 
     window.location.href = "index.html";
         });

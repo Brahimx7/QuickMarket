@@ -22,7 +22,11 @@ login.addEventListener("submit", async (e) => {
         alert("Invalid email or password.");
     }*/
 
-         const { data, error } = await supabase.auth.signInWithPassword({
+        const signupLink = document.getElementById("signupLink");
+        const loginLink = document.getElementById("loginLink");
+
+
+         const { data , error } = await supabase.auth.signInWithPassword({
         email: loginemail,
         password: loginpassword
      });
@@ -31,10 +35,13 @@ login.addEventListener("submit", async (e) => {
         alert(error.message);
         return;
     }
+     
+   
+    
 
     console.log(data.user);
 
-    window.location.href = "index.html";
+   
 
 
      });
