@@ -1,7 +1,7 @@
 import { supabase } from "./supabase.js";
 
 const login = document.getElementById("loginform");
-
+await supabase.auth.signOut();
 login.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -26,23 +26,51 @@ login.addEventListener("submit", async (e) => {
         const loginLink = document.getElementById("loginLink");
 
 
-         const { data , error } = await supabase.auth.signInWithPassword({
-        email: loginemail,
-        password: loginpassword
-     });
-        
-         if (error) {
-        alert(error.message);
-        return;
-    }
-     
-   
-    
+        const { data, error } = await supabase.auth.signInWithPassword({
+    email: loginemail,
+    password: loginpassword
+});
+
+if (error) {
+    alert(error.message);
+    return;
+}
+
+const user = data.user;
+
+
 
     console.log(data.user);
 
    
 
 
+    const { data: profile } = await supabase
+    .from("users")
+    .select("*")
+    .eq("id", user.id)
+    .single();
+
+    window.location.href = "index.html";
+
+
      });
 
+
+
+     /*if (error) {
+    if (error.message.toLowerCase().includes("email not confirmed")) {
+        alert("Please confirm your email first. We'll resend the confirmation link.");
+        await supabase.auth.resend({
+            type: "signup",
+            email: loginemail,
+            options: {
+                emailRedirectTo: "https://quick-market-4uba.vercel.app"
+            }
+        });
+    } else {
+        alert(error.message);
+    }
+    return;
+}
+*/

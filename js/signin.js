@@ -7,6 +7,13 @@ signed.addEventListener("submit", async (e) => {
     const username = document.getElementById("username").value;
     const useremail = document.getElementById("useremail").value;
     const userpassword = document.getElementById("pass").value;
+     const confirmpassword = document.getElementById("confpass").value;
+
+     if( userpassword !== confirmpassword){
+         e.preventDefault();
+        alert("Passwords do not match!");
+        return;
+     }
 
     
   /*  const userInfo = {
@@ -23,6 +30,11 @@ signed.addEventListener("submit", async (e) => {
 const { data, error } = await supabase.auth.signUp({
     email: useremail,
     password: userpassword,
+    options: {
+        data: {
+            username: username
+        }
+    }
 });
 
 if (error) {
@@ -37,20 +49,24 @@ if (!data.user) {
 }
 console.log(data.user);
 
+const user = data.user;
+
 const { error: userError } = await supabase
     .from("users")
     .insert({
-        id: data.user.id,
-        email: useremail,
+        id: user.id,
+        email: user.email,
         username: username
     });
 
-
 if (userError) {
-     console.log(userError);
     alert(userError.message);
     return;
 }
- await supabase.auth.signOut();
-window.location.href = "Login.html";
+
+
+window.location.href=("index.html");
 });
+
+
+
