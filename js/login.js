@@ -32,15 +32,13 @@ login.addEventListener("submit", async (e) => {
 });
 
 if (error) {
-    alert(error.message);
+    alert("the email or password you entered is incorrect");
     return;
 }
 
 const user = data.user;
 
 
-
-    console.log(data.user);
 
    
 

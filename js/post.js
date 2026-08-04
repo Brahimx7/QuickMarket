@@ -1,8 +1,5 @@
 import { supabase } from "./supabase.js";
 
-console.log(supabase);
-console.log(supabase.storage);
-
 const postBtn = document.getElementById("postBtn");
 //const currentuser = localStorage.getItem("currentUser");
 
@@ -28,6 +25,7 @@ const form = document.getElementById('productForm');
                              const {
                                data: { user },
                              } = await supabase.auth.getUser();
+                             
                         console.log(user);
                              if (!user) {
                                alert("Please log in first.");

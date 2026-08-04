@@ -149,3 +149,27 @@ buttons.forEach(button => {
     });
 
 });
+
+
+
+
+const selectedCategory = params.get("category");
+
+if (selectedCategory) {
+
+    buttons.forEach(button => {
+        if (button.textContent.trim() === selectedCategory) {
+            button.classList.add("active");
+        } else {
+            button.classList.remove("active");
+        }
+    });
+
+    const filteredProducts = products.filter(product =>
+        product.category === selectedCategory
+    );
+
+    renderProducts(filteredProducts);
+
+   
+}

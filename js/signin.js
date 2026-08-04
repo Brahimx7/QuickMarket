@@ -30,7 +30,7 @@ signed.addEventListener("submit", async (e) => {
 const { data, error } = await supabase.auth.signUp({
     email: useremail,
     password: userpassword,
-    options: {
+    options: { //contains extra information.
         data: {
             username: username
         }
@@ -47,7 +47,7 @@ if (!data.user) {
     alert("Signup failed.");
     return;
 }
-console.log(data.user);
+
 
 const user = data.user;
 
@@ -56,7 +56,7 @@ const { error: userError } = await supabase
     .insert({
         id: user.id,
         email: user.email,
-        username: username
+        username: username // or user.user_metadata.username
     });
 
 if (userError) {
@@ -66,6 +66,8 @@ if (userError) {
 
 
 window.location.href=("index.html");
+
+
 });
 
 

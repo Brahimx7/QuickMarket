@@ -2,7 +2,7 @@ import { Navbar }  from './components/nav.js'
 import { Footer } from "./components/footer.js";
 import { supabase } from "./supabase.js";
 //import { products } from './data/products.js'
-
+console.log("main.js loaded");
 const nav = document.getElementById("nav");
 const foot = document.getElementById("foot");
 
@@ -57,7 +57,6 @@ if (confpassword && toggle2) {
 const explore = document.getElementById("startexploring");
 if(explore) {
     explore.addEventListener("click" , ()=>{
-       console.log("Explore Button clicked!");
         window.location.href="Market.html"
     }
 
@@ -69,12 +68,13 @@ const {
   data: { user },
 } = await supabase.auth.getUser();
 
+
 if (postBtn) {
     postBtn.addEventListener("click", () => {
         console.log("Button clicked!");
         if (!user) {
-        alert("You have to sign in first.");
-        window.location.href = "Login.html";
+        alert("This page requires an account. Please sign in first.");
+        window.location.href = "Signin.html";
         return;
        }
         window.location.href = "postproduct.html";
@@ -198,3 +198,19 @@ if (homeSearch) {
     });
 
 }
+
+const categories = document.querySelectorAll(".usercat");
+
+console.log(categories);
+
+categories.forEach(categorie => {
+    categorie.addEventListener("click", () => {
+        console.log("Clicked:", categorie.textContent);
+
+        const catvalue = categorie.textContent.trim();
+
+        console.log(catvalue);
+
+        window.location.href = `Market.html?category=${encodeURIComponent(catvalue)}`;
+    });
+});
