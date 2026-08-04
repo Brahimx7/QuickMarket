@@ -180,3 +180,21 @@ if (productsNumber) {
 
 
 
+const homeSearch = document.getElementById("homeSearch");
+
+if (homeSearch) {
+
+    homeSearch.addEventListener("keydown", (e) => {
+
+        if (e.key === "Enter") {
+
+            const value = homeSearch.value.trim();
+
+            window.location.href =
+                `Market.html?search=${encodeURIComponent(value)}`;
+
+        }
+
+    });
+
+}

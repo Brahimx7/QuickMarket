@@ -1,7 +1,7 @@
 import { supabase } from "./supabase.js";
 
 const login = document.getElementById("loginform");
-await supabase.auth.signOut();
+
 login.addEventListener("submit", async (e) => {
     e.preventDefault();
 

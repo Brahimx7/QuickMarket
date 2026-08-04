@@ -67,15 +67,46 @@ const { data: products, error } = await supabase
     .from("products")
     .select("*");
 
-if (error) {
+    
+    if (error) {
     console.error(error);
 } else {
     console.log(products);
     renderProducts(products);
+
+   const searchInput = document.getElementById("searchInput");
+   const searchBtn = document.getElementById("searchBtn");
+
+    searchBtn.addEventListener("click", () => {
+        const value = searchInput.value.toLowerCase();
+
+        const filteredProducts = products.filter(product =>
+            product.title.toLowerCase().includes(value)
+        );
+
+        renderProducts(filteredProducts);
+    });
 }
 
 
+const params = new URLSearchParams(window.location.search);
+const searchValue = params.get("search");
 
+if (searchValue) {
+
+    const filteredProducts = products.filter(product =>
+        product.title.toLowerCase().includes(searchValue.toLowerCase())
+    );
+
+    renderProducts(filteredProducts);
+
+    document.getElementById("searchInput").value = searchValue;
+
+} else {
+
+    renderProducts(products);
+
+}
 
 
 
