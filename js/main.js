@@ -2,7 +2,7 @@ import { Navbar }  from './components/nav.js'
 import { Footer } from "./components/footer.js";
 import { supabase } from "./supabase.js";
 //import { products } from './data/products.js'
-console.log("main.js loaded");
+
 const nav = document.getElementById("nav");
 const foot = document.getElementById("foot");
 
@@ -62,6 +62,7 @@ if(explore) {
 
 )
 }
+
 const postBtn = document.getElementById("postBtn");
 
 const {
