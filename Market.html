@@ -63,7 +63,7 @@
                  <div id="categoryPanel" class="hidden">
 
                                   
-       
+                       <div class="categoriesS">
                                   <button class="category-btn active">All</button>
 
                                       <button class="category-btn">Electronics</button>
@@ -82,28 +82,31 @@
        
                                     <button class="category-btn">Sports</button>
 
+                       </div>         
+
                </div>
 
                 <div id="pricePanel"  class="hidden">
+                      <div class="priceP">
 
-                   <h3>Price</h3>
+                          <button id="lowHigh">Low → High</button>
+                          <button id="highLow">High → Low</button>
 
-                    <button>Low → High</button>
-                   <button>High → Low</button>
-
-                      <input type="number" placeholder="Minimum Price">
-                        <input type="number" placeholder="Maximum Price">
-
-               </div>
+                            <input type="number" placeholder="Minimum Price" id="minPrice">
+                            <input type="number" placeholder="Maximum Price" id="maxPrice">
+                      </div>
+                 </div>
 
              <div id="titlePanel"  class="hidden">
+                
+                <div class="titleT">
 
-                     <h3>Title</h3>
+                      <button id="AZ">A → Z</button>
+                       <button id="ZA">Z → A</button>
 
-                      <button>A → Z</button>
-                       <button>Z → A</button>
+                    <input type="text" maxlength="1" placeholder="Letter" id="letter">
 
-                    <input type="text" maxlength="1" placeholder="Letter">
+                 </div> 
 
              </div>
 

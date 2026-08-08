@@ -235,13 +235,148 @@ function hidePanels(){
 }
 hidePanels();
 categoryBtn.addEventListener("click", () => {
+    resetPriceFilter();
       console.log("clicked");
-    const wasHidden = categoryPanel.classList.contains("hidden");
+    const wasHiddencategories = categoryPanel.classList.contains("hidden");
+    
     hidePanels();
-     if(wasHidden){
+     if(wasHiddencategories){
         categoryPanel.classList.remove("hidden");
         categoryPanel.classList.add("shown");
         categoryBtn.textContent = "📂 Categories ▲" ; 
      }
     
+});
+
+priceBtn.addEventListener("click" , ()=>{
+resetPriceFilter();resetletter();
+    const wasHiddenprice = pricePanel.classList.contains("hidden");
+    hidePanels();
+     if(wasHiddenprice){
+        pricePanel.classList.remove("hidden");
+        pricePanel.classList.add("shown");
+        priceBtn.textContent = "💰 Prices ▲" ; 
+     }
+});
+
+titleBtn.addEventListener("click" , ()=>{
+resetPriceFilter();resetletter();
+      const wasHiddentitle = titlePanel.classList.contains("hidden");
+    hidePanels();
+     if(wasHiddentitle){
+        titlePanel.classList.remove("hidden");
+        titlePanel.classList.add("shown");
+        titleBtn.textContent = "🔤 Title ▲" ; 
+     }
+});
+
+
+
+const lowHigh = document.getElementById("lowHigh");
+const highLow = document.getElementById("highLow");
+
+lowHigh.addEventListener("click", () => {
+resetletter();
+    const sortedProducts = [...products].sort((a, b) => a.price - b.price);
+
+    renderProducts(sortedProducts);
+    resetPriceFilter();
+});
+
+highLow.addEventListener("click", () => {
+resetletter()
+    const sortedProducts = [...products].sort((a, b) => b.price - a.price);
+
+    renderProducts(sortedProducts);
+    resetPriceFilter();
+
+});
+
+
+const minPrice = document.getElementById("minPrice");
+const maxPrice = document.getElementById("maxPrice");
+
+function filterByPrice() {
+resetletter();
+    const min = Number(minPrice.value);
+    const max = Number(maxPrice.value);
+
+    const filteredProducts = products.filter(product => {
+
+        if (minPrice.value && product.price < min) {
+            return false;
+        }
+
+        if (maxPrice.value && product.price > max) {
+            return false;
+        }
+
+        return true;
+    });
+
+    renderProducts(filteredProducts);
+}
+
+minPrice.addEventListener("input", filterByPrice);
+maxPrice.addEventListener("input", filterByPrice);
+
+function resetPriceFilter() {
+    minPrice.value = "";
+    maxPrice.value = "";
+}
+
+const AZ = document.getElementById("AZ");
+const ZA = document.getElementById("ZA");
+const letter = document.getElementById("letter");
+
+AZ.addEventListener("click", () => {
+
+    const sortedLetters = [...products].sort((A, B) =>
+        A.title.localeCompare(B.title)
+    );
+
+    renderProducts(sortedLetters);
+    resetPriceFilter();
+resetletter();
+});
+
+ZA.addEventListener("click", () => {
+
+    const sortedLetters = [...products].sort((A, B) =>
+        B.title.localeCompare(A.title)
+    );
+
+    renderProducts(sortedLetters);
+    resetPriceFilter();
+resetletter();
+});
+
+letter.addEventListener("input", () => {
+
+    const selectedLetter = letter.value.toLowerCase();
+
+    const filteredProducts = products.filter(product => {
+        return product.title.toLowerCase().startsWith(selectedLetter);
+    });
+
+    renderProducts(filteredProducts);
+    resetPriceFilter();
+    
+});
+
+function resetletter(){
+    letter.value = "";
+}
+
+
+const reset = document.getElementById("resetBtn");
+
+reset.addEventListener("click", () => {
+
+    minPrice.value = "";
+    maxPrice.value = "";
+    letter.value = "";
+
+    renderProducts(products);
+
 });

@@ -158,7 +158,7 @@ body{
 .filters h2{
     font-size: 28px;
     font-weight: bold;
-     background: linear-gradient(to right , hsl(254, 74%, 39%),hsl(0, 0%, 0%));
+     background: linear-gradient(to right , hsl(254, 74%, 39%),hsl(267, 70%, 25%));
      -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-right: 8px;
@@ -193,6 +193,169 @@ body{
 .shown {
     display : block ; 
 }
+
+.categoriesS{
+       display: flex;
+    align-items: center;
+    gap: 12px;
+
+    background: hsl(244, 60%, 12%);
+    padding: 20px 25px;
+
+    width: fit-content;
+    margin: 30px auto;
+
+    border: 1px solid hsl(244, 30%, 25%);
+    border-radius: 16px;
+
+    box-shadow: 0 5px 15px rgba(7, 10, 193, 0.906);
+}
+
+.priceP {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    background: hsl(244, 60%, 12%);
+    padding: 20px 25px;
+
+    width: fit-content;
+    margin: 30px auto;
+
+    border: 1px solid hsl(244, 30%, 25%);
+    border-radius: 16px;
+
+    box-shadow: 0 5px 15px rgba(7, 10, 193, 0.906);
+}
+
+
+
+
+.priceP button {
+    border: none;
+    padding: 12px 18px;
+
+    border-radius: 10px;
+
+    background: hsl(244, 50%, 20%);
+    color: white;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.priceP button:hover {
+    background: hsl(244, 70%, 30%);
+    transform: translateY(-2px);
+}
+
+
+
+
+.priceP input {
+    width: 130px;
+    height: 42px;
+
+    padding: 0 14px;
+    box-sizing: border-box;
+
+    border: 1px solid hsl(244, 30%, 30%);
+    border-radius: 10px;
+
+    background: hsl(244, 45%, 17%);
+    color: white;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: 0.2s ease;
+}
+
+.priceP input::placeholder {
+    color: hsl(0, 0%, 70%);
+}
+
+.priceP input:focus {
+    border-color: hsl(244, 80%, 60%);
+    box-shadow: 0 0 0 3px hsl(244, 80%, 60%, 0.15);
+}
+
+.titleT{
+       display: flex;
+    align-items: center;
+    gap: 12px;
+
+    background: hsl(244, 60%, 12%);
+    padding: 20px 25px;
+
+    width: fit-content;
+    margin: 30px auto;
+
+    border: 1px solid hsl(244, 30%, 25%);
+    border-radius: 16px;
+
+    box-shadow: 0 5px 15px rgba(7, 10, 193, 0.906);
+}
+
+.titleT button{
+     border: none;
+    padding: 12px 18px;
+
+    border-radius: 10px;
+
+    background: hsl(244, 50%, 20%);
+    color: white;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.titleT button:hover {
+    background: hsl(244, 70%, 30%);
+    transform: translateY(-2px);
+}
+
+
+
+
+.titleT input {
+    width: 130px;
+    height: 42px;
+
+    padding: 0 14px;
+    box-sizing: border-box;
+
+    border: 1px solid hsl(244, 30%, 30%);
+    border-radius: 10px;
+
+    background: hsl(244, 45%, 17%);
+    color: white;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: 0.2s ease;
+}
+
+.titleT input::placeholder {
+    color: hsl(0, 0%, 70%);
+}
+
+.titleT input:focus {
+    border-color: hsl(244, 80%, 60%);
+    box-shadow: 0 0 0 3px hsl(244, 80%, 60%, 0.15);
+}
+
 @media (max-width: 768px){
 
     .market-header h1{
@@ -229,5 +392,30 @@ body{
         padding:12px;
         text-align:center;
     }
+
+   .filter-buttons{
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 8px;
+    }
+    .filters h2{
+        font-size: 40px;
+    }
+ .categoriesS{
+     display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 8px;
+ }
+ .titleT{
+     display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 8px;
+ }
+
+ .priceP{
+     display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 8px;
+ }
 
 }
