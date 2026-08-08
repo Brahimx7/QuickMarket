@@ -16,7 +16,7 @@ function renderProducts(productsArray){
 
                        }else{
 
-                            title.textContent = "Products";
+                           title.textContent = "Products";
                           }
 
             let html = "";
@@ -173,3 +173,75 @@ if (selectedCategory) {
 
    
 }
+
+/*
+const userchoice = document.getElementById("sortProducts");
+const originalProducts = [...products];
+userchoice.addEventListener("change" , ()=> {
+
+if(userchoice.value === "low-high"){
+      products.sort((productA, productB) => {
+               return productA.price - productB.price;
+              });
+              renderProducts(products);
+} 
+else if( userchoice.value === "high-low" ){
+   products.sort((productA, productB) => {
+    return productB.price - productA.price;
+         });
+         renderProducts(products);
+}
+else if ( userchoice.value === "az" ){
+   products.sort((productA, productB) => { 
+   return  productA.title.localeCompare(productB.title);
+   });
+   renderProducts(products);
+}
+else if( userchoice.value === "za" ){
+    products.sort((productA, productB) => { 
+   return  productB.title.localeCompare(productA.title);
+   });
+   renderProducts(products);
+}
+else{
+renderProducts(originalProducts);
+}
+
+
+});*/
+
+
+const categoryBtn = document.getElementById("categoryBtn");
+const priceBtn = document.getElementById("priceBtn");
+const titleBtn = document.getElementById("titleBtn");
+
+
+const categoryPanel = document.getElementById("categoryPanel");
+const pricePanel = document.getElementById("pricePanel");
+const titlePanel = document.getElementById("titlePanel");
+
+function hidePanels(){
+      categoryPanel.classList.remove("shown");
+    pricePanel.classList.remove("shown");
+    titlePanel.classList.remove("shown");
+
+   categoryPanel.classList.add("hidden");
+   pricePanel.classList.add("hidden");
+   titlePanel.classList.add("hidden");
+
+    categoryBtn.textContent = "📂 Categories ▼" ; 
+     priceBtn.textContent = "💰 Prices ▼" ; 
+      titleBtn.textContent = "🔤 Title ▼" ; 
+}
+hidePanels();
+categoryBtn.addEventListener("click", () => {
+      console.log("clicked");
+    const wasHidden = categoryPanel.classList.contains("hidden");
+    hidePanels();
+     if(wasHidden){
+        categoryPanel.classList.remove("hidden");
+        categoryPanel.classList.add("shown");
+        categoryBtn.textContent = "📂 Categories ▲" ; 
+     }
+    
+});

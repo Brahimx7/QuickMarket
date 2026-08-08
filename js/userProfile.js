@@ -19,7 +19,7 @@ if (!user) {
      
      const joinedDate = new Date(user.created_at);
 
-profilejoined.textContent = joinedDate.toLocaleString();
+     profilejoined.textContent = joinedDate.toLocaleString();
 
 
 const { data : products , error : productsError} 

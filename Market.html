@@ -31,33 +31,83 @@
 
     </div>
 
-    <section class="categories">
 
-        <h2>Categories</h2>
+       <div class="filters">
 
-        <div class="category-list">
+    <h2>Filters</h2>
 
-            <button class="category-btn active">All</button>
+    <div class="filter-buttons">
 
-            <button class="category-btn">Electronics</button>
+        <button id="categoryBtn">
+           📂 Categories ▼
+        </button>
 
-            <button class="category-btn">Fashion</button>
+        <button id="priceBtn">
+           💰 Price ▼
+        </button>
 
-            <button class="category-btn">Gaming</button>
+        <button id="titleBtn">
+            🔤 Title ▼
+        </button>
 
-            <button class="category-btn">Vehicles</button>
+        <button id="resetBtn">
+            Reset
+        </button>
 
-            <button class="category-btn">Furniture</button>
+    </div>
 
-            <button class="category-btn">Home</button>
+  </div>
 
-            <button class="category-btn">Books</button>
+  <div class="filter-panels">
 
-            <button class="category-btn">Sports</button>
+                 <div id="categoryPanel" class="hidden">
+
+                                  
+       
+                                  <button class="category-btn active">All</button>
+
+                                      <button class="category-btn">Electronics</button>
+
+                                      <button class="category-btn">Fashion</button>
+
+                                      <button class="category-btn">Gaming</button>
+
+                                      <button class="category-btn">Vehicles</button>
+
+                                      <button class="category-btn">Furniture</button>
+
+                                      <button class="category-btn">Home</button>
+
+                                      <button class="category-btn">Books</button>
+       
+                                    <button class="category-btn">Sports</button>
+
+               </div>
+
+                <div id="pricePanel"  class="hidden">
+
+                   <h3>Price</h3>
+
+                    <button>Low → High</button>
+                   <button>High → Low</button>
+
+                      <input type="number" placeholder="Minimum Price">
+                        <input type="number" placeholder="Maximum Price">
+
+               </div>
+
+             <div id="titlePanel"  class="hidden">
+
+                     <h3>Title</h3>
+
+                      <button>A → Z</button>
+                       <button>Z → A</button>
+
+                    <input type="text" maxlength="1" placeholder="Letter">
+
+             </div>
 
         </div>
-
-    </section>
 
     <section>
         <h2 id="prod">Products</h2>
@@ -75,4 +125,6 @@
   <script type="module" src="./js/Market.js"></script>
 
 </body>
-</html>
+
+
+

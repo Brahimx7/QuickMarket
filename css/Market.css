@@ -146,7 +146,53 @@ body{
 }
 
 
+.filters{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
 
+.filters h2{
+    font-size: 28px;
+    font-weight: bold;
+     background: linear-gradient(to right , hsl(254, 74%, 39%),hsl(0, 0%, 0%));
+     -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-right: 8px;
+}
+
+.filter-buttons button{
+    width: 170px;
+    padding: 10px 14px;
+    border: 2px solid hsl(244, 88%, 16%);
+    border-radius: 10px;
+    background: linear-gradient(to right , hsl(244, 88%, 16%),hsl(244, 88%, 30%));
+    color: #ffdede;
+    font-size: 15px;
+    cursor: pointer;
+    outline: none;
+    transition: 0.3s ease;
+}
+
+.filter-buttons button:hover{
+    border-color: hsl(244, 88%, 26%);
+}
+
+.sort-container select:focus{
+    border-color: hsl(244, 88%, 36%);
+    box-shadow: 0 0 0 4px rgba(46, 34, 143, .15);
+}
+
+.hidden {
+    display: none;
+}
+
+.shown {
+    display : block ; 
+}
 @media (max-width: 768px){
 
     .market-header h1{
