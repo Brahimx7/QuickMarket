@@ -11,37 +11,82 @@
 <body>
     <div id="nav"></div>
 
- <div class="profile-container">
+<div class="profile-container">
 
-    <div class="profile-header">
+                <div class="profile-menu">
 
-        <div class="avatar">
-            👤
-        </div>
+                       <button id="aboutBtn" >👤 About Me</button>
 
-        <div class="profile-info">
-            <h1 id="profileUsername">Ahmed Chakir</h1>
+                      <button id="favoritesBtn">❤️ Favorites</button>
 
-            <div class="info-box">
-                <h3>Email</h3>
-                <p id="profilemail">ahmed@gmail.com</p>
-            </div>
+                      <button id="messagesBtn">💬 Messages</button>
 
-            <div class="info-box">
-                <h3>Products Posted</h3>
-                <p><span id="profileproducts">0</span></p>
-                <h3>Date Joined :</h3>
-                <p><span id="profilejoined">0</span></p>
-            </div>
+                 </div>
 
-        </div>
+    <div id="aboutSection">
 
+                  <div class="profile-header">
+
+                      <div class="avatar">
+                            👤
+                       </div>
+
+                        <div class="profile-info">
+            
+                                <h1 id="profileUsername">Ahmed Chakir</h1>
+ 
+                                <div class="info-box">
+                                    <h3>Email</h3>
+                                   <p id="profilemail">ahmed@gmail.com</p>
+                                </div>
+
+                                 <div class="info-box">
+                                     <h3>Products Posted</h3>
+                                     <p><span id="profileproducts">0</span></p>
+                                     <h3>Date Joined :</h3>
+                                     <p><span id="profilejoined">0</span></p>
+                                 </div>
+
+                          </div>
+
+                      </div>
+
+                 <h2>Your Products</h2>
+
+              <div id="userproducts" class="userproducts"></div>
+         
     </div>
+         
+         <div id="favoritesSection" class="hidden">
 
-    <h2>Your Products</h2>
 
-    <div id="userproducts" class="userproducts"></div>
+         </div>
 
+       
+              <div id="messagesSection" class="hidden">
+                 
+                        <div id="conversationList" class="usersnames"></div>
+
+                    <div id="chatArea" class="hidden chatphone">
+
+                              <div id="messagesContainer"></div>
+
+                        <div class="typesendmessages">
+                             <input
+                                 type="text"
+                                 id="messageInput"
+                                     placeholder="Type your message..."
+                                            class="hidden">
+
+                             <button id="sendBtn" class="hidden">Send</button>
+                         </div>
+
+                    </div>
+
+              </div>
+            
+            
+              
 </div>
 
 

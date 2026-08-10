@@ -156,7 +156,7 @@ buttons.forEach(button => {
 const selectedCategory = params.get("category");
 
 if (selectedCategory) {
-
+   
     buttons.forEach(button => {
         if (button.textContent.trim() === selectedCategory) {
             button.classList.add("active");
@@ -235,7 +235,7 @@ function hidePanels(){
 }
 hidePanels();
 categoryBtn.addEventListener("click", () => {
-    resetPriceFilter();
+    resetPriceFilter();resetletter();
       console.log("clicked");
     const wasHiddencategories = categoryPanel.classList.contains("hidden");
     

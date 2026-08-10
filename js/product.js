@@ -17,6 +17,10 @@ const { data: product , error : productError } = await supabase
     .eq("id", id)
     .single();
 
+    const { data : products , error : productsError} = await supabase.from("products").select("*");
+    if(productsError){
+        window.alert(productsError);
+    }
 if (productError) {
     console.error(productError);
 } else {
@@ -33,3 +37,52 @@ if (productError) {
 
 console.log("ID from URL:", id);
 console.log("Product:", product);
+
+const contactBtn = document.getElementById("contactBtn");
+
+contactBtn.addEventListener("click", async () => {
+const {
+    data: { user }
+} = await supabase.auth.getUser();
+
+if (user.id === product.user_id) {
+    alert("You can't contact yourself.");
+    return;
+}
+
+const { data: conversation, error: conversationError } = await supabase
+    .from("conversations")
+    .select("*")
+    .eq("buyer_id", user.id)
+    .eq("seller_id", product.user_id)
+    .eq("product_id", product.id)
+    .maybeSingle();
+
+if (conversationError) {
+    console.error(conversationError);
+    return;
+}
+if (conversation) {
+    window.location.href = `userProfile.html?tab=messages&conversation=${conversation.id}`;
+    return;
+}
+
+const { data: newConversation, error: newConversationError } = await supabase
+    .from("conversations")
+    .insert({
+        buyer_id: user.id,
+        seller_id: product.user_id,
+        product_id: product.id
+    }).select().single();
+
+ if (newConversationError) {
+    console.error(newConversationError);
+    return;
+   }  
+    
+    console.log("button clicked");
+    window.location.href = `userProfile.html?tab=messages&conversation=${conversation.id}`;
+});
+
+
+

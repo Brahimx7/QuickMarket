@@ -8,7 +8,7 @@
 }
 
 .logo h2{
-    color: #c2cde4;
+    color: #e2e7f2;
      cursor: pointer;
 }
 
@@ -23,9 +23,12 @@
     font-weight: bold;
     padding: 10px 20px;
     border-radius: 8px;
+    transition: all 0.3s ease;
 }
 .connect a:hover{
    background: hwb(221 15% 35%);
+   transform: translateY(-2px);
+   box-shadow: 0 8px 20px rgba(112, 127, 161, 0.3);
 }
 
 .active{

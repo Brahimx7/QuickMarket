@@ -31,7 +31,7 @@ body{
 
 
 .intr button{
-       background-color: #2563EB;
+       background: linear-gradient(to right , hsl(244, 85%, 32%),hsl(244, 88%, 16%));
     color: white;
 
     padding: 12px 28px;
@@ -115,7 +115,7 @@ body{
 }
 
 .sell button{
-       background-color: #2563EB;
+       background: linear-gradient(to right , hsl(244, 85%, 32%),hsl(244, 88%, 16%));
     color: white;
 
     padding: 12px 28px;

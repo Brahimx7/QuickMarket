@@ -75,7 +75,7 @@ if (postBtn) {
         console.log("Button clicked!");
         if (!user) {
         alert("This page requires an account. Please sign in first.");
-        window.location.href = "Signin.html";
+        window.location.href = "Login.html";
         return;
        }
         window.location.href = "postproduct.html";
