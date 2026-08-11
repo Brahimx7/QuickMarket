@@ -149,9 +149,51 @@ favoritesBtn.addEventListener("click", () => {
       let currentConversation = null;
 
      
+
+
+
+
+            supabase
+            .channel("messages")
+            .on(
+                "postgres_changes",
+          {
+              event: "INSERT",
+              schema: "public",
+              table: "messages"
+          },
+          payload => {
+
+              if (!currentConversation) return;
+
+              if (payload.new.conversation_id === currentConversation.id) {
+                  addMessage(payload.new);
+                                      }
+
+          }
+      ).subscribe();
+
+
+
+
+
       
 
+function addMessage(message) {
 
+    const p = document.createElement("p");
+
+    p.textContent = message.message;
+
+    if (message.sender_id === user.id) {
+        p.classList.add("my-message");
+    } else {
+        p.classList.add("other-message");
+    }
+
+    messagesContainer.appendChild(p);
+    
+}
 
 
       async function openMessages() {
@@ -248,18 +290,9 @@ favoritesBtn.addEventListener("click", () => {
 
                                   messages.forEach(message => {
 
-                                       const p = document.createElement("p");
-
-                                       p.textContent = message.message;
-
-                                       if (message.sender_id === user.id) {
-                                           p.classList.add("my-message");
-                                       } else {
-                                           p.classList.add("other-message");
-                                       }
-
-                                       messagesContainer.appendChild(p);
+                                        addMessage(message);
                                                                   });
+                                                                  messagesContainer.scrollTop = messagesContainer.scrollHeight;
                                                                   
 
                    
@@ -273,8 +306,9 @@ favoritesBtn.addEventListener("click", () => {
                  
                   
                       if (conversation.id == conversationId) {
-    div.click();
-}
+                        div.click();
+                        }
+                        
              });
 
 
@@ -310,6 +344,8 @@ console.log(conversationList);
 }
 messageInput.value = "";
                                                          });
+
+                                                         
 
   
 }
