@@ -258,6 +258,7 @@ favoritesBtn.addEventListener("click", () => {
 
                                        messagesContainer.appendChild(p);
                                                                   });
+                                                                  messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
                    
 
