@@ -156,6 +156,12 @@ favoritesBtn.addEventListener("click", () => {
 
  messagesBtn.addEventListener("click", async () => {
                       console.log("clicked");
+                         if (messagesSection.classList.contains("shown")) {
+                            
+                             chatArea.classList.remove("chatphone");
+                              chatArea.classList.add("hidden");
+                                return;
+                             }
                       messagesSection.classList.add("section");
                       conversationList.classList.remove("hidden");
                       chatArea.classList.remove("chatphone");
@@ -172,6 +178,8 @@ favoritesBtn.addEventListener("click", () => {
                         messagesSection.classList.remove("hidden");
                         messagesSection.classList.add("shown");
                                             }
+
+                                            
 
                     // Clear only the conversation list
                             conversationList.innerHTML = "";
@@ -215,6 +223,7 @@ favoritesBtn.addEventListener("click", () => {
                         
                    div.addEventListener("click", async () => {
                      chatArea.classList.add("chatphone");
+                     chatArea.classList.remove("hidden");
                      document.querySelectorAll(".conversation").forEach(conversation => {
                         conversation.classList.remove("active");
                            });
@@ -270,6 +279,7 @@ favoritesBtn.addEventListener("click", () => {
     
 
 });
+
 
 console.log(sendBtn);
 console.log(messageInput);
