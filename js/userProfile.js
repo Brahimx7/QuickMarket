@@ -157,7 +157,6 @@ favoritesBtn.addEventListener("click", () => {
  messagesBtn.addEventListener("click", async () => {
                       console.log("clicked");
                          if (messagesSection.classList.contains("shown")) {
-                            
                              chatArea.classList.remove("chatphone");
                               chatArea.classList.add("hidden");
                                 return;
@@ -310,6 +309,7 @@ console.log(conversationList);
     console.error(sendError);
     return;
 }
+messageInput.value = "";
                                                          });
 
                                                          
