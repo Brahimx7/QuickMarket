@@ -154,7 +154,9 @@ favoritesBtn.addEventListener("click", () => {
 
 
 
- messagesBtn.addEventListener("click", async () => {
+      async function openMessages() {
+
+    
                       console.log("clicked");
                          if (messagesSection.classList.contains("shown")) {
                              chatArea.classList.remove("chatphone");
@@ -258,7 +260,7 @@ favoritesBtn.addEventListener("click", () => {
 
                                        messagesContainer.appendChild(p);
                                                                   });
-                                                                  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                                                                  
 
                    
 
@@ -268,17 +270,13 @@ favoritesBtn.addEventListener("click", () => {
 
 
                       conversationList.appendChild(div);
-
+                 
                   
-                      
+                      if (conversation.id == conversationId) {
+    div.click();
+}
              });
 
-             
-
-
-    
-
-});
 
 
 console.log(sendBtn);
@@ -313,4 +311,13 @@ console.log(conversationList);
 messageInput.value = "";
                                                          });
 
+  
+}
+
+
+messagesBtn.addEventListener("click", openMessages);
+
+                                          if (conversationId) {
+                                           await openMessages();
+                                        }
                                                          

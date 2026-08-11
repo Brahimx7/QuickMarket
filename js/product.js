@@ -40,6 +40,10 @@ console.log("Product:", product);
 
 const contactBtn = document.getElementById("contactBtn");
 
+
+const aboutSection = document.getElementById("aboutSection");
+const messagesSection = document.getElementById("messagesSection");
+
 contactBtn.addEventListener("click", async () => {
 const {
     data: { user }
@@ -81,7 +85,10 @@ const { data: newConversation, error: newConversationError } = await supabase
    }  
     
     console.log("button clicked");
-    window.location.href = `userProfile.html?tab=messages&conversation=${conversation.id}`;
+    aboutSection.classList.remove("shown");
+    aboutSection.classList.add("hidden");
+
+    window.location.href = `userProfile.html?tab=messages&conversation=${newConversation.id}`;
 });
 
 
