@@ -56,14 +56,127 @@ if (products.length === 0) {
                     View Details
                 </button>
 
+                  <button
+                  class="delete-btn"
+                          data-id="${product.id}"
+                             data-title="${product.title}">
+                             🗑 Delete
+                      </button>
+
             </div>
         `;
 
     });
 
     productdiv.innerHTML = html;
+   const deleteButtons = document.querySelectorAll(".delete-btn");
+    const deleteModal = document.getElementById("deleteModal");
+   
+    const cancelDelete = document.getElementById("cancelDelete");
+    const confirmDelete = document.getElementById("confirmDelete");
 
+    let productToDelete = null;
   
+
+const deleteTitle = document.getElementById("deleteTitle");
+
+deleteButtons.forEach(button => {
+    button.addEventListener("click", async () => {
+
+        const currentProductID = button.dataset.id;
+
+        const { data: product, error: productError } = await supabase
+            .from("products")
+            .select("title")
+            .eq("id", currentProductID)
+            .single();
+
+        if (productError) {
+            console.error(productError);
+            return;
+        }
+
+        deleteTitle.textContent = `Delete "${product.title}"?`;
+
+        productToDelete = currentProductID;
+
+        console.log("Deleting product:", productToDelete);
+
+        deleteModal.classList.remove("hidden");
+    });
+});
+
+        cancelDelete.addEventListener("click", ()=>{
+              deleteModal.classList.add("hidden");
+              return ;
+           });
+
+
+
+           confirmDelete.addEventListener("click", async () => {
+
+    console.log("Deleting product:", productToDelete);
+
+    // Get conversations linked to this product
+    const { data: conversations, error: conversationsError } = await supabase
+        .from("conversations")
+        .select("id")
+        .eq("product_id", productToDelete);
+
+    if (conversationsError) {
+        console.error(conversationsError);
+        alert(conversationsError.message);
+        return;
+    }
+
+    // Delete all messages in each conversation
+    for (const conversation of conversations) {
+
+        const { error: messagesDeleteError } = await supabase
+            .from("messages")
+            .delete()
+            .eq("conversation_id", conversation.id);
+              console.log("Deleting messages for:", conversation.id);
+              console.log("Message delete error:", messagesDeleteError);
+
+
+        if (messagesDeleteError) {
+            alert(messagesDeleteError.message);
+            return;
+        }
+    }
+
+    // Delete conversations
+    const { error: conversationsDeleteError } = await supabase
+        .from("conversations")
+        .delete()
+        .eq("product_id", productToDelete);
+
+    if (conversationsDeleteError) {
+        console.error(conversationsDeleteError);
+        alert(conversationsDeleteError.message);
+        return;
+    }
+
+    // Delete product
+    const { error: productDeleteError } = await supabase
+        .from("products")
+        .delete()
+        .eq("id", productToDelete);
+
+    if (productDeleteError) {
+        console.error(productDeleteError);
+        alert(productDeleteError.message);
+        return;
+    }
+
+    // Close modal and refresh
+    deleteModal.classList.add("hidden");
+    productToDelete = null;
+    window.location.reload();
+});
+    
+
     const detailsButtons = document.querySelectorAll(".details-btn");
 
     detailsButtons.forEach(button => {
@@ -347,7 +460,7 @@ messageInput.value = "";
 
                                                          
 
-  
+  console.log("Send button clicked");
 }
 
 
