@@ -235,7 +235,9 @@ aboutBtn.addEventListener("click", () => {
     
 });
 
-favoritesBtn.addEventListener("click", () => {
+const savedProductsContainer = document.getElementById("savedproducts");
+console.log(savedproducts);
+favoritesBtn.addEventListener("click", async () => {
     conversationList.classList.add("hidden");
    chatArea.classList.remove("chatphone");
    chatArea.classList.add("hidden");
@@ -251,8 +253,91 @@ favoritesBtn.addEventListener("click", () => {
         favoritesSection.classList.add("shown");
        
      }
+
+     const { data : savedproducts , error : savedError} = await supabase.from("savedproducts").select("*").eq("user_id",user.id);
+     if(savedError){
+        console.log(savedError);
+        return;
+     }
+     const productIds = savedproducts.map(item => item.product_id);
+     if (productIds.length === 0) {
+    favoritesSection.innerHTML = "<p>You haven't saved any products yet.</p>";
+    return;
+}
+
+      const { data : productssaved , error : productssavedError} = await supabase.from("products").select("*").in("id",productIds);
+     if(productssavedError){
+        console.log(productssavedError);
+        return ;
+     }
+     console.log(productssaved );
+      let html = "";
+      productssaved.forEach(productsaved => {
+        
+        html += `
+            <div class="product-card">
+
+                <img src="${productsaved.image}" alt="${productsaved.title}">
+
+                <h3>${productsaved.title}</h3>
+
+                <p>$${productsaved.price}</p>
+
+                <p>${productsaved.location}</p>
+
+                <button class="details-btn" data-id="${productsaved.id}">
+                    View Details
+                </button>
+
+                  <button
+                  class="delete-btn"
+                          data-id="${productsaved.id}"
+                             data-title="${productsaved.title}">
+                             ❤️ Unsave Product
+                      </button>
+
+            </div>
+        `;
+
+    });
+
+    
+savedProductsContainer.innerHTML = html;
+
+const unsaveproducts = document.querySelectorAll(".delete-btn");
+
+unsaveproducts.forEach(product => {
+    product.addEventListener("click", async () =>{
+        const unsaveproductID = product.dataset.id;
+       const { error : unsaveproductError } = await supabase.from("savedproducts").delete().eq("user_id",user.id).eq("product_id",unsaveproductID);
+       if(unsaveproductError){
+        console.log(unsaveproductError);
+        return
+       }
+        window.location.reload();
+    });
+   
+});
+
+console.log("Favorites clicked");
+
+   const detailsButtons = document.querySelectorAll(".details-btn");
+
+    detailsButtons.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            const id = button.dataset.id;
+
+            window.location.href = `product.html?id=${id}`;
+
+        });
+
+    });
     
 });
+
+
 
 
       const conversationList = document.getElementById("conversationList");

@@ -68,16 +68,11 @@ body{
     gap:20px;
 }
 
-.products-grid{
-
-    display: grid;
-
-    grid-template-columns: repeat(4, 250px);
-
-    gap: 30px;
-    
-    
-
+#savedproducts{
+    margin-top:40px;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+    gap:20px;
 }
 
 .product-card{
@@ -421,15 +416,20 @@ body{
         grid-template-columns: repeat(2, 1fr);
         gap: 15px;
     }
+    #savedproducts{
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
 
     .product-card img{
         height: 160px;
     }
 
 
-    .product-card h3,p{
-        font-size: 16px;
-    }
+    .product-card h3,
+.product-card p{
+    font-size:16px;
+}
    
     .profile-menu{
       display: grid;

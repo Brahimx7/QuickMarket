@@ -40,11 +40,11 @@ console.log("Product:", product);
 
 const contactBtn = document.getElementById("contactBtn");
 
-
-contactBtn.addEventListener("click", async () => {
 const {
     data: { user }
 } = await supabase.auth.getUser();
+contactBtn.addEventListener("click", async () => {
+
 
 if (user.id === product.user_id) {
     alert("You can't contact yourself.");
@@ -83,6 +83,71 @@ const { data: newConversation, error: newConversationError } = await supabase
     
     console.log("button clicked");
     window.location.href = `userProfile.html?tab=messages&conversation=${newConversation.id}`;
+});
+
+const saveBtn = document.getElementById("saveBtn");
+
+
+async function isproductSaved(){
+ const { data, error } = await supabase
+  .from("savedproducts")
+  .select("*")
+  .eq("user_id", user.id)
+  .eq("product_id", id)
+  .maybeSingle();
+   
+   if (error) {
+    console.log(error);
+    return;
+}
+if(data){
+    return true;
+}
+else{
+    return false;
+}
+}
+  
+const answer = await isproductSaved();
+if(answer){
+   
+    saveBtn.textContent = "❤️ Unsave Product";
+}
+else{
+    saveBtn.textContent = "🤍 Save product";
+}
+saveBtn.addEventListener("click", async ()=>{
+
+const saved = await isproductSaved(); 
+
+  if(saved){
+
+    const { error : deletesavedproductError} = await supabase.from("savedproducts")
+    .delete().eq("user_id",user.id).eq("product_id",id); 
+    if(deletesavedproductError){
+        console.log(deletesavedproductError);
+        return;
+    }
+       saveBtn.textContent = "🤍 Save product";
+  }
+  else{
+
+   const { error : savedError} = await supabase.from("savedproducts").insert (
+        {
+            user_id : user.id,
+            product_id : id
+        }
+    );
+
+    if (savedError) {
+    console.log(savedError);
+    return;
+       }
+      saveBtn.textContent = "❤️ Unsave Product";
+
+  }
+
+    
 });
 
 
