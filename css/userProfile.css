@@ -135,17 +135,24 @@ body{
 }
 
 
-.product-card button{
+.buttons{
+    display: flex;
+    gap: 10px;
+}
 
-    margin: auto 20px 20px;
+.buttons button{
 
+  
+    margin: auto;
+    margin-bottom : 10px;
+    padding: 10px;
     height: 45px;
-
+    width:100px;
     border: none;
-
+   font-size: 11px;
     border-radius: 12px;
 
-    background: #3f6cff;
+    background:linear-gradient(to right ,#1f2843, #1a2d65); 
 
     color: white;
 
@@ -154,12 +161,48 @@ body{
     cursor: pointer;
 
     transition: .3s;
-
+ 
 }
 
-.product-card button:hover{
+#delete-btn{
+    
+    margin: auto;
+     margin-bottom: 10px;
+    text-align: center;
+    padding: 10px;
+    height: 45px;
+    width:100px;
+    border: none;
+   font-size: 11px;
+    border-radius: 12px;
 
-    background: #5d82ff;
+    background:linear-gradient(to right ,#1f2843, #1a2d65); 
+
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: .3s;
+   
+}
+#delete-btn:hover{
+
+    background:#3b549d;
+     transform: translateY(-8px);
+
+    box-shadow: 0 12px 30px rgba(63,108,255,.25);
+
+
+}
+.buttons button:hover{
+
+    background:#3b549d;
+     transform: translateY(-8px);
+
+    box-shadow: 0 12px 30px rgba(63,108,255,.25);
+
 
 }
 

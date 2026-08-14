@@ -4,24 +4,55 @@ const postBtn = document.getElementById("postBtn");
 //const currentuser = localStorage.getItem("currentUser");
 
 
+const params = new URLSearchParams(window.location.search);
+const editProductId = params.get("editproduct");
 
+
+ let currentImage = null;
+
+   if(editProductId){
+  const edit = document.getElementById("post");
+  edit.textContent="Edit Your Product" ;
+
+  const { data : productInfo , error : productInfoError} = await supabase.from("products")
+  .select("*").eq("id",editProductId).single();
+  if(productInfoError){
+    console.log(productInfoError);
+  }
+ const title = document.getElementById('title');
+ const price = document.getElementById('price');
+ const category = document.getElementById('category');
+ const condition = document.getElementById('condition');
+ const location = document.getElementById('location');
+ const seller = document.getElementById('seller');
+ const description = document.getElementById('description');
+ const phone = document.getElementById('phone');
+ const imagelabel =  document.getElementById('imagelabel'); 
+ const button = document.getElementById('submit'); 
+
+
+   title.value=productInfo.title;
+   price.value=productInfo.price;
+   category.value=productInfo.category;
+   condition.value=productInfo.condition;
+   location.value=productInfo.location;
+   seller.value=productInfo.seller;
+   phone.value=productInfo.phone;
+   currentImage = productInfo.image;
+   description.value=productInfo.description;
+   imagelabel.textContent="Select a new image (optional)";
+  button.textContent = "Save changes";
+
+}
 
 
 const form = document.getElementById('productForm');
 
-                      form.addEventListener('submit', async (e) => {
-        /*                  const {
-                        data: { user },
-                      } = await supabase.auth.getUser();
-                      if (!user) {
-                        alert("Please log in first.");
-                        return;
-                      }*/
+
+  form.addEventListener('submit', async (e) => {
+
+
                        e.preventDefault(); 
-                               /*   if(!currentuser){
-                           window.alert("you have to sign up");
-                        return;
-                              }*/
                              const {
                                data: { user },
                              } = await supabase.auth.getUser();
@@ -32,8 +63,9 @@ const form = document.getElementById('productForm');
                                return;
                                         }
                         console.log('Form submitted');
+                           let imageUrl;
 
-                        const title = document.getElementById('title').value;
+                          const title = document.getElementById('title').value;
                         const price = document.getElementById('price').value;
                         const category = document.getElementById('category').value;
                         const condition = document.getElementById('condition').value;
@@ -41,8 +73,71 @@ const form = document.getElementById('productForm');
                         const seller = document.getElementById('seller').value;
                         const description = document.getElementById('description').value;
                         const phone = document.getElementById('phone').value;
-                        
                         const imageFile = document.getElementById('image').files[0];
+ 
+
+  if(editProductId){
+    if(!imageFile){
+       imageUrl = currentImage ;
+    }
+    else{
+      const fileName = `${Date.now()}-${imageFile.name}`;
+          const { error: uploadError } = await supabase.storage
+                   .from("product-images")
+                   .upload(fileName, imageFile);
+
+              if (uploadError) {
+               console.error(uploadError);
+              alert(uploadError.message);
+             return;
+                   }
+                                 
+            const { data: imageData } = supabase.storage
+          .from("product-images")
+          .getPublicUrl(fileName);
+
+           imageUrl = imageData.publicUrl;
+    }
+    console.log(editProductId);
+console.log(user.id);
+
+
+  const { data, error: updateError } = await supabase
+  .from("products")
+  .update({
+    title,
+    price: Number(price),
+    category,
+    condition,
+    location,
+    seller,
+    description,
+    phone,
+    image: imageUrl,
+  })
+  .eq("id", editProductId)
+  .select();
+  console.log("editProductId:", editProductId);
+console.log("user.id:", user.id);
+console.log("currentImage:", currentImage);
+console.log("imageUrl:", imageUrl);
+  console.log(data);
+
+    if(updateError){
+      console.log(updateError);
+      return;
+    }
+    console.log("Product updated successfully!");
+    console.log(editProductId);
+console.log(user.id);
+console.log(data);
+console.log(updateError);
+  }
+
+else{
+    
+                        
+                      
                           if (!imageFile) {
                             alert("Please select an image.");
                             return;
@@ -64,7 +159,7 @@ const form = document.getElementById('productForm');
                           .from("product-images")
                           .getPublicUrl(fileName);
 
-                        const imageUrl = imageData.publicUrl;
+                             imageUrl = imageData.publicUrl;
                      
                                 const { error: productError } = await supabase
                                  .from("products")
@@ -117,8 +212,12 @@ const form = document.getElementById('productForm');
 
           localStorage.setItem("products", JSON.stringify(userProducts));*/
 
+
+}
+                  
                            window.location.href = "Market.html";
 });
+
 
 
 

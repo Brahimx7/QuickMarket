@@ -52,23 +52,37 @@ if (products.length === 0) {
 
                 <p>${product.location}</p>
 
+                <div class="buttons">
                 <button class="details-btn" data-id="${product.id}">
                     View Details
                 </button>
-
+                <button class="edit-btn" data-id="${product.id}">✏️ Edit </button>
+                </div>
                   <button
                   class="delete-btn"
                           data-id="${product.id}"
-                             data-title="${product.title}">
+                             data-title="${product.title}" id="delete-btn">
                              🗑 Delete
                       </button>
-
+                      
+               
             </div>
         `;
 
     });
+     productdiv.innerHTML = html;
 
-    productdiv.innerHTML = html;
+    const editButtons = document.querySelectorAll(".edit-btn");
+
+    editButtons.forEach(editButton => {
+        editButton.addEventListener("click", ()=>{
+            console.log("edit button clicked");
+            const editproductID = editButton.dataset.id;
+            window.location.href=(`postproduct.html?editproduct=${editproductID}`);
+        });
+    });
+
+  
    const deleteButtons = document.querySelectorAll(".delete-btn");
     const deleteModal = document.getElementById("deleteModal");
    
@@ -284,7 +298,8 @@ favoritesBtn.addEventListener("click", async () => {
                 <p>$${productsaved.price}</p>
 
                 <p>${productsaved.location}</p>
-
+              
+            <div class="buttons">
                 <button class="details-btn" data-id="${productsaved.id}">
                     View Details
                 </button>
@@ -295,7 +310,7 @@ favoritesBtn.addEventListener("click", async () => {
                              data-title="${productsaved.title}">
                              ❤️ Unsave Product
                       </button>
-
+              </div>
             </div>
         `;
 
@@ -334,7 +349,7 @@ console.log("Favorites clicked");
         });
 
     });
-    
+
 });
 
 
