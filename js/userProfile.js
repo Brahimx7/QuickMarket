@@ -366,27 +366,39 @@ console.log("Favorites clicked");
 
 
 
-            supabase
-            .channel("messages")
-            .on(
-                "postgres_changes",
-          {
-              event: "INSERT",
-              schema: "public",
-              table: "messages"
-          },
-          payload => {
+  supabase
+    .channel("messages")
+    .on(
+        "postgres_changes",
+        {
+            event: "INSERT",
+            schema: "public",
+            table: "messages"
+        },
+        payload => {
 
-              if (!currentConversation) return;
+            const conversationId = payload.new.conversation_id;
 
-              if (payload.new.conversation_id === currentConversation.id) {
-                  addMessage(payload.new);
-                                      }
+            if (
+                currentConversation &&
+                conversationId === currentConversation.id
+            ) {
+                addMessage(payload.new);
+                return;
+            }
 
-          }
-      ).subscribe();
+            const div = document.querySelector(
+                `[data-conversation-id="${conversationId}"]`
+            );
 
+            if (div) {
+                updateUnreadBadge(conversationId, div);
+            }
 
+            updateTotalUnread();
+        }
+    )
+    .subscribe();
 
 
 
@@ -407,6 +419,97 @@ function addMessage(message) {
     messagesContainer.appendChild(p);
     
 }
+
+
+
+
+
+
+async function updateUnreadBadge(conversationId, div) {
+    const { data: unreadMessages, error } = await supabase
+        .from("messages")
+        .select("id")
+        .eq("conversation_id", conversationId)
+        .eq("is_read", false)
+        .neq("sender_id", user.id);
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    // Remove existing badge
+    const oldBadge = div.querySelector(".unread-badge");
+
+    if (oldBadge) {
+        oldBadge.remove();
+    }
+
+    // Add new badge if there are unread messages
+    if (unreadMessages.length > 0) {
+        const badge = document.createElement("span");
+
+        badge.textContent = `+${unreadMessages.length}`;
+        badge.classList.add("unread-badge");
+
+        div.appendChild(badge);
+    }
+}
+
+
+async function updateTotalUnread() {
+
+    // Get conversations belonging to the current user
+    const { data: conversations, error: conversationsError } = await supabase
+        .from("conversations")
+        .select("id")
+        .or(`buyer_id.eq.${user.id},seller_id.eq.${user.id}`);
+
+    if (conversationsError) {
+        console.error(conversationsError);
+        return;
+    }
+
+    if (conversations.length === 0) {
+        return;
+    }
+
+    const conversationIds = conversations.map(conversation => conversation.id);
+
+    // Get unread messages from those conversations
+    const { data: unreadMessages, error: unreadError } = await supabase
+        .from("messages")
+        .select("id")
+        .in("conversation_id", conversationIds)
+        .eq("is_read", false)
+        .neq("sender_id", user.id);
+
+    if (unreadError) {
+        console.error(unreadError);
+        return;
+    }
+
+    // Remove old badge
+    const oldBadge = messagesBtn.querySelector(".total-unread-badge");
+
+    if (oldBadge) {
+        oldBadge.remove();
+    }
+
+    // Add new badge
+    if (unreadMessages.length > 0) {
+
+        const badge = document.createElement("span");
+
+        badge.textContent = `+${unreadMessages.length}`;
+        badge.classList.add("total-unread-badge");
+
+        messagesBtn.appendChild(badge);
+    }
+}
+
+await updateTotalUnread();
+
 
 
       async function openMessages() {
@@ -456,6 +559,20 @@ function addMessage(message) {
 
                         const div = document.createElement("div");
                           div.classList.add("conversation");
+                          div.dataset.conversationId = conversation.id;
+
+                          const { data: unreadMessages, error: unreadError } = await supabase
+                              .from("messages")
+                              .select("id")
+                              .eq("conversation_id", conversation.id)
+                              .eq("is_read", false)
+    .neq("sender_id", user.id);
+
+if (unreadError) {
+    console.error(unreadError);
+    return;
+}
+
                         let otherUserId;
 
                            if (conversation.buyer_id === user.id) {
@@ -475,18 +592,43 @@ function addMessage(message) {
                                     return;
                                         }
 
-                        div.textContent = otherUser.username;
+                      div.textContent = otherUser.username;
+
+
+                      if (unreadMessages.length > 0) {
+   
+                       const badge = document.createElement("span");
+                       badge.textContent = `+${unreadMessages.length}`;
+                           badge.classList.add("unread-badge");
+                           div.appendChild(badge);
+                                              }
                         
                    div.addEventListener("click", async () => {
-                     chatArea.classList.add("chatphone");
+                    currentConversation = conversation;                     chatArea.classList.add("chatphone");
                      chatArea.classList.remove("hidden");
+                     const { error: readError } = await supabase
+                        .from("messages")
+                        .update({ is_read: true })
+                        .eq("conversation_id", currentConversation.id)
+                        .eq("is_read", false)
+                        .neq("sender_id", user.id);
+
+                    if (readError) {
+                        console.error(readError);
+                    }
+                    await updateTotalUnread();
                      document.querySelectorAll(".conversation").forEach(conversation => {
                         conversation.classList.remove("active");
                            });
                       div.classList.add("active");
+                      const badge = div.querySelector(".unread-badge");
+
+                   if (badge) {
+                      badge.remove();
+                          }
                          sendBtn.classList.add("shown");
                          messageInput.classList.add("shown");
-                                    currentConversation = conversation;
+                                    
 
                                     console.log("Conversation clicked");
 
@@ -505,7 +647,7 @@ function addMessage(message) {
 
                                         addMessage(message);
                                                                   });
-                                                                  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                              messagesContainer.scrollTop = messagesContainer.scrollHeight;
                                                                   
 
                    
