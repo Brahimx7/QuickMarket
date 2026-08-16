@@ -1,74 +1,166 @@
+:root {
+    --bg: hsl(244, 88%, 7%);
+    --surface: hsl(244, 70%, 10%);
+    --surface-light: hsl(244, 65%, 14%);
+    --card: hsl(244, 65%, 18%);
+
+    --primary: #4f7cff;
+    --primary-dark: #2920a8;
+    --primary-light: #8b8cff;
+
+    --text: #ffffff;
+    --text-muted: #c8c7df;
+
+    --border: rgba(255, 255, 255, 0.16);
+
+    --radius: 14px;
+    --transition: 0.3s ease;
+}
+* {
+    box-sizing: border-box;
+}
+html {
+    scroll-behavior: smooth;
+}
+
 body{
     background-color: hsl(244, 88%, 8%);
-    color: white;
+    color: var(--text);
+    overflow-x: hidden;
 }
 .intro{
-    color: white;
+     color: var(--text);
     display: flex;
+    animation: heroEnter 0.8s ease both;
+
 }
 .intro h2{
-    font-size: 40px;
+     font-size: clamp(40px, 4vw, 62px); 
+      margin: 0 0 25px;
+       background: linear-gradient(
+        90deg,
+        #ffffff,
+        #aaa8ff
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+ 
 }
 .intro p{
     font-size: 20px;
+    color: var(--text-muted);max-width: 700px;
+    animation: fadeUp 0.8s ease 0.2s both;
 }
 .Search{
     margin-top: 40px;
 }
 .Search input{
-    width: 300px;
-    padding: 10px 15px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+     width: min(100%, 490px);
+    padding: 15px 18px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.97);
+    color: #111;
     font-size: 16px;
-    transition: 0.3s;
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        transform 0.3s ease;
 }
 .Search input:focus{
     outline: none;
-    border-color: #2563EB;
-    border-width: 2px;
+     border-color: var(--primary);
+
+    box-shadow:
+        0 0 0 4px rgba(79, 124, 255, 0.15),
+        0 8px 25px rgba(79, 124, 255, 0.15);
+    
+    transform: translateY(-2px);
+}
+.Search input::placeholder {
+    color: #777;
+}
+.Search input:hover {
+    transform: translateY(-2px);
 }
 
 
-.intr button{
-       background: linear-gradient(to right , hsl(244, 85%, 32%),hsl(244, 88%, 16%));
+
+.intr button,
+.sell button {
+     background: hsl(243, 68%, 21%);
+
     color: white;
 
-    padding: 12px 28px;
+    padding: 13px 28px;
+
     border: none;
-    border-radius: 10px;
+    border-radius: 11px;
 
     font-size: 16px;
     font-weight: 600;
+
     cursor: pointer;
 
-    transition: all 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+       
 }
 
-.intr button:hover{
-   background-color: #1D4ED8;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+.intr button:hover,
+.sell button:hover {
+    transform: translateY(-4px);
 
+    box-shadow:
+        0 12px 30px rgba(79, 124, 255, 0.3);
+
+    
 }
 
 .system{
-    border: 1px solid grey ;
-    background-color: hsl(244, 88%, 11%);
-    border-radius: 12px;
+    border: 1px solid var(--border);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(79, 124, 255, 0.04),
+            transparent
+        ),var(--surface);   
+    border-radius: var(--radius);
     width: 90%;
     margin-top: 30px;
+        padding: 5px;
+    animation: fadeUp 0.8s ease both;
 }
-.system h2.title{
-    font-size: 25px;
-    color: rgb(142, 142, 227);
-    margin-left: 17px;
+.system:hover{
+    border-color: rgba(79, 124, 255, 0.5);
 }
-
+.system h2.title,
+.Whychoose h2.title {
+    font-size: 28px;
+    color: var(--primary-light);
+    margin-left: 20px;
+    margin-bottom: 25px;
+}
 .expl{
     display: flex;
     gap: 20px;
     padding: 10px;
+}
+.expl1 {
+    padding: 12px;
+
+    border-radius: 12px;
+
+    transition:
+        transform 0.3s ease,
+        background-color 0.3s ease;
+}
+.expl1:hover {
+    transform: translateY(-6px);
+
+    background-color: rgba(79, 124, 255, 0.08);
 }
 .expl1 h2{
     font-size: 20px;
@@ -76,17 +168,21 @@ body{
 }
 
 .Whychoose{
-      border: 1px solid grey ;
-    background-color: hsl(244, 88%, 11%);
+       border: 1px solid var(--border);
+      background:
+        linear-gradient(
+            145deg,
+            rgba(79, 124, 255, 0.04),
+            transparent
+        ),var(--surface);
     border-radius: 12px;
     width: 90%;
     margin-top: 30px;
+    padding: 8px;
+    animation: fadeUp 0.8s ease both;
 }
-.Whychoose h2.title{
-  font-size: 25px;
-    color: rgb(142, 142, 227);
-    margin-left: 17px;
-
+.Whychoose:hover{
+    border-color: rgba(79, 124, 255, 0.5);
 }
 .arg{
     display: flex;
@@ -95,9 +191,26 @@ body{
    
      
 }
+.arg > div {
+    padding: 15px;
+
+    border-radius: 12px;
+
+    transition:
+        transform 0.3s ease,
+        background-color 0.3s ease;
+}
+
+.arg > div:hover {
+    transform: translateY(-5px);
+
+    background-color: rgba(79, 124, 255, 0.07);
+}
 
 .main{
     display: flex;
+    gap: 35px;
+    padding: 20px 12px;
 }
 .left{
     width: 70%;
@@ -107,45 +220,49 @@ body{
 }
 
 .sell{
-    background-color: hsl(244, 88%, 11%);
-    padding: 10px;
-    border: 1px solid grey ;
-    border-radius: 12px;
+     background:
+        linear-gradient(
+            145deg,
+            rgba(79, 124, 255, 0.08),
+            transparent
+        ),
+        var(--surface);
+     padding: 22px;
+    border: 1px solid var(--border);
+     border-radius: var(--radius);
     margin-top: 15px;
+    animation: slideRight 0.8s ease 0.15s both;
+        transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+.sell:hover {
+
+    border-color: rgba(79, 124, 255, 0.5);
 }
 
-.sell button{
-       background: linear-gradient(to right , hsl(244, 85%, 32%),hsl(244, 88%, 16%));
-    color: white;
-
-    padding: 12px 28px;
-    border: none;
-    border-radius: 10px;
-
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-
-    transition: all 0.3s ease;
-}
-
-.sell button:hover{
-   background-color: #1D4ED8;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
-
-}
 .sell p{
     font-size: 20px;
+    color: var(--text-muted);
 }
 
 .statistics{
-        background-color: hsl(244, 88%, 11%);
-    padding: 10px;
-    border: 1px solid grey ;
-    border-radius: 12px;
+     background:
+        linear-gradient(
+            145deg,
+            rgba(79, 124, 255, 0.04),
+            transparent
+        ),var(--surface);
+    padding: 15px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
     margin-top: 25px;
+    animation: slideRight 0.8s ease 0.3s both;
    
+}
+.statistics:hover{
+     border-color: rgba(79, 124, 255, 0.5);
 }
 .statistics h2{
     font-size: 20px;
@@ -155,44 +272,62 @@ body{
      gap: 20px;
 }
 .statis1{
-    background-color: hsl(244, 88%, 14%);
+    background: var(--surface-light);
     border-radius: 12px;
      transition: .3s;
     width: 50%;
      padding: 4px;
+      transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+    border: 1px solid transparent;
 }
 .statis1:hover{
-     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(60,120,255,.25);
+      transform: translateY(-7px);
+    border-color: rgba(79, 124, 255, 0.4);
+    box-shadow:
+        0 12px 30px rgba(60, 120, 255, 0.2);
     cursor: pointer;
 }
 .statis2{
-    background-color: hsl(244, 88%, 14%);
+     background: var(--surface-light);
     border-radius: 12px;
      transition: .3s;
     width: 50%;
  margin-left: 90px;
  padding: 4px;
  margin-top: 8px;
+  transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+    border: 1px solid transparent;
 }
 .statis2:hover{
-     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(60,120,255,.25);
+      transform: translateY(-7px);
+    border-color: rgba(79, 124, 255, 0.4);
+    box-shadow:
+        0 12px 30px rgba(60, 120, 255, 0.2);
     cursor: pointer;
 }
 
 
 
 .featured-categories{
-     background-color: hsl(244, 88%, 11%);
+      background: var(--surface);
     padding: 10px;
-    border: 1px solid grey ;
+    border: 1px solid var(--border);
     border-radius: 12px;
     margin-top: 25px;
+    animation: slideRight 0.8s ease 0.45s both;
+}
+.featured-categories:hover{
+     border-color: rgba(79, 124, 255, 0.5);
 }
 
 .featured-categories h2{
-    color: #8b8cff;
+    color: var(--primary-light);
     font-size: 1.5rem;
     margin-bottom: 18px;
 }
@@ -204,17 +339,23 @@ body{
 }
 
 .category-card{
-    background: #19105d;
+    background: var(--surface-light);
     border-radius: 12px;
     padding: 14px;
     cursor: pointer;
     transition: .3s ease;
     text-align: center;
     border: 1px solid transparent;
+     transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease,
+        background 0.35s ease;
 }
 
 .category-card span{
     font-size: 1.5rem;
+    
 }
 
 .category-card h3{
@@ -225,9 +366,51 @@ body{
 }
 
 .category-card:hover{
+    background :hsl(244, 65%, 18%);
     transform: translateY(-4px);
     border-color: #3f7cff;
     box-shadow: 0 8px 18px rgba(63,124,255,.2);
+}
+
+
+/* =========================
+   ANIMATIONS
+========================= */
+@keyframes heroEnter {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideRight {
+    from {
+        opacity: 0;
+        transform: translateX(35px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 

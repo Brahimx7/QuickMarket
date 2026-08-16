@@ -129,9 +129,8 @@ deleteButtons.forEach(button => {
 
            confirmDelete.addEventListener("click", async () => {
 
-    console.log("Deleting product:", productToDelete);
 
-    // Get conversations linked to this product
+    
     const { data: conversations, error: conversationsError } = await supabase
         .from("conversations")
         .select("id")
@@ -150,8 +149,6 @@ deleteButtons.forEach(button => {
             .from("messages")
             .delete()
             .eq("conversation_id", conversation.id);
-              console.log("Deleting messages for:", conversation.id);
-              console.log("Message delete error:", messagesDeleteError);
 
 
         if (messagesDeleteError) {
@@ -168,7 +165,6 @@ deleteButtons.forEach(button => {
 
     if (conversationsDeleteError) {
         console.error(conversationsDeleteError);
-        alert(conversationsDeleteError.message);
         return;
     }
 
@@ -513,7 +509,7 @@ await updateTotalUnread();
 
 
       async function openMessages() {
-
+      
     
                       console.log("clicked");
                          if (messagesSection.classList.contains("shown")) {
@@ -521,10 +517,12 @@ await updateTotalUnread();
                               chatArea.classList.add("hidden");
                                 return;
                              }
+                            
+                           
                       messagesSection.classList.add("section");
                       conversationList.classList.remove("hidden");
                       chatArea.classList.remove("chatphone");
-                      chatArea.classList.remove("hidden");
+                        chatArea.classList.add("hidden");
                       messagesBtn.classList.add("active");
                       favoritesBtn.classList.remove("active");
                       aboutBtn.classList.remove("active");
@@ -566,12 +564,12 @@ await updateTotalUnread();
                               .select("id")
                               .eq("conversation_id", conversation.id)
                               .eq("is_read", false)
-    .neq("sender_id", user.id);
+                     .neq("sender_id", user.id);
 
-if (unreadError) {
-    console.error(unreadError);
-    return;
-}
+                        if (unreadError) {
+                      console.error(unreadError);
+                         return;
+                                    }
 
                         let otherUserId;
 

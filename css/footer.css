@@ -1,10 +1,40 @@
-footer{
-    text-align: center;
-    background-color: hsl(244, 88%, 16%);
-    padding: 30px;
-    margin-top: 50px;
-}
+ footer {
+     text-align: center;
 
+     background:
+         linear-gradient(
+             145deg,
+             rgba(79, 124, 255, 0.08),
+             rgba(30, 20, 100, 0.25)
+         ),
+         hsl(244, 70%, 11%);
+
+     color: #d9d9eb;
+
+     padding: 35px 20px;
+
+     margin-top: 60px;
+
+     border-top:
+         1px solid rgba(255, 255, 255, 0.10);
+
+     box-shadow:
+         0 -10px 30px rgba(0, 0, 0, 0.15);
+ }
+
+ footer p {
+     margin: 0;
+
+     font-size: 15px;
+
+     color: #aaaac4;
+
+     transition: color 0.3s ease;
+ }
+
+  footer p:hover {
+     color: white;
+ }
 @media (max-width: 768px){
     footer{
         padding: 15px;

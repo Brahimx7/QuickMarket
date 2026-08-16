@@ -126,6 +126,7 @@ button.addEventListener("click" , () =>{
 
 
 
+
 buttons.forEach(button => {
 
     button.addEventListener("click", () => {
@@ -236,7 +237,6 @@ function hidePanels(){
 hidePanels();
 categoryBtn.addEventListener("click", () => {
     resetPriceFilter();resetletter();
-      console.log("clicked");
     const wasHiddencategories = categoryPanel.classList.contains("hidden");
     
     hidePanels();

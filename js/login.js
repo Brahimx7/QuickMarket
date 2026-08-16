@@ -36,18 +36,9 @@ if (error) {
     return;
 }
 
-const user = data.user;
-
 
 
    
-
-
-    const { data: profile } = await supabase
-    .from("users")
-    .select("*")
-    .eq("id", user.id)
-    .single();
 
     window.location.href = "index.html";
 

@@ -117,21 +117,12 @@ console.log(user.id);
   })
   .eq("id", editProductId)
   .select();
-  console.log("editProductId:", editProductId);
-console.log("user.id:", user.id);
-console.log("currentImage:", currentImage);
-console.log("imageUrl:", imageUrl);
-  console.log(data);
 
     if(updateError){
       console.log(updateError);
       return;
     }
     console.log("Product updated successfully!");
-    console.log(editProductId);
-console.log(user.id);
-console.log(data);
-console.log(updateError);
   }
 
 else{

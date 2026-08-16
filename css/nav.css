@@ -1,42 +1,121 @@
-.navbar{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 50px;
-   background-color: hsl(244, 88%, 16%);
-   border-radius: 15px;
-}
+.navbar {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
 
-.logo h2{
-    color: #e2e7f2;
+     padding: 18px 35px;
+
+     background:
+         linear-gradient(
+             145deg,
+             rgba(79, 124, 255, 0.10),
+             rgba(30, 20, 100, 0.35)
+         ),
+         hsl(244, 70%, 11%);
+
+     border: 1px solid rgba(255, 255, 255, 0.10);
+
+     border-radius: 16px;
+
+     box-shadow:
+         0 8px 30px rgba(0, 0, 0, 0.20);
+
+     position: relative;
+     z-index: 10;
+
+     animation: navEnter 0.6s ease both;
+ }
+.logo h2 {
+     color: #e8eaff;
+
      cursor: pointer;
-}
 
-.connect{
-    display: flex;
-    padding: 15px;
-    gap: 20px;
-}
-.connect a{
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-    padding: 10px 20px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-}
-.connect a:hover{
-   background: hwb(221 15% 35%);
-   transform: translateY(-2px);
-   box-shadow: 0 8px 20px rgba(112, 127, 161, 0.3);
-}
+     margin: 0;
 
-.active{
-    background-color: hwb(221 15% 35%);
-    color: white;
-}
+     font-size: 28px;
+
+     transition:
+         transform 0.3s ease,
+         color 0.3s ease,
+         text-shadow 0.3s ease;
+ }
+
+ .logo h2:hover {
+     color: #aeb5ff;
+
+     transform: translateY(-2px);
+
+     text-shadow:
+         0 0 18px rgba(79, 124, 255, 0.35);
+ }
+ .connect {
+     display: flex;
+
+     align-items: center;
+
+     gap: 8px;
+
+     padding: 5px;
+ }
+
+ .connect a {
+     position: relative;
+
+     text-decoration: none;
+
+     color: #e7e7f5;
+
+     font-weight: bold;
+
+     padding: 11px 20px;
+
+     border-radius: 10px;
+
+     transition:
+         color 0.3s ease,
+         background-color 0.3s ease,
+         transform 0.3s ease,
+         box-shadow 0.3s ease;
+ }
+
+.connect a:hover {
+     color: white;
+
+     background: rgba(79, 124, 255, 0.15);
+
+     transform: translateY(-2px);
+
+     box-shadow:
+         0 8px 20px rgba(79, 124, 255, 0.15);
+ }
+
+ .connect a.active {
+     background:
+         linear-gradient(
+             135deg,
+             #416fdb,
+             #2948ad
+         );
+
+     color: white;
+
+     box-shadow:
+         0 7px 20px rgba(65, 111, 219, 0.25);
+ }
 
 
+ @keyframes navEnter {
+
+     from {
+         opacity: 0;
+         transform: translateY(-15px);
+     }
+
+     to {
+         opacity: 1;
+         transform: translateY(0);
+     }
+ }
 
 @media (max-width: 768px) {
     
