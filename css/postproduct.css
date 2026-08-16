@@ -3,6 +3,7 @@ body{
 
     background:hsl(244,88%,8%);
     color:white;
+
 }
 
 .post-page{
@@ -14,6 +15,7 @@ body{
     align-items:center;
 
     padding:120px 20px 60px;
+    animation: pageEnter 0.8s ease 0.2s both;
 }
 
 .post-card{
@@ -22,15 +24,19 @@ body{
 
     max-width:100%;
 
-    background:#17143d;
+     background:hsl(244, 65%, 14%);
 
     border-radius:18px;
 
     padding:40px;
 
-    border:1px solid rgba(255,255,255,.08);
+    border:1px solid rgba(255, 255, 255, 0.16);
 
     box-shadow:0 12px 30px rgba(0,0,0,.35);
+}
+.post-card:hover{
+    border-color: #3f6cff;
+    box-shadow: 0 0 4px blue;
 }
 
 .post-card h1{
@@ -40,15 +46,29 @@ body{
     margin-bottom:10px;
 
     font-size:2.2rem;
+
+        background: linear-gradient(
+        90deg,
+        #fcfbff,
+        #5957ae
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .post-card p{
 
     text-align:center;
-
-    color:#bdbdd5;
-
+     font-size: 1.2rem;
     margin-bottom:35px;
+
+         background: linear-gradient(
+        90deg,
+        #af99cf,
+        #2522a4
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .input-group{
@@ -61,7 +81,7 @@ body{
 }
 
 .input-group label{
-
+    font-size: 20Px;
     margin-bottom:8px;
 
     font-weight:bold;
@@ -71,11 +91,11 @@ body{
 .input-group select,
 .input-group textarea{
 
-    background:#211d57;
+    background:#1c184d;
 
     color:white;
 
-    border:none;
+    border: 1px solid #2c1c41;
 
     outline:none;
 
@@ -84,6 +104,15 @@ body{
     padding:14px;
 
     font-size:1rem;
+}
+
+
+.input-group input:focus,textarea:focus{
+   
+  
+    box-shadow:
+        0 0 0 3px rgba(87, 19, 138, 0.849);
+    transform: translateY(-2px);
 }
 
 .input-group textarea{
@@ -110,7 +139,7 @@ button{
 
     border-radius:12px;
 
-    background:#3f6cff;
+    background:hsl(246, 68%, 25%);
 
     color:white;
 
@@ -121,13 +150,23 @@ button{
     cursor:pointer;
 
     transition:.3s;
+    
 }
 
 button:hover{
 
-    background:#5a7eff;
+    transform: translateY(-2px);
+    background:hsl(246, 73%, 31%);
+    
 }
 
+
+
+/* ========================= ANIMATIONS ========================= */ 
+@keyframes pageEnter {
+     from { opacity: 0; }
+      to { opacity: 1; }
+     } 
 
 
 @media (max-width: 768px){

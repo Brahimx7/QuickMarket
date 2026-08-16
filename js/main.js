@@ -136,7 +136,15 @@ if (user) {
         loginLink.textContent = "Logout";
     }
 
+      signupLink.addEventListener("click", () => {
 
+    links.forEach(link => {
+        link.classList.remove("active");
+    });
+
+    signupLink.classList.add("active");
+
+});
     loginLink.addEventListener("click", async (e) => {
     e.preventDefault();
 

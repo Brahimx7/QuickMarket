@@ -55,11 +55,13 @@ body{
     margin-top: 40px;
 }
 .Search input{
-     width: min(100%, 490px);
-    padding: 15px 18px;
+     width: 100%;
+     width:360px;
+     height:55px;
+    padding:0 20px;
     border: 1px solid var(--border);
     border-radius: 12px;
-    background: rgba(255, 255, 255, 0.97);
+    background:#1e1b4d;
     color: #111;
     font-size: 16px;
     transition:
@@ -241,7 +243,11 @@ body{
 
     border-color: rgba(79, 124, 255, 0.5);
 }
-
+.sell h2{
+   font-size: 28px;
+    color: var(--primary-light);
+    margin-bottom: 15px;
+}
 .sell p{
     font-size: 20px;
     color: var(--text-muted);

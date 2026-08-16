@@ -5,7 +5,8 @@ import { supabase } from "./supabase.js"
 const productdiv = document.getElementById("userproducts");
 const params = new URLSearchParams(window.location.search);
 const { data : { user } } = await supabase.auth.getUser();
-
+const signupLink = document.getElementById("signupLink");
+signupLink.classList.add("active");
 if (!user) {
     window.location.href = "Login.html";
 }
@@ -271,7 +272,7 @@ favoritesBtn.addEventListener("click", async () => {
      }
      const productIds = savedproducts.map(item => item.product_id);
      if (productIds.length === 0) {
-    favoritesSection.innerHTML = "<p>You haven't saved any products yet.</p>";
+    favoritesSection.innerHTML = "<p class='no-favorites'>You haven't saved any products yet.</p>";
     return;
 }
 
