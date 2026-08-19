@@ -456,7 +456,7 @@ async function updateUnreadBadge(conversationId, div) {
 
 async function updateTotalUnread() {
 
-    // Get conversations belonging to the current user
+   
     const { data: conversations, error: conversationsError } = await supabase
         .from("conversations")
         .select("id")
@@ -473,7 +473,7 @@ async function updateTotalUnread() {
 
     const conversationIds = conversations.map(conversation => conversation.id);
 
-    // Get unread messages from those conversations
+   
     const { data: unreadMessages, error: unreadError } = await supabase
         .from("messages")
         .select("id")
@@ -486,14 +486,14 @@ async function updateTotalUnread() {
         return;
     }
 
-    // Remove old badge
+   
     const oldBadge = messagesBtn.querySelector(".total-unread-badge");
 
     if (oldBadge) {
         oldBadge.remove();
     }
 
-    // Add new badge
+  
     if (unreadMessages.length > 0) {
 
         const badge = document.createElement("span");
@@ -603,6 +603,7 @@ await updateTotalUnread();
                                               }
                         
                    div.addEventListener("click", async () => {
+                    chatArea.classList.remove("chatphone");
                     currentConversation = conversation;                     chatArea.classList.add("chatphone");
                      chatArea.classList.remove("hidden");
                      const { error: readError } = await supabase

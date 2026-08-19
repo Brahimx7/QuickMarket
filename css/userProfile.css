@@ -15,6 +15,9 @@ body{
     padding:35px;
     box-shadow:0 10px 15px rgba(20, 18, 139, 0.831);
     animation: pageEnter 0.8s ease 0.2s both;
+    display:flex;
+    flex-direction: column;
+    
 }
 
 .profile-header{
@@ -219,15 +222,16 @@ body{
 
 .shown {
     display : block ; 
+    animation: slideRight 0.8s ease 0.2s both;
 }
 
 
 
 .profile-menu{
     background: linear-gradient(to right ,hsl(244, 88%, 16%), hsl(244, 88%, 31%));
-    width: 600px;
+    width: 540px;
     height: auto;
-    padding: 20px;
+    padding: 15px;
     border: 2px solid hsl(245, 97%, 28%);
     border-radius: 10px;
     display: flex;
@@ -235,6 +239,7 @@ body{
     justify-content: center;
     gap: 20px;
     margin-left: 130px;
+    animation: fadeUp 0.8s ease 0.2s both;
 }
 .profile-menu button{
     background: linear-gradient(to right, rgb(0, 0, 81),rgb(21, 21, 91));
@@ -314,6 +319,7 @@ body{
     height: 300px;
     display: flex;
     flex-direction: column;
+    animation: pageEnter 0.8s ease 0.2s both;
 }
 #messagesContainer{
     flex: 1;
@@ -499,6 +505,29 @@ body{
 
 
 
+     @keyframes fadeUp { 
+    from { opacity: 0; transform: translateY(25px); }
+     to { opacity: 1; transform: translateY(0); } 
+    } 
+
+@keyframes filterAppear {
+ from { opacity: 0; transform: translateY(-10px) scale(0.98); } 
+ to { opacity: 1; transform: translateY(0) scale(1); }
+ }
+
+ @keyframes slideRight {
+    from {
+        opacity: 0;
+        transform: translateX(35px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
 @media(max-width:768px){
 
      .profile-container{
@@ -529,19 +558,17 @@ body{
       grid-template-columns: repeat(3,1fr);
         gap: 10px;
     padding: 10px;
-    width: 260px;
-     margin-left: 1px;
+    width: 250px;
+     margin-left: 0;
    
 }
 
 .profile-menu button{
  
     font-size: 10px;
-        padding: 10px;
+        padding: 6px;
         white-space: nowrap;
         color: white;
-        margin-left: 4px;
-         margin-right: 4px;
         width: 80px;
 
 }
