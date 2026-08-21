@@ -72,3 +72,32 @@ window.location.href=("index.html");
 
 
 
+const password = document.getElementById("pass");
+const confpassword = document.getElementById("confpass");
+const toggle = document.getElementById("showpass");
+const toggle2 = document.getElementById("showconfpass");
+
+if (password && toggle) {
+
+    toggle.addEventListener("click", () => {
+
+        password.type =
+            password.type === "password" ? "text" : "password";
+
+    });
+
+}
+
+if (confpassword && toggle2) {
+
+    toggle2.addEventListener("click", () => {
+
+        confpassword.type =
+            confpassword.type === "password" ? "text" : "password";
+
+    });
+
+}
+
+
+

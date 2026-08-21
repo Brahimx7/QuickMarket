@@ -77,12 +77,12 @@ const form = document.getElementById('productForm');
  
 
   if(editProductId){
-    if(!imageFile){
-       imageUrl = currentImage ;
-    }
-    else{
-      const fileName = `${Date.now()}-${imageFile.name}`;
-          const { error: uploadError } = await supabase.storage
+       if(!imageFile){
+          imageUrl = currentImage ;
+         }
+        else{
+           const fileName = `${Date.now()}-${imageFile.name}`;
+           const { error: uploadError } = await supabase.storage
                    .from("product-images")
                    .upload(fileName, imageFile);
 
@@ -92,38 +92,38 @@ const form = document.getElementById('productForm');
              return;
                    }
                                  
-            const { data: imageData } = supabase.storage
-          .from("product-images")
-          .getPublicUrl(fileName);
+             const { data: imageData } = await supabase.storage
+            .from("product-images")
+            .getPublicUrl(fileName);
 
-           imageUrl = imageData.publicUrl;
+            imageUrl = imageData.publicUrl;
+           }
+         console.log(editProductId);
+         console.log(user.id);
+
+
+         const { data, error: updateError } = await supabase
+         .from("products")
+         .update({
+           title,
+           price: Number(price),
+           category,
+           condition,
+           location,
+           seller,
+           description,
+           phone,
+           image: imageUrl,
+         })
+         .eq("id", editProductId)
+         .select();
+
+           if(updateError){
+             console.log(updateError);
+             return;
+           }
+           console.log("Product updated successfully!");
     }
-    console.log(editProductId);
-console.log(user.id);
-
-
-  const { data, error: updateError } = await supabase
-  .from("products")
-  .update({
-    title,
-    price: Number(price),
-    category,
-    condition,
-    location,
-    seller,
-    description,
-    phone,
-    image: imageUrl,
-  })
-  .eq("id", editProductId)
-  .select();
-
-    if(updateError){
-      console.log(updateError);
-      return;
-    }
-    console.log("Product updated successfully!");
-  }
 
 else{
     

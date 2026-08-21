@@ -292,6 +292,23 @@ resetletter()
 
 });
 
+function resetButtonsclass(){
+    
+buttons.forEach(button => {
+
+        const category = button.textContent;
+
+        if(category === "All"){
+
+           button.classList.add("active");
+
+        }else{
+            button.classList.remove("active");
+        }
+
+
+});
+}
 
 const minPrice = document.getElementById("minPrice");
 const maxPrice = document.getElementById("maxPrice");
@@ -315,6 +332,7 @@ resetletter();
     });
 
     renderProducts(filteredProducts);
+    resetButtonsclass();
 }
 
 minPrice.addEventListener("input", filterByPrice);
@@ -323,6 +341,7 @@ maxPrice.addEventListener("input", filterByPrice);
 function resetPriceFilter() {
     minPrice.value = "";
     maxPrice.value = "";
+    resetButtonsclass();
 }
 
 const AZ = document.getElementById("AZ");
@@ -362,6 +381,7 @@ letter.addEventListener("input", () => {
     renderProducts(filteredProducts);
     resetPriceFilter();
     
+    
 });
 
 function resetletter(){
@@ -376,7 +396,9 @@ reset.addEventListener("click", () => {
     minPrice.value = "";
     maxPrice.value = "";
     letter.value = "";
-
+   resetPriceFilter();resetletter();
     renderProducts(products);
+
+resetButtonsclass();
 
 });

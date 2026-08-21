@@ -25,35 +25,6 @@ if (foot) foot.innerHTML = Footer();
 
 
 
-const password = document.getElementById("pass");
-const confpassword = document.getElementById("confpass");
-const toggle = document.getElementById("showpass");
-const toggle2 = document.getElementById("showconfpass");
-
-if (password && toggle) {
-
-    toggle.addEventListener("click", () => {
-
-        password.type =
-            password.type === "password" ? "text" : "password";
-
-    });
-
-}
-
-if (confpassword && toggle2) {
-
-    toggle2.addEventListener("click", () => {
-
-        confpassword.type =
-            confpassword.type === "password" ? "text" : "password";
-
-    });
-
-}
-
-
-
 const explore = document.getElementById("startexploring");
 if(explore) {
     explore.addEventListener("click" , ()=>{
@@ -186,6 +157,11 @@ const homeSearch = document.getElementById("homeSearch");
 if (homeSearch) {
 
     homeSearch.addEventListener("keydown", (e) => {
+         if(homeSearch.value.trim() === ""){
+           console.log("nahh");
+           window.alert("you can't search nothing 😊");
+            return;
+            }
 
         if (e.key === "Enter") {
 

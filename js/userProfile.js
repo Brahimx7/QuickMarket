@@ -533,7 +533,7 @@ await updateTotalUnread();
                     hideSections();
 
                     if (wasHiddenmessages) {
-                        messagesSection.classList.remove("hidden");
+                          messagesSection.classList.remove("hidden");
                         messagesSection.classList.add("shown");
                                             }
 
@@ -565,7 +565,7 @@ await updateTotalUnread();
                               .select("id")
                               .eq("conversation_id", conversation.id)
                               .eq("is_read", false)
-                     .neq("sender_id", user.id);
+                             .neq("sender_id", user.id);
 
                         if (unreadError) {
                       console.error(unreadError);
@@ -603,9 +603,10 @@ await updateTotalUnread();
                                               }
                         
                    div.addEventListener("click", async () => {
-                    chatArea.classList.remove("chatphone");
-                    currentConversation = conversation;                     chatArea.classList.add("chatphone");
-                     chatArea.classList.remove("hidden");
+                       chatArea.classList.remove("hidden");
+                        chatArea.classList.add("chatphone");
+                       currentConversation = conversation;                  
+    
                      const { error: readError } = await supabase
                         .from("messages")
                         .update({ is_read: true })

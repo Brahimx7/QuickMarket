@@ -11,6 +11,18 @@ const allProducts = [...products, ...userProducts];
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
+
+
+const productImage = document.getElementById("productImage");
+const productTitle = document.getElementById("productTitle");
+const productPrice = document.getElementById("productPrice");
+const productDescription = document.getElementById("productDescription");
+const productCondition = document.getElementById("productCondition");
+const productLocation = document.getElementById("productLocation");
+const sellerName = document.getElementById("sellerName");
+const sellerPhone = document.getElementById("sellerPhone");
+const productCategory = document.getElementById("productCategory");
+
 const { data: product , error : productError } = await supabase
     .from("products")
     .select("*")
