@@ -603,10 +603,26 @@ await updateTotalUnread();
                                               }
                         
                    div.addEventListener("click", async () => {
+                    
                        chatArea.classList.remove("hidden");
                         chatArea.classList.add("chatphone");
-                       currentConversation = conversation;                  
-    
+                       currentConversation = conversation;    
+                      const productName = document.getElementById("productName");
+
+                        const { data: product, error: productError } =
+                            await supabase
+                                .from("products")
+                                .select("*")
+                                .eq("id", currentConversation.product_id)
+                                                    .single();
+
+                        if (productError) {
+                            console.log(productError);
+                            return;
+                        }
+
+                        productName.textContent = product.title;
+                  
                      const { error: readError } = await supabase
                         .from("messages")
                         .update({ is_read: true })
@@ -702,7 +718,7 @@ messageInput.value = "";
                                                          });
 
                                                          
-
+ messagesContainer.scrollTop = messagesContainer.scrollHeight;
   console.log("Send button clicked");
 }
 
