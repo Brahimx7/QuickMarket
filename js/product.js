@@ -1,5 +1,6 @@
 //import { products } from "./data/products.js";
 import  { supabase } from "./supabase.js"
+import { Toast } from "./components/toast.js" ; 
 
 /*
 const id = Number(params.get("id"));
@@ -59,7 +60,17 @@ contactBtn.addEventListener("click", async () => {
 
 
 if (user.id === product.user_id) {
-    alert("You can't contact yourself.");
+        const toast = Toast( "You can't contact yourself.");
+                
+                 document.body.appendChild(toast);
+                const button = toast.querySelector("button");
+                 button.addEventListener("click", () => { 
+                      toast.remove();
+                      return;
+                 });
+                 setTimeout( () => {
+                    toast.remove();
+                 },10000);
     return;
 }
 

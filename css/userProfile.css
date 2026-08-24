@@ -731,3 +731,26 @@ body{
     margin-top: 8px;
 }
 }
+
+@media (max-width: 360px) {
+    .profile-menu{
+           gap: 10px;
+           padding: 10px;
+          width: 250px;
+    }
+     .profile-menu button {
+        font-size: 9px;
+        padding: 5px 4px;
+        width: 70px;
+    }
+
+    #messagesBtn {
+        width:70px;
+    }
+
+    .total-unread-badge {
+        font-size: 9px;
+        padding: 2px 4px;
+        margin-left: 3px;
+    }
+}

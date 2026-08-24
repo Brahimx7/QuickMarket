@@ -1,6 +1,7 @@
 import { Navbar }  from './components/nav.js'
 import { Footer } from "./components/footer.js";
 import { supabase } from "./supabase.js";
+import { Toast } from "./components/toast.js" ; 
 //import { products } from './data/products.js'
 
 const nav = document.getElementById("nav");
@@ -40,14 +41,24 @@ const {
   data: { user },
 } = await supabase.auth.getUser();
 
-
+ const alert = document.createElement("div");
 if (postBtn) {
     postBtn.addEventListener("click", () => {
         console.log("Button clicked!");
         if (!user) {
-        alert("This page requires an account. Please sign in first.");
-        window.location.href = "Login.html";
-        return;
+        const toast = Toast(
+         "You need an account to use this feature. Please sign up first."
+           );
+         document.body.appendChild(toast);
+        const button = toast.querySelector("button");
+         button.addEventListener("click", () => { 
+              toast.remove();
+              return;
+         });
+         setTimeout( () => {
+            toast.remove();
+         },10000);
+        return ;
        }
         window.location.href = "postproduct.html";
     });
