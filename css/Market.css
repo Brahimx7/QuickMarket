@@ -3,7 +3,12 @@ body{
      background-color: hsl(244, 88%, 8%);
     color: white;
 }
-
+* {
+    box-sizing: border-box;
+}
+html {
+    scroll-behavior: smooth;
+}
 .market{
 
     max-width:1200px;

@@ -3,6 +3,12 @@ body{
     color: white;
 }
 
+* {
+    box-sizing: border-box;
+}
+html {
+    scroll-behavior: smooth;
+}
 .signup-page{
 
   
@@ -22,7 +28,7 @@ body{
 .signup-card{
     
     width:100%;
-    max-width:500px;
+    max-width:600px;
   
     padding:35px;
 

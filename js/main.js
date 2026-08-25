@@ -1,3 +1,5 @@
+"use strict";
+
 import { Navbar }  from './components/nav.js'
 import { Footer } from "./components/footer.js";
 import { supabase } from "./supabase.js";
@@ -168,13 +170,23 @@ const homeSearch = document.getElementById("homeSearch");
 if (homeSearch) {
 
     homeSearch.addEventListener("keydown", (e) => {
-         if(homeSearch.value.trim() === ""){
-           console.log("nahh");
-           window.alert("you can't search nothing 😊");
-            return;
-            }
-
+        
         if (e.key === "Enter") {
+                
+             if(homeSearch.value.trim() === ""){
+                   console.log("nahh");
+                   const toast = Toast("you can't search nothing 😊");
+                   document.body.appendChild(toast);
+                   const button = toast.querySelector("button");
+                   button.addEventListener("click", ()=>{
+                    toast.remove();
+                    return;
+                   });
+                   setTimeout(()=>{
+                    toast.remove();
+                   },5000);
+                    return;
+               }
 
             const value = homeSearch.value.trim();
 
@@ -202,3 +214,5 @@ categories.forEach(categorie => {
         window.location.href = `Market.html?category=${encodeURIComponent(catvalue)}`;
     });
 });
+
+

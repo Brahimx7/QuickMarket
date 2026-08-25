@@ -399,36 +399,7 @@ body{
     box-shadow: 0 8px 18px rgba(63,124,255,.2);
 }
 
-.No-account{
-    position: fixed;
-    top: 10%;
-    left: 75%;
-    z-index: 2000;
-   font-size: 12px;
-    border: 1px solid rgba(129, 140, 248, 0.18);
-    padding: 2px 8px;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
-      background:
-       linear-gradient(135deg, #17145f 0%, #211b78 100%); 
-    border-radius: var(--radius);
-    width: 300px;
-  animation: toastInOut 10s ease-in-out forwards;
-  transform-origin: right center;
-  border-left: 3px double rgb(9, 9, 176);
-}
-.No-account button{
-    background-color: rgba(97, 43, 172, 0.957);
-    border: none;
-    position: fixed;
-    left: 90%;
-    color: white;
-    border-radius: 15px;
-}
-.No-account button:hover{
-      background-color: rgb(130, 70, 210);
-    transform: scale(1.1);
-    cursor: pointer;
-}
+
 
 /* =========================
    ANIMATIONS
@@ -470,27 +441,7 @@ body{
     }
 }
 
-@keyframes toastInOut {
-  0% {
-    opacity: 0;
-    transform: translateX(120%);
-  }
 
-  10% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  85% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateX(120%);
-  }
-}
 
 @media (max-width: 768px) {
     .main{
@@ -532,18 +483,8 @@ body{
    grid-template-columns: repeat(2,50%);
    
 }
-
-.No-account{
-    left: 40%;
-    font-size: 12px;
-    width: 240px;
+.Search input{
+    width: 300px;
 }
 }
 
-@media (max-width: 360px){
-    .No-account{
-    left: 36%;
-    font-size: 12px;
-    width: 220px;
-}
-}

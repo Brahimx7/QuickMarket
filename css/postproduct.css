@@ -5,6 +5,12 @@ body{
     color:white;
 
 }
+* {
+    box-sizing: border-box;
+}
+html {
+    scroll-behavior: smooth;
+}
 
 .post-page{
 
@@ -20,7 +26,7 @@ body{
 
 .post-card{
 
-    width:750px;
+    width:800px;
 
     max-width:100%;
 
@@ -129,7 +135,7 @@ body{
     gap:20px;
 }
 
-button{
+button:not(.toast button){
 
     width:100%;
 
@@ -153,7 +159,7 @@ button{
     
 }
 
-button:hover{
+button:not(.toast button):hover{
 
     transform: translateY(-2px);
     background:hsl(246, 73%, 31%);
@@ -177,9 +183,9 @@ button:hover{
      }
      .post-card{
 
-    width:700px;
+    width:100%;
 
-    max-width:100%;
+    max-width:800px;
 
 
     padding:28px;
