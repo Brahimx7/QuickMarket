@@ -50,11 +50,18 @@ const { data: { user } } = await supabase.auth.getUser();
                toast.classList.add("toast");
               document.body.appendChild(toast);
               const button = toast.querySelector("button");
-              button.addEventListener("click" , ()=>{
+              button.addEventListener("click" , (event)=>{
+                event.stopPropagation();
                 toast.remove();
               }); 
               setTimeout(()=>{
                 toast.remove();
-              },5000);                    
+              },5000);     
+               toast.classList.add("message-notification");
+              toast.addEventListener("click",()=>{
+                    window.location.href = `userProfile.html?tab=messages&conversation=${conversation.id}`;
+              });
             
          }).subscribe();
+
+         

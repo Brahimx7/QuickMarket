@@ -44,7 +44,9 @@
     transform: scale(1.1);
     cursor: pointer;
 }
-
+.message-notification {
+    cursor: pointer;
+}
 @keyframes toastInOut {
   0% {
     opacity: 0;
