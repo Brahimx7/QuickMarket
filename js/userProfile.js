@@ -376,14 +376,23 @@ console.log("Favorites clicked");
 
             const conversationId = payload.new.conversation_id;
 
-            if (
-                currentConversation &&
-                conversationId === currentConversation.id
-            ) {
-                addMessage(payload.new);
-                return;
-            }
+          if (
+              currentConversation &&
+              conversationId === currentConversation.id
+          ) 
+          {
+              addMessage(payload.new);
 
+              const div = document.querySelector(
+                  `[data-conversation-id="${conversationId}"]`
+              );
+
+              if (div) {
+                  conversationList.prepend(div);
+              }
+
+              return;
+          }
             const div = document.querySelector(
                 `[data-conversation-id="${conversationId}"]`
             );
