@@ -390,6 +390,7 @@ console.log("Favorites clicked");
 
             if (div) {
                 updateUnreadBadge(conversationId, div);
+                conversationList.prepend(div);
             }
 
             updateTotalUnread();
@@ -509,7 +510,7 @@ await updateTotalUnread();
 
 
 
-      async function openMessages() {
+ async function openMessages() {
       
     
                       console.log("clicked");
@@ -520,7 +521,7 @@ await updateTotalUnread();
                              }
                             
                            
-                      messagesSection.classList.add("section");
+                      
                       conversationList.classList.remove("hidden");
                       chatArea.classList.remove("chatphone");
                         chatArea.classList.add("hidden");
@@ -535,11 +536,12 @@ await updateTotalUnread();
                     if (wasHiddenmessages) {
                           messagesSection.classList.remove("hidden");
                         messagesSection.classList.add("shown");
+                        messagesSection.classList.add("section");
                                             }
 
                                             
 
-                    // Clear only the conversation list
+                   
                             conversationList.innerHTML = "";
 
                             const { data: conversations, error: conversationsError } = await supabase
@@ -551,138 +553,142 @@ await updateTotalUnread();
                                 console.error(conversationsError);
                                 return;
                                             }
+           
+            let conversationsWithLatestMessage = [];
+            let conversationsWithLatestMessageInOrder ;
 
-              conversations.forEach(async (conversation) => {
-
+           for(const conversation of conversations){
                
 
-                        const div = document.createElement("div");
-                          div.classList.add("conversation");
-                          div.dataset.conversationId = conversation.id;
+                const { data : conversationMessages , error : conversationMessagesErorr} = 
+                await supabase.from("messages").select("*").
+                eq("conversation_id",conversation.id).order("created_at",{ ascending : true});
+                if(conversationMessagesErorr){
+                    console.log(conversationMessagesErorr);
+                    return;
+                }
+                conversationsWithLatestMessage.push({
+                    conversation : conversation ,
+                    latestMessage : conversationMessages[conversationMessages.length - 1]
+                });
+                console.log(conversationsWithLatestMessage);
 
-                          const { data: unreadMessages, error: unreadError } = await supabase
-                              .from("messages")
-                              .select("id")
-                              .eq("conversation_id", conversation.id)
-                              .eq("is_read", false)
-                             .neq("sender_id", user.id);
+           }
+           
+        conversationsWithLatestMessageInOrder = [...conversationsWithLatestMessage].sort(
+                    (a,b) => { 
+                      const timeA =  new Date(a.latestMessage.created_at).getTime();
+                       const timeB =  new Date(b.latestMessage.created_at).getTime();
+                      return timeB - timeA ;
+                    }
+                );
+                console.log(conversationsWithLatestMessageInOrder);
 
-                        if (unreadError) {
-                      console.error(unreadError);
-                         return;
-                                    }
+           for(const orderedConversation of conversationsWithLatestMessageInOrder){
+                       const conversation = orderedConversation.conversation ; 
+                       const div = document.createElement("div");
+                      div.classList.add("conversation");
+                      div.dataset.conversationId = conversation.id;
+                       let otherUserId = null;
+                
+                      if(conversation.seller_id===user.id){
+                        otherUserId = conversation.buyer_id;
+                      }
+                      else{
+                        otherUserId = conversation.seller_id;
+                      }
+                      const { data : otheruserName , error : otheruserNameError } 
+                    = await supabase.from("users").select("*").eq("id",otherUserId).single();
 
-                        let otherUserId;
+                      if(otheruserNameError){
+                          console.log(otheruserNameError);
+                        return;
+                      }
+                        div.textContent = otheruserName.username ; 
 
-                           if (conversation.buyer_id === user.id) {
-                            otherUserId = conversation.seller_id;
-                        } else {
-                              otherUserId = conversation.buyer_id;
-                                }
-
-                        const { data: otherUser, error: otherUserError } = await supabase
-                                    .from("users")
-                                    .select("username")
-                                            .eq("id", otherUserId)
-                                                    .single();
-
-                        if (otherUserError) {
-                            console.log(otherUserError);
-                                    return;
-                                        }
-
-                      div.textContent = otherUser.username;
-
-
-                      if (unreadMessages.length > 0) {
-   
-                       const badge = document.createElement("span");
-                       badge.textContent = `+${unreadMessages.length}`;
-                           badge.classList.add("unread-badge");
-                           div.appendChild(badge);
-                                              }
-                        
-                   div.addEventListener("click", async () => {
-                    
-                       chatArea.classList.remove("hidden");
-                        chatArea.classList.add("chatphone");
-                       currentConversation = conversation;    
-                      const productName = document.getElementById("productName");
-
-                        const { data: product, error: productError } =
-                            await supabase
-                                .from("products")
+                           const { data: unreadMessages, error: unreadMessagesError } =
+                             await supabase
+                                 .from("messages")
                                 .select("*")
-                                .eq("id", currentConversation.product_id)
-                                                    .single();
-
-                        if (productError) {
-                            console.log(productError);
+                               .eq("conversation_id", conversation.id)
+                               .eq("is_read", false)
+                               .neq("sender_id", user.id);
+                    
+                         if (unreadMessagesError) {
+                           console.log(unreadMessagesError);
                             return;
                         }
 
-                        productName.textContent = product.title;
-                  
-                     const { error: readError } = await supabase
-                        .from("messages")
-                        .update({ is_read: true })
-                        .eq("conversation_id", currentConversation.id)
-                        .eq("is_read", false)
-                        .neq("sender_id", user.id);
+                       if (unreadMessages.length > 0) {
+                            const badge = document.createElement("span");
 
-                    if (readError) {
-                        console.error(readError);
-                    }
-                    await updateTotalUnread();
-                     document.querySelectorAll(".conversation").forEach(conversation => {
-                        conversation.classList.remove("active");
-                           });
-                      div.classList.add("active");
-                      const badge = div.querySelector(".unread-badge");
+                           badge.textContent = `+${unreadMessages.length}`;
+                            badge.classList.add("unread-badge");
 
-                   if (badge) {
-                      badge.remove();
-                          }
-                         sendBtn.classList.add("shown");
-                         messageInput.classList.add("shown");
-                                    
-
-                                    console.log("Conversation clicked");
-
-                                    messagesContainer.innerHTML = "";
-                                    const { data: messages, error: messagesError } = await supabase.from("messages").select("*").eq("conversation_id",currentConversation.id).order("created_at", { ascending: true });
-                                   if (messagesError) {
-                                       console.error(messagesError);
-                                           return;
-                                                      }
-                                      console.log(messages);
-                                     console.log(messagesError);
-
-
-
-                                  messages.forEach(message => {
-
-                                        addMessage(message);
-                                                                  });
-                              messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                                                                  
-
-                   
-
-                          
-                      });
-
-
+                           div.appendChild(badge);
+                                        }
 
                       conversationList.appendChild(div);
-                 
-                  
-                      if (conversation.id == conversationId) {
-                        div.click();
-                        }
-                        
-             });
 
+                  div.addEventListener("click", async () => {
+                         sendBtn.classList.add("shown");
+                         messageInput.classList.add("shown");
+                         chatArea.classList.remove("hidden");
+                         chatArea.classList.add("chatphone");
+                        currentConversation = conversation;
+
+                        const productName = document.getElementById("productName");
+                        const { data : productTitle , error : productTitleError } = 
+                        await supabase.from("products").select("*").eq("id",currentConversation.product_id).single();
+                          if(productTitleError){
+                            console.log(productTitleError);
+                            return;
+                          }
+                          productName.textContent = productTitle.title;
+
+                          document.querySelectorAll(".conversation").forEach(conversation => {
+                            conversation.classList.remove("active");
+                          });
+                          div.classList.add("active");
+
+                          const { data : unreadMessages , error: unreadMessagesError } = 
+                          await supabase.from("messages").select("*").eq("conversation_id",currentConversation.id)
+                          .eq("is_read",false).neq("sender_id",user.id);
+                          if(unreadMessagesError){
+                            console.log(unreadMessagesError);
+                            return;
+                          }
+                          const badge = div.querySelector(".unread-badge");
+                          if(badge){
+                            badge.remove();
+                          }
+
+                         
+
+                           const { error: readError } = await supabase.from("messages").update({ is_read: true })
+                          .eq("conversation_id", currentConversation.id).eq("is_read", false).neq("sender_id", user.id);
+                          if (readError){
+                            console.error(readError);
+                           return;
+                          }
+                          updateTotalUnread();
+
+                    const{ data: messages, error: messagesError } = await supabase.from("messages").
+                    select("*").eq("conversation_id",currentConversation.id).order("created_at", { ascending: true });
+                   
+                     if(messagesError){
+                        console.log(messagesError);
+                         return;
+                     }
+                     messages.forEach(message =>{
+                        addMessage(message);
+                     });
+
+
+                     messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                       
+                });
+          }      
 
 
 console.log(sendBtn);
@@ -691,35 +697,37 @@ console.log(messagesContainer);
 console.log(conversationList);
 
 
- sendBtn.addEventListener("click", async () =>      {
+        sendBtn.addEventListener("click", async () =>      {
 
-    if (!currentConversation) {
-    alert("Select a conversation first.");
-    return;
-    }
-    if(messageInput.value.trim() === ""){
-        console.log("nahh");
-        return;
-    }
+              if (!currentConversation) {
+              alert("Select a conversation first.");
+              return;
+              }
+              if(messageInput.value.trim() === ""){
+                  console.log("nahh");
+                  return;
+              }
            
-    const { error : sendError} = await supabase.from("messages").insert(
-     {
-     conversation_id : currentConversation.id  ,
-      message : messageInput.value ,
-    sender_id : user.id
-       }
-        );
+              const { error : sendError} = await supabase.from("messages").insert(
+               {
+               conversation_id : currentConversation.id  ,
+                message : messageInput.value ,
+              sender_id : user.id
+                 }
+                  );
 
-   if (sendError) {
-    console.error(sendError);
-    return;
-}
-messageInput.value = "";
-                                                         });
+             if (sendError) {
+              console.error(sendError);
+              return;
+          }
+          messageInput.value = "";
+       });                                                  
 
                                                          
- messagesContainer.scrollTop = messagesContainer.scrollHeight;
-  console.log("Send button clicked");
+           messagesContainer.scrollTop = messagesContainer.scrollHeight;
+           console.log("Send button clicked");
+          
+        
 }
 
 
