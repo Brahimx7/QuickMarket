@@ -841,8 +841,13 @@ async function openMessages() {
 
 
                      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    
                        
                 });
+
+                 if (conversation.id == conversationId) {
+                        div.click();
+                     }
           }      
 
 
