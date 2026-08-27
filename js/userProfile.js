@@ -457,7 +457,76 @@ console.log("Favorites clicked");
     .subscribe();
 
 
+let currentMenu = null;
+let editingMessage = null;
+let editingElement = null;
 
+function showMessageMenu(message, p, x, y) {
+
+    if (currentMenu) {
+        currentMenu.remove();
+    }
+
+    const menu = document.createElement("div");
+    menu.classList.add("menu");
+    currentMenu = menu;
+
+    const deleteOption = document.createElement("button");
+    const editOption = document.createElement("button");
+
+    deleteOption.classList.add("deleteOption");
+    editOption.classList.add("editOption");
+
+    deleteOption.textContent = "🗑️ Delete";
+    editOption.textContent = "✏️ Edit";
+
+    menu.appendChild(deleteOption);
+    menu.appendChild(editOption);
+
+    document.body.appendChild(menu);
+
+    menu.style.left = x + "px";
+    menu.style.top = y + "px";
+
+
+    deleteOption.addEventListener("click", async () => {
+
+        messageInput.value = "";
+
+        const { data , error: deleteError } = await supabase
+            .from("messages")
+            .delete()
+            .eq("id", message.id).select();
+            console.log("deleted message :: " ,data);
+
+        if (deleteError) {
+            console.log(deleteError);
+            return;
+        }
+
+        p.remove();
+
+        currentMenu.remove();
+        currentMenu = null;
+
+        sendBtn.textContent = "Send";
+    });
+
+
+    editOption.addEventListener("click", () => {
+
+        editingMessage = message;
+        editingElement = p;
+
+        messageInput.value = editingMessage.message;
+        messageInput.focus();
+
+        currentMenu.remove();
+        currentMenu = null;
+
+        sendBtn.textContent = "Save";
+    });
+}
       
 
 function addMessage(message) {
@@ -469,6 +538,7 @@ function addMessage(message) {
 
      if (message.sender_id === user.id) {
        p.classList.add("my-message");
+
 
        p.addEventListener("contextmenu", (event) => {
         event.preventDefault();
@@ -511,75 +581,7 @@ document.addEventListener("click", (event) => {
     }
 });
 
-let currentMenu = null;
-let editingMessage = null;
-let editingElement = null;
 
-function showMessageMenu(message, p, x, y) {
-
-    if (currentMenu) {
-        currentMenu.remove();
-    }
-
-    const menu = document.createElement("div");
-    menu.classList.add("menu");
-    currentMenu = menu;
-
-    const deleteOption = document.createElement("button");
-    const editOption = document.createElement("button");
-
-    deleteOption.classList.add("deleteOption");
-    editOption.classList.add("editOption");
-
-    deleteOption.textContent = "🗑️ Delete";
-    editOption.textContent = "✏️ Edit";
-
-    menu.appendChild(deleteOption);
-    menu.appendChild(editOption);
-
-    document.body.appendChild(menu);
-
-    menu.style.left = x + "px";
-    menu.style.top = y + "px";
-
-
-    deleteOption.addEventListener("click", async () => {
-
-        messageInput.value = "";
-
-        const { error: deleteError } = await supabase
-            .from("messages")
-            .delete()
-            .eq("id", message.id);
-
-        if (deleteError) {
-            console.log(deleteError);
-            return;
-        }
-
-        p.remove();
-
-        currentMenu.remove();
-        currentMenu = null;
-
-        sendBtn.textContent = "Send";
-    });
-
-
-    editOption.addEventListener("click", () => {
-
-        editingMessage = message;
-        editingElement = p;
-
-        messageInput.value = editingMessage.message;
-        messageInput.focus();
-
-        currentMenu.remove();
-        currentMenu = null;
-
-        sendBtn.textContent = "Save";
-    });
-}
 
 
 async function updateUnreadBadge(conversationId, div) {
@@ -890,7 +892,7 @@ async function openMessages() {
               console.error(sendError);
               return;
           }
-          addMessage(newMessage);
+          
           messageInput.value = "";
            messagesContainer.scrollTop = messagesContainer.scrollHeight;
        });                                                  
