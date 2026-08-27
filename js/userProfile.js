@@ -414,22 +414,123 @@ console.log("Favorites clicked");
 function addMessage(message) {
 
     const p = document.createElement("p");
-
+     
+     
     p.textContent = message.message;
 
-    if (message.sender_id === user.id) {
-        p.classList.add("my-message");
-    } else {
-        p.classList.add("other-message");
-    }
+     if (message.sender_id === user.id) {
+       p.classList.add("my-message");
+
+       p.addEventListener("contextmenu", (event) => {
+        event.preventDefault();
+        showMessageMenu(message,p,event.clientX,event.clientY);
+        });
+
+        let pressTimer;
+         p.addEventListener("touchstart", (event) => {
+             pressTimer = setTimeout(() => {
+                event.preventDefault();
+                const touch = event.touches[0];
+                 showMessageMenu(message,p,touch.clientX,touch.clientY);
+                 }, 500);
+             });
+
+           p.addEventListener("touchend", () => {
+            clearTimeout(pressTimer);
+             });
+
+              p.addEventListener("touchmove", () => {
+                clearTimeout(pressTimer);
+               });
+           }
+           
+           else {
+            p.classList.add("other-message");
+             }
+
 
     messagesContainer.appendChild(p);
     
 }
 
+document.addEventListener("click", (event) => {
+
+    if (currentMenu && !currentMenu.contains(event.target)) {
+
+        currentMenu.remove();
+        currentMenu = null;
+    }
+});
+
+let currentMenu = null;
+let editingMessage = null;
+let editingElement = null;
+
+function showMessageMenu(message, p, x, y) {
+
+    if (currentMenu) {
+        currentMenu.remove();
+    }
+
+    const menu = document.createElement("div");
+    menu.classList.add("menu");
+    currentMenu = menu;
+
+    const deleteOption = document.createElement("button");
+    const editOption = document.createElement("button");
+
+    deleteOption.classList.add("deleteOption");
+    editOption.classList.add("editOption");
+
+    deleteOption.textContent = "🗑️ Delete";
+    editOption.textContent = "✏️ Edit";
+
+    menu.appendChild(deleteOption);
+    menu.appendChild(editOption);
+
+    document.body.appendChild(menu);
+
+    menu.style.left = x + "px";
+    menu.style.top = y + "px";
 
 
+    deleteOption.addEventListener("click", async () => {
 
+        messageInput.value = "";
+
+        const { error: deleteError } = await supabase
+            .from("messages")
+            .delete()
+            .eq("id", message.id);
+
+        if (deleteError) {
+            console.log(deleteError);
+            return;
+        }
+
+        p.remove();
+
+        currentMenu.remove();
+        currentMenu = null;
+
+        sendBtn.textContent = "Send";
+    });
+
+
+    editOption.addEventListener("click", () => {
+
+        editingMessage = message;
+        editingElement = p;
+
+        messageInput.value = editingMessage.message;
+        messageInput.focus();
+
+        currentMenu.remove();
+        currentMenu = null;
+
+        sendBtn.textContent = "Save";
+    });
+}
 
 
 async function updateUnreadBadge(conversationId, div) {
@@ -519,7 +620,7 @@ await updateTotalUnread();
 
 
 
- async function openMessages() {
+async function openMessages() {
       
     
                       console.log("clicked");
@@ -700,10 +801,6 @@ await updateTotalUnread();
           }      
 
 
-console.log(sendBtn);
-console.log(messageInput);
-console.log(messagesContainer);
-console.log(conversationList);
 
 
         sendBtn.addEventListener("click", async () =>      {
@@ -716,6 +813,19 @@ console.log(conversationList);
                   console.log("nahh");
                   return;
               }
+
+               if (editingMessage) { 
+                 const { error : editError } = await supabase.from("messages")
+                 .update({ message : messageInput.value}).eq("id",editingMessage.id);
+                 if(editError){
+                    console.log(editError);
+                    return;
+                 }
+                 editingElement.textContent = messageInput.value;
+                 messageInput.value = "";
+                 sendBtn.textContent = "Send";
+                 return;
+               }
            
               const { error : sendError} = await supabase.from("messages").insert(
                {
@@ -730,6 +840,7 @@ console.log(conversationList);
               return;
           }
           messageInput.value = "";
+           messagesContainer.scrollTop = messagesContainer.scrollHeight;
        });                                                  
 
                                                          
