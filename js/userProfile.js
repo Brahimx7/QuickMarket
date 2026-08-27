@@ -404,6 +404,55 @@ console.log("Favorites clicked");
 
             updateTotalUnread();
         }
+    ).on(
+    "postgres_changes",
+    {
+        event: "UPDATE",
+        schema: "public",
+        table: "messages"
+    }, payload => {
+
+            const message = payload.new;
+
+            if (
+                currentConversation &&
+                message.conversation_id === currentConversation.id
+            ) {
+
+                const p = document.querySelector(
+                    `[data-message-id="${message.id}"]`
+                );
+
+                if (p) {
+                    p.textContent = message.message;
+                }
+            }
+        }
+    ).on(
+        "postgres_changes",
+        {
+            event: "DELETE",
+            schema: "public",
+            table: "messages"
+        },
+        payload => {
+
+            const message = payload.old;
+
+            if (
+                currentConversation &&
+                message.conversation_id === currentConversation.id
+            ) {
+
+                const p = document.querySelector(
+                    `[data-message-id="${message.id}"]`
+                );
+
+                if (p) {
+                    p.remove();
+                }
+            }
+        }
     )
     .subscribe();
 
@@ -414,7 +463,7 @@ console.log("Favorites clicked");
 function addMessage(message) {
 
     const p = document.createElement("p");
-     
+     p.dataset.messageId = message.id;
      
     p.textContent = message.message;
 
@@ -824,6 +873,8 @@ async function openMessages() {
                  editingElement.textContent = messageInput.value;
                  messageInput.value = "";
                  sendBtn.textContent = "Send";
+                 editingMessage = null;
+                 editingElement = null;
                  return;
                }
            
