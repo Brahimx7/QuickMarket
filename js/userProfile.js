@@ -429,31 +429,25 @@ console.log("Favorites clicked");
             }
         }
     ).on(
-        "postgres_changes",
-        {
-            event: "DELETE",
-            schema: "public",
-            table: "messages"
-        },
-        payload => {
+    "postgres_changes",
+    {
+        event: "DELETE",
+        schema: "public",
+        table: "messages"
+    },
+    payload => {
 
-            const message = payload.old;
+        const messageId = payload.old.id;
 
-            if (
-                currentConversation &&
-                message.conversation_id === currentConversation.id
-            ) {
+        const p = document.querySelector(
+            `[data-message-id="${messageId}"]`
+        );
 
-                const p = document.querySelector(
-                    `[data-message-id="${message.id}"]`
-                );
-
-                if (p) {
-                    p.remove();
-                }
-            }
-        }
-    )
+        if (p) {
+            p.remove();
+          }
+       }
+      )
     .subscribe();
 
 
