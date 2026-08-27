@@ -827,18 +827,19 @@ async function openMessages() {
                  return;
                }
            
-              const { error : sendError} = await supabase.from("messages").insert(
+              const { data: newMessage ,  error : sendError} = await supabase.from("messages").insert(
                {
                conversation_id : currentConversation.id  ,
                 message : messageInput.value ,
               sender_id : user.id
                  }
-                  );
+                  ).select().single();
 
              if (sendError) {
               console.error(sendError);
               return;
           }
+          addMessage(newMessage);
           messageInput.value = "";
            messagesContainer.scrollTop = messagesContainer.scrollHeight;
        });                                                  
