@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verified - QuickMarket</title>
+    <link rel="stylesheet" href="./css/Verified.css">
+</head>
+<body>
+    <div class="container" id="content">
+       
+        <div id="loading-card">
+            <div class="spinner"></div>
+            <h1>Verifying your email...</h1>
+            <p>Please wait while we set up your account.</p>
+        </div>
+
+        
+        <div id="success-card" class="hidden">
+            <div class="success-icon">✅</div>
+            <h1>Email Verified Successfully!</h1>
+            <p id="welcome-msg">Welcome to QuickMarket!</p>
+            <div class="success-box">
+                <p style="color: #60a5fa; font-weight: 600; margin-bottom: 0;">You can return to your main website tab now.</p>
+            </div>
+        </div>
+
+        
+        <div id="error-card" class="hidden">
+            <div class="error" style="font-size: 48px; margin-bottom: 16px;">⚠️</div>
+            <h1>Verification Issue</h1>
+            <p class="error" id="error-msg"></p>
+            <p style="margin-top: 16px;"><a href="index.html" style="color: #3b82f6; text-decoration: none;">Go to Home Page</a></p>
+        </div>
+    </div>
+
+    
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script type="module" src="js/supabase.js"></script>
+    <script type="module" src="js/Verified.js"></script>
+</body>
+</html>

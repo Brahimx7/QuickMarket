@@ -1,6 +1,6 @@
 "use strict";
 
-import { Navbar }  from './components/nav.js'
+import { Navbar }  from './components/nav.js';
 import { Footer } from "./components/footer.js";
 import { supabase } from "./supabase.js";
 import { Toast } from "./components/toast.js" ; 
@@ -43,7 +43,7 @@ const {
   data: { user },
 } = await supabase.auth.getUser();
 
- const alert = document.createElement("div");
+ 
 if (postBtn) {
     postBtn.addEventListener("click", () => {
         console.log("Button clicked!");
@@ -175,7 +175,7 @@ if (homeSearch) {
                 
              if(homeSearch.value.trim() === ""){
                    console.log("nahh");
-                   const toast = Toast("you can't search nothing 😊");
+                   const toast = Toast("We couldn't find any products matching your search.");
                    document.body.appendChild(toast);
                    const button = toast.querySelector("button");
                    button.addEventListener("click", ()=>{
@@ -201,15 +201,11 @@ if (homeSearch) {
 
 const categories = document.querySelectorAll(".usercat");
 
-console.log(categories);
-
 categories.forEach(categorie => {
     categorie.addEventListener("click", () => {
         console.log("Clicked:", categorie.textContent);
 
         const catvalue = categorie.textContent.trim();
-
-        console.log(catvalue);
 
         window.location.href = `Market.html?category=${encodeURIComponent(catvalue)}`;
     });

@@ -8,16 +8,15 @@ function renderProducts(productsArray){
     productsGrid.innerHTML = "";
 
      const title = document.getElementById("prod");
+    if (productsArray.length === 0) {
+        title.textContent = "No Products available";
 
-            if(productsArray.length === 0){
+        return;
+    }
 
-                  title.textContent = "No Products available";
-                        return;
+    title.textContent = "Products";
 
-                       }else{
 
-                           title.textContent = "Products";
-                          }
 
             let html = "";
 
@@ -88,7 +87,7 @@ const { data: products, error } = await supabase
     });
 }
 
-
+// home page Search 
 const params = new URLSearchParams(window.location.search);
 const searchValue = params.get("search");
 
@@ -114,23 +113,12 @@ if (searchValue) {
 
 const buttons = document.querySelectorAll(".category-btn");
 
-
-
-buttons.forEach(button => {
-button.addEventListener("click" , () =>{
-    buttons.forEach(btn => btn.classList.remove("active"));
-    button.classList.add("active");
-});
-});
-
-
-
-
-
 buttons.forEach(button => {
 
     button.addEventListener("click", () => {
-
+           
+         buttons.forEach(btn => btn.classList.remove("active"));
+          button.classList.add("active");
         const category = button.textContent;
 
         if(category === "All"){
@@ -159,16 +147,17 @@ const selectedCategory = params.get("category");
 if (selectedCategory) {
    
     buttons.forEach(button => {
-        if (button.textContent.trim() === selectedCategory) {
+        if (button.textContent === selectedCategory) {
+
             button.classList.add("active");
         } else {
             button.classList.remove("active");
         }
     });
 
-    const filteredProducts = products.filter(product =>
-        product.category === selectedCategory
-    );
+    const filteredProducts = products.filter(product =>{
+        return  product.category === selectedCategory;
+    });
 
     renderProducts(filteredProducts);
 
@@ -281,6 +270,7 @@ resetletter();
 
     renderProducts(sortedProducts);
     resetPriceFilter();
+    resetButtonsclass();
 });
 
 highLow.addEventListener("click", () => {
@@ -289,6 +279,7 @@ resetletter()
 
     renderProducts(sortedProducts);
     resetPriceFilter();
+    resetButtonsclass();
 
 });
 
@@ -333,6 +324,7 @@ resetletter();
 
     renderProducts(filteredProducts);
     resetButtonsclass();
+   
 }
 
 minPrice.addEventListener("input", filterByPrice);
@@ -341,7 +333,7 @@ maxPrice.addEventListener("input", filterByPrice);
 function resetPriceFilter() {
     minPrice.value = "";
     maxPrice.value = "";
-    resetButtonsclass();
+  
 }
 
 const AZ = document.getElementById("AZ");
@@ -357,6 +349,7 @@ AZ.addEventListener("click", () => {
     renderProducts(sortedLetters);
     resetPriceFilter();
 resetletter();
+resetButtonsclass();
 });
 
 ZA.addEventListener("click", () => {
@@ -368,6 +361,7 @@ ZA.addEventListener("click", () => {
     renderProducts(sortedLetters);
     resetPriceFilter();
 resetletter();
+resetButtonsclass();
 });
 
 letter.addEventListener("input", () => {
@@ -380,7 +374,7 @@ letter.addEventListener("input", () => {
 
     renderProducts(filteredProducts);
     resetPriceFilter();
-    
+    resetButtonsclass();
     
 });
 
@@ -398,7 +392,7 @@ reset.addEventListener("click", () => {
     letter.value = "";
    resetPriceFilter();resetletter();
     renderProducts(products);
+  resetButtonsclass();
 
-resetButtonsclass();
 
 });

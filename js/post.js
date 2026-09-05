@@ -76,28 +76,27 @@ const form = document.getElementById('productForm');
                         const imageFile = document.getElementById('image').files[0];
  
 
-  if(editProductId){
-       if(!imageFile){
-          imageUrl = currentImage ;
-         }
-        else{
-           const fileName = `${Date.now()}-${imageFile.name}`;
-           const { error: uploadError } = await supabase.storage
-                   .from("product-images")
-                   .upload(fileName, imageFile);
+       if(editProductId){
+           if(!imageFile){
+             imageUrl = currentImage ;
+            }
+           else{
+              const fileName = `${Date.now()}-${imageFile.name}`;
+              const { error: uploadError } = await supabase.storage
+                      .from("product-images")
+                      .upload(fileName, imageFile);
 
-              if (uploadError) {
-               console.error(uploadError);
-              alert(uploadError.message);
-             return;
-                   }
+                 if (uploadError) {
+                  console.error(uploadError);
+                  return;
+                      }
                                  
-             const { data: imageData } = await supabase.storage
-            .from("product-images")
-            .getPublicUrl(fileName);
+                const { data: imageData } = await supabase.storage
+               .from("product-images")
+               .getPublicUrl(fileName);
 
-            imageUrl = imageData.publicUrl;
-           }
+               imageUrl = imageData.publicUrl;
+              }
          console.log(editProductId);
          console.log(user.id);
 
@@ -123,7 +122,7 @@ const form = document.getElementById('productForm');
              return;
            }
            console.log("Product updated successfully!");
-    }
+     }
 
 else{
     

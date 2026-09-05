@@ -58,6 +58,20 @@ const {
 } = await supabase.auth.getUser();
 contactBtn.addEventListener("click", async () => {
 
+      if(!user){
+     const toast = Toast( "You need an account to use this feature. Please sign up first.");
+                
+                 document.body.appendChild(toast);
+                const button = toast.querySelector("button");
+                 button.addEventListener("click", () => { 
+                      toast.remove();
+                      return;
+                 });
+                 setTimeout( () => {
+                    toast.remove();
+                 },10000);
+                 return;
+   }   
 
 if (user.id === product.user_id) {
         const toast = Toast( "You can't contact yourself.");
@@ -71,6 +85,8 @@ if (user.id === product.user_id) {
                  setTimeout( () => {
                     toast.remove();
                  },10000);
+
+            
     return;
 }
 
@@ -110,6 +126,7 @@ const { data: newConversation, error: newConversationError } = await supabase
 
 const saveBtn = document.getElementById("saveBtn");
 
+if(user){
 
 async function isproductSaved(){
  const { data, error } = await supabase
@@ -172,6 +189,25 @@ const saved = await isproductSaved();
 
     
 });
+
+
+}
+if(!user){
+      saveBtn.addEventListener("click", ()=>{
+     const toast = Toast( "You need an account to use this feature. Please sign up first.");
+                
+                 document.body.appendChild(toast);
+                const button = toast.querySelector("button");
+                 button.addEventListener("click", () => { 
+                      toast.remove();
+                      return;
+                 });
+                 setTimeout( () => {
+                    toast.remove();
+                 },10000);
+                 return;
+                });
+}
 
 
 

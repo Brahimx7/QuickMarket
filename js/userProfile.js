@@ -35,7 +35,9 @@ console.log(products);
 
 if (products.length === 0) {
     productdiv.innerHTML = "<p>You haven't posted any products yet.</p>";
-} else {
+}
+
+else {
 
      
     let html = "";
@@ -53,12 +55,12 @@ if (products.length === 0) {
 
                 <p>${product.location}</p>
 
-                <div class="buttons">
-                <button class="details-btn" data-id="${product.id}">
-                    View Details
-                </button>
-                <button class="edit-btn" data-id="${product.id}">✏️ Edit </button>
-                </div>
+               <div class="buttons">
+                   <button class="details-btn" data-id="${product.id}">
+                      View Details
+                    </button>
+                     <button class="edit-btn" data-id="${product.id}">✏️ Edit </button>
+               </div>
                   <button
                   class="delete-btn"
                           data-id="${product.id}"
@@ -77,7 +79,6 @@ if (products.length === 0) {
 
     editButtons.forEach(editButton => {
         editButton.addEventListener("click", ()=>{
-            console.log("edit button clicked");
             const editproductID = editButton.dataset.id;
             window.location.href=(`postproduct.html?editproduct=${editproductID}`);
         });
@@ -128,63 +129,59 @@ deleteButtons.forEach(button => {
 
 
 
-           confirmDelete.addEventListener("click", async () => {
+confirmDelete.addEventListener("click", async () => {
+
+            const { data: conversations, error: conversationsError } = await supabase
+                .from("conversations")
+                .select("id")
+                .eq("product_id", productToDelete);
+
+            if (conversationsError) {
+                console.error(conversationsError);
+                return;
+            }
+
+            // Delete all messages in each conversation
+            for (const conversation of conversations) {
+
+                const { error: messagesDeleteError } = await supabase
+                    .from("messages")
+                    .delete()
+                   .eq("conversation_id", conversation.id);
 
 
-    
-    const { data: conversations, error: conversationsError } = await supabase
-        .from("conversations")
-        .select("id")
-        .eq("product_id", productToDelete);
+                if (messagesDeleteError) {
+                    alert(messagesDeleteError.message);
+                    return;
+                }
+            }
 
-    if (conversationsError) {
-        console.error(conversationsError);
-        alert(conversationsError.message);
-        return;
-    }
+            // Delete conversations
+            const { error: conversationsDeleteError } = await supabase
+                .from("conversations")
+                .delete()
+                .eq("product_id", productToDelete);
 
-    // Delete all messages in each conversation
-    for (const conversation of conversations) {
+            if (conversationsDeleteError) {
+                console.error(conversationsDeleteError);
+                return;
+            }
 
-        const { error: messagesDeleteError } = await supabase
-            .from("messages")
-            .delete()
-            .eq("conversation_id", conversation.id);
+            // Delete product
+            const { error: productDeleteError } = await supabase
+                .from("products")
+                .delete()
+               .eq("id", productToDelete);
 
+            if (productDeleteError) {
+                console.error(productDeleteError);
+                return;
+            }
 
-        if (messagesDeleteError) {
-            alert(messagesDeleteError.message);
-            return;
-        }
-    }
-
-    // Delete conversations
-    const { error: conversationsDeleteError } = await supabase
-        .from("conversations")
-        .delete()
-        .eq("product_id", productToDelete);
-
-    if (conversationsDeleteError) {
-        console.error(conversationsDeleteError);
-        return;
-    }
-
-    // Delete product
-    const { error: productDeleteError } = await supabase
-        .from("products")
-        .delete()
-        .eq("id", productToDelete);
-
-    if (productDeleteError) {
-        console.error(productDeleteError);
-        alert(productDeleteError.message);
-        return;
-    }
-
-    // Close modal and refresh
-    deleteModal.classList.add("hidden");
-    productToDelete = null;
-    window.location.reload();
+            // Close modal and refresh
+            deleteModal.classList.add("hidden");
+            productToDelete = null;
+            window.location.reload();
 });
     
 
@@ -246,106 +243,109 @@ aboutBtn.addEventListener("click", () => {
     
 });
 
+
+
+
 const savedProductsContainer = document.getElementById("savedproducts");
-console.log(savedproducts);
+
 favoritesBtn.addEventListener("click", async () => {
-    conversationList.classList.add("hidden");
-   chatArea.classList.remove("chatphone");
-   chatArea.classList.add("hidden");
-    favoritesBtn.classList.add("active");
-    aboutBtn.classList.remove("active");
-    messagesBtn.classList.remove("active");
-      console.log("clicked");
-    const wasHiddenfavorite = favoritesSection.classList.contains("hidden");
+       conversationList.classList.add("hidden");
+       chatArea.classList.remove("chatphone");
+       chatArea.classList.add("hidden");
+       favoritesBtn.classList.add("active");
+       aboutBtn.classList.remove("active");
+       messagesBtn.classList.remove("active");
+       console.log("clicked");
+       const wasHiddenfavorite = favoritesSection.classList.contains("hidden");
     
-    hideSections();
-     if(wasHiddenfavorite){
-        favoritesSection.classList.remove("hidden");
-        favoritesSection.classList.add("shown");
+       hideSections();
+        if(wasHiddenfavorite){
+           favoritesSection.classList.remove("hidden");
+           favoritesSection.classList.add("shown");
        
-     }
+           }
 
-     const { data : savedproducts , error : savedError} = await supabase.from("savedproducts").select("*").eq("user_id",user.id);
-     if(savedError){
-        console.log(savedError);
-        return;
-     }
-     const productIds = savedproducts.map(item => item.product_id);
-     if (productIds.length === 0) {
-    favoritesSection.innerHTML = "<p class='no-favorites'>You haven't saved any products yet.</p>";
-    return;
-}
+       const { data : savedproducts , error : savedError} = await supabase.from("savedproducts").select("*").eq("user_id",user.id);
+       if(savedError){
+          console.log(savedError);
+          return;
+         }
+       const productIds = savedproducts.map(item => item.product_id);
+       if (productIds.length === 0) {
+          favoritesSection.innerHTML = "<p class='no-favorites'>You haven't saved any products yet.</p>";
+           return;
+          }
 
-      const { data : productssaved , error : productssavedError} = await supabase.from("products").select("*").in("id",productIds);
-     if(productssavedError){
-        console.log(productssavedError);
-        return ;
-     }
-     console.log(productssaved );
-      let html = "";
-      productssaved.forEach(productsaved => {
+
+       const { data : productssaved , error : productssavedError} = await supabase.from("products").select("*").in("id",productIds);
+       if(productssavedError){
+          console.log(productssavedError);
+          return ;
+       }
+        let html = "";
+         productssaved.forEach(productsaved => {
         
-        html += `
-            <div class="product-card">
+           html += `
+               <div class="product-card">
 
-                <img src="${productsaved.image}" alt="${productsaved.title}">
+                   <img src="${productsaved.image}" alt="${productsaved.title}">
 
-                <h3>${productsaved.title}</h3>
+                   <h3>${productsaved.title}</h3>
 
-                <p>$${productsaved.price}</p>
+                   <p>$${productsaved.price}</p>
 
-                <p>${productsaved.location}</p>
+                   <p>${productsaved.location}</p>
               
-            <div class="buttons">
-                <button class="details-btn" data-id="${productsaved.id}">
-                    View Details
-                </button>
+                  <div class="buttons">
+                     <button class="details-btn" data-id="${productsaved.id}">
+                          View Details
+                     </button>
 
-                  <button
-                  class="delete-btn"
-                          data-id="${productsaved.id}"
-                             data-title="${productsaved.title}">
-                             ❤️ Unsave Product
-                      </button>
-              </div>
-            </div>
-        `;
+                       <button
+                      class="delete-btn"
+                              data-id="${productsaved.id}"
+                                 data-title="${productsaved.title}">
+                                 ❤️ Unsave Product
+                          </button>
+                
+                    </div>
+               </div>
+           `;
 
-    });
+            });
 
     
-savedProductsContainer.innerHTML = html;
+            savedProductsContainer.innerHTML = html;
 
-const unsaveproducts = document.querySelectorAll(".delete-btn");
+            const unsaveproducts = document.querySelectorAll(".delete-btn");
 
-unsaveproducts.forEach(product => {
-    product.addEventListener("click", async () =>{
-        const unsaveproductID = product.dataset.id;
-       const { error : unsaveproductError } = await supabase.from("savedproducts").delete().eq("user_id",user.id).eq("product_id",unsaveproductID);
-       if(unsaveproductError){
-        console.log(unsaveproductError);
-        return
-       }
-        window.location.reload();
-    });
+            unsaveproducts.forEach(product => {
+                product.addEventListener("click", async () =>{
+                    const unsaveproductID = product.dataset.id;
+                   const { error : unsaveproductError } = await supabase.from("savedproducts").delete().eq("user_id",user.id).eq("product_id",unsaveproductID);
+                   if(unsaveproductError){
+                    console.log(unsaveproductError);
+                    return
+                   }
+                    window.location.reload();
+                });
    
-});
+                        });
 
-console.log("Favorites clicked");
 
-   const detailsButtons = document.querySelectorAll(".details-btn");
+      const detailsButtons = document.querySelectorAll(".details-btn");
 
-    detailsButtons.forEach(button => {
+       detailsButtons.forEach(button => {
 
-        button.addEventListener("click", () => {
+           button.addEventListener("click", () => {
 
-            const id = button.dataset.id;
+              const id = button.dataset.id;
 
-            window.location.href = `product.html?id=${id}`;
+               window.location.href = `product.html?id=${id}`;
 
-        });
+           });
 
-    });
+       });
 
 });
 
@@ -531,31 +531,31 @@ function addMessage(message) {
     p.textContent = message.message;
 
      if (message.sender_id === user.id) {
-       p.classList.add("my-message");
+             p.classList.add("my-message");
 
 
-       p.addEventListener("contextmenu", (event) => {
-        event.preventDefault();
-        showMessageMenu(message,p,event.clientX,event.clientY);
-        });
+            p.addEventListener("contextmenu", (event) => {
+            event.preventDefault();
+            showMessageMenu(message,p,event.clientX,event.clientY);
+            });
 
-        let pressTimer;
-         p.addEventListener("touchstart", (event) => {
-             pressTimer = setTimeout(() => {
-                event.preventDefault();
-                const touch = event.touches[0];
-                 showMessageMenu(message,p,touch.clientX,touch.clientY);
-                 }, 500);
-             });
+                let pressTimer;
+                   p.addEventListener("touchstart", (event) => {
+                   pressTimer = setTimeout(() => {
+                    event.preventDefault();
+                    const touch = event.touches[0];
+                     showMessageMenu(message,p,touch.clientX,touch.clientY);
+                    }, 500);
+                 });
 
-           p.addEventListener("touchend", () => {
-            clearTimeout(pressTimer);
-             });
+               p.addEventListener("touchend", () => {
+                 clearTimeout(pressTimer);
+                });
 
-              p.addEventListener("touchmove", () => {
-                clearTimeout(pressTimer);
-               });
-           }
+                  p.addEventListener("touchmove", () => {
+                   clearTimeout(pressTimer);
+                  });
+       }
            
            else {
             p.classList.add("other-message");
@@ -693,7 +693,7 @@ async function openMessages() {
                         messagesSection.classList.add("shown");
                         messagesSection.classList.add("section");
                                             }
-
+                                          
                                             
 
                    
@@ -726,9 +726,9 @@ async function openMessages() {
                     conversation : conversation ,
                     latestMessage : conversationMessages[conversationMessages.length - 1]
                 });
-                console.log(conversationsWithLatestMessage);
+               
 
-           }
+             }
            
         conversationsWithLatestMessageInOrder = [...conversationsWithLatestMessage].sort(
                     (a,b) => { 
@@ -737,7 +737,7 @@ async function openMessages() {
                       return timeB - timeA ;
                     }
                 );
-                console.log(conversationsWithLatestMessageInOrder);
+                console.log("conversation with latest message in order : " ,conversationsWithLatestMessageInOrder);
 
            for(const orderedConversation of conversationsWithLatestMessageInOrder){
                        const conversation = orderedConversation.conversation ; 
@@ -813,6 +813,7 @@ async function openMessages() {
                             console.log(unreadMessagesError);
                             return;
                           }
+                          // removing the unsean messages number after opening the message
                           const badge = div.querySelector(".unread-badge");
                           if(badge){
                             badge.remove();
@@ -865,18 +866,18 @@ async function openMessages() {
               }
 
                if (editingMessage) { 
-                 const { error : editError } = await supabase.from("messages")
-                 .update({ message : messageInput.value}).eq("id",editingMessage.id);
-                 if(editError){
-                    console.log(editError);
-                    return;
-                 }
-                 editingElement.textContent = messageInput.value;
-                 messageInput.value = "";
-                 sendBtn.textContent = "Send";
-                 editingMessage = null;
-                 editingElement = null;
-                 return;
+                   const { error : editError } = await supabase.from("messages")
+                   .update({ message : messageInput.value}).eq("id",editingMessage.id);
+                   if(editError){
+                      console.log(editError);
+                      return;
+                   }
+                   editingElement.textContent = messageInput.value;
+                   messageInput.value = "";
+                   sendBtn.textContent = "Send";
+                   editingMessage = null;
+                   editingElement = null;
+                   return;
                }
            
               const { data: newMessage ,  error : sendError} = await supabase.from("messages").insert(

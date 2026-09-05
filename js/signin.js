@@ -1,103 +1,105 @@
-const signed = document.getElementById("signinform");
 import { supabase } from "./supabase.js";
+import { Toast } from "./components/toast.js";
 
-signed.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    
-    const username = document.getElementById("username").value;
-    const useremail = document.getElementById("useremail").value;
-    const userpassword = document.getElementById("pass").value;
-     const confirmpassword = document.getElementById("confpass").value;
+const signed = document.getElementById("signinform");
 
-     if( userpassword !== confirmpassword){
-         e.preventDefault();
-        alert("Passwords do not match!");
+
+signed?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value.trim();
+      const useremail = document.getElementById("useremail").value.trim();
+      const userpassword = document.getElementById("pass").value;
+      const confirmpassword = document.getElementById("confpass").value;
+
+      if (userpassword !== confirmpassword) { 
+
+        showToast("Passwords do not match!"); 
         return;
-     }
 
-    
-  /*  const userInfo = {
-        username,
-        useremail,
-        userpassword
-    };*/
-
-    
-    //const users = JSON.parse(localStorage.getItem("usersdata")) || [];
-   // const usersData = [...users, userInfo];
-    //localStorage.setItem("usersdata", JSON.stringify(usersData));
-
-const { data, error } = await supabase.auth.signUp({
-    email: useremail,
-    password: userpassword,
-    options: { //contains extra information.
-        data: {
-            username: username
         }
+
+    try {
+        localStorage.removeItem("verificationComplete");
+
+             // Create the Supabase Auth account const 
+           const  { data, error } = await supabase.auth.signUp(
+             { 
+                 email: useremail, 
+                 password: userpassword, 
+                 options: { 
+                      data: { username: username }, 
+                      emailRedirectTo: `${window.location.origin}/verified.html` 
+            
+                     }     
+              }
+
+                                                           );
+
+                if (error) { 
+              
+                   showToast(error.message); 
+                   return; 
+                    }  
+
+                if (!data.user) { 
+            
+                   showToast("Signup failed. Please try again."); 
+                   return;
+                  }
+
+                  localStorage.setItem("pendingVerificationEmail", useremail); 
+                  localStorage.setItem("pendingUsername", username);
+                  localStorage.setItem("pendingUserId", data.user.id);
+
+                  showToast("Account created! Please check your email to verify your account.");
+
+                  
+    
+        }
+         
+         catch (error) {
+            
+            console.error("Signup error:", error); 
+            showToast("An unexpected error occurred."); 
+        }
+
+ });
+
+
+
+
+
+
+      window.addEventListener("storage", (event) => {
+
+             if (event.key === "verificationComplete" && event.newValue === "true") {
+
+               localStorage.removeItem("verificationComplete");
+
+               localStorage.removeItem("pendingVerificationEmail");
+               localStorage.removeItem("pendingUsername");
+               localStorage.removeItem("pendingUserId");
+
+                 window.location.href = "index.html";
+                  
+                    }
+
+         });
+
+  
+   function showToast(message) { 
+    
+         const toast = Toast(message); 
+         document.body.appendChild(toast);
+    
+          const button = toast.querySelector("button"); 
+    
+            button?.addEventListener("click", () =>  {
+                  toast.remove();
+                 }); 
+             
+               setTimeout(() => { toast.remove(); }, 5000); 
+            
     }
-});
-
-if (error) {
-    alert(error.message);
-    return;
-}
-
-// Make sure a user was actually returned
-if (!data.user) {
-    alert("Signup failed.");
-    return;
-}
-
-
-const user = data.user;
-
-const { error: userError } = await supabase
-    .from("users")
-    .insert({
-        id: user.id,
-        email: user.email,
-        username: username // or user.user_metadata.username
-    });
-
-if (userError) {
-    alert(userError.message);
-    return;
-}
-
-
-window.location.href=("index.html");
-
-
-});
-
-
-
-const password = document.getElementById("pass");
-const confpassword = document.getElementById("confpass");
-const toggle = document.getElementById("showpass");
-const toggle2 = document.getElementById("showconfpass");
-
-if (password && toggle) {
-
-    toggle.addEventListener("click", () => {
-
-        password.type =
-            password.type === "password" ? "text" : "password";
-
-    });
-
-}
-
-if (confpassword && toggle2) {
-
-    toggle2.addEventListener("click", () => {
-
-        confpassword.type =
-            confpassword.type === "password" ? "text" : "password";
-
-    });
-
-}
-
-
 
