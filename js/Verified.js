@@ -29,7 +29,7 @@ async function init() {
             }
         }
 
-        // Get the existing Supabase Auth user
+     
         const { data: { user }, error } = await supabase.auth.getUser();
 
         if (error) {
@@ -38,30 +38,28 @@ async function init() {
             return;
         }
 
-        // Make sure a user exists
+     
         if (!user) {
             showError("No user found. Please try clicking the confirmation link again.");
             return;
         }
 
-        // Make sure the email is confirmed
+       
         if (!user.email_confirmed_at) {
             showError("Your email has not been confirmed yet.");
             return;
         }
 
-        // Get username from Auth metadata
+       
         const username = user.user_metadata?.username || "User";
 
-        // Add the user to public.users
-        const { error: dbError } = await supabase
-            .from("users")
-            .upsert({
-                id: user.id,
-                email: user.email,
-                username: username
-            }, {
-                onConflict: "id"
+       
+      const { error: dbError } = await supabase
+           .from("users")
+            .insert({
+                  id: user.id,
+                  email: user.email,
+                  username: username
             });
 
         if (dbError) {
@@ -74,7 +72,7 @@ async function init() {
 
 
         localStorage.setItem("verificationComplete", "true");
-        
+
      console.log("USER:", user);
      console.log("USERNAME:", username);
      console.log("USER INSERTED SUCCESSFULLY");
