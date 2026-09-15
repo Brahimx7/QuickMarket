@@ -102,7 +102,28 @@
      box-shadow:
          0 7px 20px rgba(65, 111, 219, 0.25);
  }
+.user {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
 
+.user img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.user p {
+    margin: 0;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+}
 
  @keyframes navEnter {
 

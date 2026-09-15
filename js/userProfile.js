@@ -1,6 +1,6 @@
 
 import { supabase } from "./supabase.js"
-
+import { Toast } from "./components/toast.js" ; 
 
 const productdiv = document.getElementById("userproducts");
 const params = new URLSearchParams(window.location.search);
@@ -15,11 +15,25 @@ if (!user) {
       const profilemail = document.getElementById("profilemail");
       const profileproducts = document.getElementById("profileproducts");
       const profilejoined = document.getElementById("profilejoined");
-      
+      const aboutAvatarImg = document.getElementById("aboutAvatarImg");
+      const settingsAvatarImg = document.getElementById("settingsAvatarImg");
+      const { data : AvatarImg , error : AvatarImgError} = await supabase.from("users").select("Avatar_url").eq("id",user.id).single();
+      if(AvatarImgError){
+        console.log(AvatarImgError);
+      }
+      if(!AvatarImg.Avatar_url){
+        aboutAvatarImg.src = ("/AvatarImg/defaultAvatar.png");
+        settingsAvatarImg.src = ("/AvatarImg/defaultAvatar.png");
+      } 
+      else{
+        aboutAvatarImg.src= AvatarImg.Avatar_url;
+       settingsAvatarImg.src= AvatarImg.Avatar_url;
+      }
       profileUsername.textContent = user.user_metadata.username;
       profilemail.textContent = user.email;
      
      const joinedDate = new Date(user.created_at);
+     
 
      profilejoined.textContent = joinedDate.toLocaleString();
 
@@ -206,34 +220,36 @@ const conversationId = params.get("conversation");
 const aboutBtn = document.getElementById("aboutBtn");
 const favoritesBtn = document.getElementById("favoritesBtn");
 const messagesBtn = document.getElementById("messagesBtn");
+const settingsBtn = document.getElementById("settingsBtn");
 const aboutSection = document.getElementById("aboutSection");
 const favoritesSection = document.getElementById("favoritesSection");
 const messagesSection = document.getElementById("messagesSection");
-
+const settingsSection = document.getElementById("settingsSection");
 
 function hideSections(){
-    aboutSection.classList.remove("shown");
-    favoritesSection.classList.remove("shown");
-    messagesSection.classList.remove("shown");
-    aboutSection.classList.add("hidden");
-    favoritesSection.classList.add("hidden");
-    messagesSection.classList.add("hidden");
+   [aboutSection, favoritesSection, messagesSection, settingsSection ].forEach(s => {
+    s.classList.add("hidden");
+    s.classList.remove("shown");
+    s.classList.remove("section");
+  });
 }
 
+function removeActiveClasses(){
+   [aboutBtn, favoritesBtn, messagesBtn, settingsBtn ].forEach(b => {
+    b.classList.remove("active");
+  });
+}
 hideSections();
+removeActiveClasses();
  aboutSection.classList.add("shown");
   aboutBtn.classList.add("active");
 
 aboutBtn.addEventListener("click", () => {
-   conversationList.classList.add("hidden");
-   chatArea.classList.remove("chatphone");
-   chatArea.classList.add("hidden");
-     aboutBtn.classList.add("active");
-    favoritesBtn.classList.remove("active");
-    messagesBtn.classList.remove("active");
-      console.log("clicked");
-    const wasHiddenabout = aboutSection.classList.contains("hidden");
+  
     
+    const wasHiddenabout = aboutSection.classList.contains("hidden");
+    removeActiveClasses();
+    aboutBtn.classList.add("active");
     hideSections();
      if(wasHiddenabout){
         aboutSection.classList.remove("hidden");
@@ -243,19 +259,17 @@ aboutBtn.addEventListener("click", () => {
     
 });
 
-
+/*conversationList.classList.add("hidden");
+       chatArea.classList.remove("chatphone");
+       chatArea.classList.add("hidden");*/
 
 
 const savedProductsContainer = document.getElementById("savedproducts");
 
 favoritesBtn.addEventListener("click", async () => {
-       conversationList.classList.add("hidden");
-       chatArea.classList.remove("chatphone");
-       chatArea.classList.add("hidden");
+        removeActiveClasses();
        favoritesBtn.classList.add("active");
-       aboutBtn.classList.remove("active");
-       messagesBtn.classList.remove("active");
-       console.log("clicked");
+
        const wasHiddenfavorite = favoritesSection.classList.contains("hidden");
     
        hideSections();
@@ -666,7 +680,7 @@ await updateTotalUnread();
 
 
 async function openMessages() {
-      
+  
     
                       console.log("clicked");
                          if (messagesSection.classList.contains("shown")) {
@@ -730,13 +744,19 @@ async function openMessages() {
 
              }
            
-        conversationsWithLatestMessageInOrder = [...conversationsWithLatestMessage].sort(
-                    (a,b) => { 
-                      const timeA =  new Date(a.latestMessage.created_at).getTime();
-                       const timeB =  new Date(b.latestMessage.created_at).getTime();
-                      return timeB - timeA ;
-                    }
-                );
+      conversationsWithLatestMessageInOrder = [...conversationsWithLatestMessage].sort(
+                    (a, b) => {
+                              const timeA = a.latestMessage
+                               ? new Date(a.latestMessage.created_at).getTime()
+                               : 0;
+
+                               const timeB = b.latestMessage
+                               ? new Date(b.latestMessage.created_at).getTime()
+                               : 0;
+
+                    return timeB - timeA;
+                                 }
+                        );
                 console.log("conversation with latest message in order : " ,conversationsWithLatestMessageInOrder);
 
            for(const orderedConversation of conversationsWithLatestMessageInOrder){
@@ -911,3 +931,252 @@ messagesBtn.addEventListener("click", openMessages);
                                            await openMessages();
                                         }
                                                          
+
+// ===== SETTINGS =====
+const settingsUsername = document.getElementById("settingsUsername");
+const settingsEmail = document.getElementById("settingsEmail");
+const newPassword = document.getElementById("newPassword");
+const confirmPassword = document.getElementById("confirmPassword");
+const avatarInput = document.getElementById("avatarInput");
+const uploadAvatarBtn = document.getElementById("uploadAvatarBtn");
+const removeAvatarBtn = document.getElementById("removeAvatarBtn");
+const saveProfileBtn = document.getElementById("saveProfileBtn");
+const savePasswordBtn = document.getElementById("savePasswordBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+const settingsMsg = document.getElementById("settingsMsg");
+const settingsAvatarEmoji = document.getElementById("settingsAvatarEmoji");
+const navUserImg = document.getElementById("navUserImg");
+const navUsername = document.getElementById("navUsername");
+
+settingsBtn.addEventListener("click", () => {
+  
+    
+    const wasHiddenSettings = settingsSection.classList.contains("hidden");
+    removeActiveClasses();
+    settingsBtn.classList.add("active");
+    hideSections();
+     if(wasHiddenSettings){
+        settingsSection.classList.remove("hidden");
+        settingsSection.classList.add("shown");
+       
+     }
+    
+});
+
+uploadAvatarBtn.addEventListener("click", async () => {
+    avatarInput.click();
+});
+
+avatarInput.addEventListener("change", async () => {
+     const AvatarFile = avatarInput.files[0];
+     const AvatarFileName = `${user.id}/${Date.now()}-${AvatarFile.name}`;
+    const { error : AvatarUploadError } = await supabase.storage.from("avatars").upload(AvatarFileName, AvatarFile);
+    if(AvatarUploadError) {
+        console.log(AvatarUploadError);
+        return;
+    }
+
+    const { data: { publicUrl: AvatarUrl } } = supabase.storage.from("avatars").getPublicUrl(AvatarFileName);
+    const { error : UpdateError } = await supabase.from("users").update({
+      Avatar_url : AvatarUrl
+    }).eq("id",user.id);
+
+    if(UpdateError){
+        console.log(UpdateError);
+        return;
+    }
+   settingsAvatarImg.src = AvatarUrl;
+   aboutAvatarImg.src=AvatarUrl;
+   navUserImg.src=AvatarUrl;
+
+});
+
+
+saveProfileBtn.addEventListener("click" , async()=> {
+        if(settingsUsername.value){
+            const { error } = await supabase.from("users").update(
+                {
+                    username : settingsUsername.value
+                }
+              ).eq("id",user.id);
+              if(error){
+                console.log(error);
+              }
+              const { data : NewUsername , error : NewUsernameError} = await supabase.from("users").select("username").eq("id",user.id).single();
+              if(NewUsernameError){
+                console.log(NewUsernameError);
+              }
+               console.log(NewUsername.username);
+              profileUsername.textContent = NewUsername.username;
+            navUsername.textContent = settingsUsername.value;
+     
+             const toast = Toast(
+                "Username updated successfully."
+            );
+
+            document.body.appendChild(toast);   
+
+            const button = toast.querySelector("button");
+
+            button.addEventListener("click", () => {
+                toast.remove();
+            });
+        
+            setTimeout(() => {
+                toast.remove();
+           }, 10000);
+           settingsUsername.value= "";
+         }
+
+
+           if (settingsEmail.value) {
+
+            const { error } = await supabase.auth.updateUser({
+                email: settingsEmail.value,
+                options: {
+                    emailRedirectTo: `${window.location.origin}/verified.html`
+                }
+            });
+
+            if (error) {
+                console.log(error);
+                return;
+            }
+
+          localStorage.setItem(
+                "pendingEmailUpdate",
+                  settingsEmail.value
+                );
+
+            const toast = Toast(
+                "A verification email has been sent to your new email address. Please verify it to complete the change."
+            );
+
+            document.body.appendChild(toast);   
+
+            const button = toast.querySelector("button");
+
+            button.addEventListener("click", () => {
+                toast.remove();
+            });
+        
+            setTimeout(() => {
+                toast.remove();
+           }, 10000);
+
+
+        
+
+            return;
+        }
+
+
+      
+      
+});
+
+
+       const emailVerified =
+       localStorage.getItem("NewEmailverificationComplete");
+
+         if (emailVerified === "true") {
+             const { data: { user } } = await supabase.auth.getUser();
+
+               profilemail.textContent = user.email;
+               localStorage.removeItem("NewEmailverificationComplete");
+          }
+
+
+
+
+ savePasswordBtn.addEventListener("click", async () => {
+
+    if (!newPassword.value || !confirmPassword.value) {
+        console.log("Please fill both password fields.");
+        return;
+    }
+
+    if (newPassword.value !== confirmPassword.value) {
+              const toast = Toast(
+                "Passwords do not match."
+            );
+
+            document.body.appendChild(toast);   
+
+            const button = toast.querySelector("button");
+
+            button.addEventListener("click", () => {
+                toast.remove();
+            });
+        
+            setTimeout(() => {
+                toast.remove();
+           }, 10000);
+        
+        return;
+    }
+
+    if (newPassword.value.length < 6) {
+         const toast = Toast(
+                "Password must be at least 6 characters."
+            );
+
+            document.body.appendChild(toast);   
+
+            const button = toast.querySelector("button");
+
+            button.addEventListener("click", () => {
+                toast.remove();
+            });
+        
+            setTimeout(() => {
+                toast.remove();
+           }, 10000);
+        return;
+    }
+
+    const { error } = await supabase.auth.updateUser({
+        password: newPassword.value
+    });
+
+    if (error) {
+        console.log("Password update error:", error);
+        return;
+    }
+
+ 
+   
+
+    newPassword.value = "";
+    confirmPassword.value = "";
+
+        const toast = Toast(
+                "Password updated successfully."
+            );
+
+            document.body.appendChild(toast);   
+
+            const button = toast.querySelector("button");
+
+            button.addEventListener("click", () => {
+                toast.remove();
+            });
+        
+            setTimeout(() => {
+                toast.remove();
+           }, 10000);
+});         
+
+
+
+logoutBtn.addEventListener("click", async () => {
+
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+        console.log("Logout error:", error);
+        return;
+    }
+
+    window.location.href = "./index.html";
+});

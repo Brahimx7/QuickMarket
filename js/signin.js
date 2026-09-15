@@ -5,6 +5,7 @@ const signed = document.getElementById("signinform");
 const successful_email_panel = document.getElementById("successful_email_panel");
 const resend_email = document.getElementById("resend_email");
  const close = document.getElementById("close");
+ 
 
 
 signed?.addEventListener("submit", async (e) => {
@@ -23,6 +24,23 @@ signed?.addEventListener("submit", async (e) => {
         return;
 
         }
+
+       const { data: existingEmail, error: existingEmailError } = await supabase
+        .from("users")
+         .select("id")
+          .eq("email", useremail)
+            .maybeSingle();
+
+  if (existingEmailError) {
+    console.error("Error checking email:", emailCheckError);
+    showToast("Could not check the email. Please try again.");
+    return;
+  }
+
+  if (existingEmail) {
+    showToast("Email already exists");
+    return;
+  }
 
     try {
         localStorage.removeItem("verificationComplete");

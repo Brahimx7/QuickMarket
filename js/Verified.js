@@ -7,6 +7,8 @@ const errorCard = document.getElementById("error-card");
 const welcomeMsg = document.getElementById("welcome-msg");
 const errorMsg = document.getElementById("error-msg");
 
+const newEmail = localStorage.getItem("pendingEmailUpdate");
+
 
 async function init() {
 
@@ -54,40 +56,72 @@ async function init() {
         const username = user.user_metadata?.username || "User";
 
        
-      const { error: dbError } = await supabase
-           .from("users")
-            .insert({
-                  id: user.id,
-                  email: user.email,
-                  username: username
-            });
 
-        if (dbError) {
-            console.error("Database error:", dbError);
-            showError(
-                "Your email was verified, but we could not create your profile. Try again later."
-            );
-            return;
-        }
+        if (newEmail) {
+
+               const { error: dbError } = await supabase
+              .from("users")
+              .update({
+                  email: user.email
+                   })
+                    .eq("id", user.id);
+
+         if (dbError) {
+              console.error("Database error:", dbError);
+              showError(
+                  "Your email was verified, but we could not update your profile."
+              );
+              return;
+               }
+
+            localStorage.setItem("NewEmailverificationComplete", "true");
+            localStorage.removeItem("pendingEmailUpdate");
+           console.log("USER:", user);
+           console.log("USERNAME:", username);
+           console.log("Email Updated SUCCESSFULLY");
+
+           loadingCard.classList.add("hidden");
+           successCard.classList.remove("hidden");
+
+           welcomeMsg.textContent = `email updated Successfuly`; 
+      
+      } else {
+
+            const { error: dbError } = await supabase
+                 .from("users")
+                  .insert({
+                        id: user.id,
+                        email: user.email,
+                        username: username
+                  });
+
+              if (dbError) {
+                  console.error("Database error:", dbError);
+                 showError(
+                      "Your email was verified, but we could not create your profile. Try again later."
+                  );
+                  return;
+              }
 
 
-        localStorage.setItem("verificationComplete", "true");
+              localStorage.setItem("verificationComplete", "true");
 
-     console.log("USER:", user);
-     console.log("USERNAME:", username);
-     console.log("USER INSERTED SUCCESSFULLY");
+           console.log("USER:", user);
+           console.log("USERNAME:", username);
+           console.log("USER INSERTED SUCCESSFULLY");
 
-     loadingCard.classList.add("hidden");
-     successCard.classList.remove("hidden");
+           loadingCard.classList.add("hidden");
+           successCard.classList.remove("hidden");
 
-     welcomeMsg.textContent = `Welcome to QuickMarket, ${username}!`;
+           welcomeMsg.textContent = `Welcome to QuickMarket, ${username}!`; 
+          }
 
-    } catch (error) {
+          } catch (error) {
 
-        console.error("Verification error:", error);
-        showError("An unexpected error occurred.");
+              console.error("Verification error:", error);
+              showError("An unexpected error occurred.");
 
-    }
+          }
 }
 
 

@@ -225,36 +225,9 @@ body{
 }
 
 
-
-.profile-menu{
-    background: linear-gradient(to right ,hsl(244, 88%, 16%), hsl(244, 88%, 31%));
-    width: 540px;
-    height: auto;
-    padding: 15px;
-    border: 2px solid hsl(245, 97%, 28%);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    margin-left: 130px;
-    animation: fadeUp 0.8s ease 0.2s both;
-}
-.profile-menu button{
-    background: linear-gradient(to right, rgb(0, 0, 81),rgb(21, 21, 91));
-    padding: 10px;
-    border: 1px solid  hsl(240, 100%, 15%) ;
-    border-radius: 10px;
-    font-size: 20px;
-    cursor: pointer;
-    color: white;
-}
-
-.profile-menu button:hover{
-     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
-
-}
+.profile-menu{ background:linear-gradient(to right,hsl(244,88%,16%),hsl(244,88%,31%)); width:fit-content; max-width:100%; height:auto; padding:15px; border:2px solid hsl(245,97%,28%); border-radius:10px; display:flex; align-items:center; justify-content:center; gap:15px; margin:0 auto 20px auto; flex-wrap:wrap; animation:fadeUp 0.8s ease 0.2s both; }
+.profile-menu button{ background:linear-gradient(to right,rgb(0,0,81),rgb(21,21,91)); padding:10px; border:1px solid hsl(240,100%,15%); border-radius:10px; font-size:18px; cursor:pointer; color:white; }
+.profile-menu button:hover{ transform:translateY(-2px); box-shadow:0 8px 20px rgba(37,99,235,0.3); }
 
 
 .active{
@@ -582,6 +555,200 @@ body{
     color: #291b93;
 }
 
+
+#settingsSection.shown {
+    display: block;
+    animation: slideRight 0.8s ease 0.2s both;
+}
+
+.profileImage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+.profileImage h3{
+    font-size: 25px;
+    font-weight: bold;
+    color: hsl(240, 4%, 95%);
+}
+
+.settingsAvatar {
+    position: relative;
+    width: 120px;
+    height: 120px;
+}
+.settingsAvatar button{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    width: 36px;
+    height: 36px;
+
+    border-radius: 50%;
+    background: rgb(50, 42, 42);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.settingsAvatar button::after {
+    content: "Upload image";
+
+    position: absolute;
+    bottom: 45px;
+    right: -25px;
+
+  
+    color: white;
+
+    padding: 6px 10px;
+    border-radius: 6px;
+
+    font-size: 12px;
+    white-space: nowrap;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(5px);
+
+    transition: 0.2s ease;
+}
+
+.settingsAvatar button:hover::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    background: hsl(216, 71%, 31%);
+}
+
+#settingsAvatarImg {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+#aboutAvatarImg{
+     width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.settings-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 18px;
+}
+
+.settings-card h3 {
+    margin: 0 0 20px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.settings-card label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+
+    color: #b8bfd3;
+    font-size: 14px;
+}
+
+.settings-card input {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 12px 14px;
+    border-radius: 9px;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+
+    color: white;
+    font-size: 14px;
+
+    outline: none;
+    transition: 0.2s ease;
+}
+
+.settings-card input::placeholder {
+    color: #6f768b;
+}
+
+.settings-card input:focus {
+    border-color: #4f7cff;
+    background: rgba(79, 124, 255, 0.05);
+    box-shadow: 0 0 0 3px rgba(79, 124, 255, 0.1);
+}
+
+
+#saveProfileBtn,
+#savePasswordBtn {
+    margin-top: 4px;
+
+    padding: 11px 18px;
+    border: none;
+    border-radius: 9px;
+
+    background: #4f7cff;
+    color: white;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+#saveProfileBtn:hover,
+#savePasswordBtn:hover {
+    background: #628bff;
+    transform: translateY(-1px);
+}
+
+/* Logout card */
+.settings-card:has(.danger) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#logoutBtn.danger {
+    width: 100%;
+
+    padding: 11px 18px;
+    border-radius: 9px;
+
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    background: rgba(239, 68, 68, 0.08);
+
+    color: #f87171;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+#logoutBtn.danger:hover {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.4);
+}
 
 
 @keyframes pageEnter {

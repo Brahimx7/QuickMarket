@@ -6,6 +6,7 @@
     <title>Profile</title>
     <link rel="stylesheet" href="./css/nav.css">
      <link rel="stylesheet" href="./css/userProfile.css">
+       <link rel="stylesheet" href="css/toast.css">
      <link rel="icon" href="favicon.png">
 </head>
 
@@ -33,6 +34,8 @@
                      
                       <button id="messagesBtn">💬 Messages</button>
 
+                       <button id="settingsBtn">⚙️ Settings</button>
+
                  </div>
 
     <div id="aboutSection">
@@ -40,7 +43,7 @@
                   <div class="profile-header">
 
                             <div class="avatar">
-                               👤
+                                 <img id="aboutAvatarImg" src="./AvatarImg/defaultAvatar.png" alt="Avatar">
                             </div>
 
                             <div class="profile-info">
@@ -81,22 +84,69 @@
                         <div id="conversationList"></div>
 
                     <div id="chatArea" class="hidden">
-                            <h2 id="productName">Product</h2>
+                             <h2 id="productName">Product</h2>
                               <div id="messagesContainer"></div>
 
-                        <div class="typesendmessages">
-                             <input
-                                 type="text"
-                                 id="messageInput"
-                                     placeholder="Type your message..."
+                           <div class="typesendmessages">
+                                <input
+                                   type="text"
+                                     id="messageInput"
+                                        placeholder="Type your message..."
                                             class="hidden">
 
-                             <button id="sendBtn" class="hidden">Send</button>
-                         </div>
+                                 <button id="sendBtn" class="hidden">Send</button>
+                          </div>
 
                     </div>
 
               </div>
+
+
+
+   <div id="settingsSection" class="hidden">
+                      
+                       <div id="settingsMsg" class="hidden"></div>
+
+                      <div class="settings-card">
+                                <div class="profileImage">
+                                        <h3>Profile Picture</h3>
+                                         <div class="settingsAvatar">
+                                               <img id="settingsAvatarImg" src="./AvatarImg/defaultAvatar.png" alt="Avatar">
+                                               <button id="uploadAvatarBtn" type="button">📸</button>
+                                                <input type="file" id="avatarInput" accept="image/*" style="display: none;">  
+                                         </div>
+                                 </div>
+                      </div>
+                        
+        
+
+                        <div class="settings-card">
+                              <h3>Profile Info</h3>
+                              <label>Username
+                                  <input type="text" id="settingsUsername" placeholder="Your username">
+                              </label>
+                              <label>Email
+                                 <input type="email" id="settingsEmail" placeholder="you@email.com">
+                              </label>
+                             <button id="saveProfileBtn">Save Changes</button>
+                       </div>
+
+                         <div class="settings-card">
+                              <h3>Change Password</h3>
+                              <label>New Password
+                                 <input type="password" id="newPassword" placeholder="Min 6 characters">
+                              </label>
+                              <label>Confirm Password
+                                <input type="password" id="confirmPassword" placeholder="Repeat password">
+                             </label>
+                             <button id="savePasswordBtn">Update Password</button>
+                         </div>
+
+                          <div class="settings-card">
+                              <button id="logoutBtn" class="danger">Logout</button>
+                          </div>
+             </div>
+   
             
             
               

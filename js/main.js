@@ -28,6 +28,7 @@ if (foot) foot.innerHTML = Footer();
 
 
 
+
 const explore = document.getElementById("startexploring");
 if(explore) {
     explore.addEventListener("click" , ()=>{
@@ -115,9 +116,29 @@ if (user) {
     if (error) {
         console.error(error);
     } else {
-        signupLink.textContent = `👤 ${profile.username}`;
+       
         signupLink.href = "userProfile.html";
         loginLink.textContent = "Logout";
+
+       if(profile.Avatar_url){
+           signupLink.innerHTML ="";
+           signupLink.innerHTML =  `
+            <div class="user"> 
+            <img id="navUserImg" src="${profile.Avatar_url}" alt="Avatar"> <p id="navUsername">${profile.username}</p>
+            </div>
+         `;
+       }
+       else{
+           signupLink.innerHTML =  `
+              <div class="user"> 
+                <img id="navUserImg" src="./AvatarImg/defaultAvatar.png" alt="Avatar"> <p id="navUsername">${profile.username}</p>
+               </div>
+           `;
+       }
+
+       
+
+    
     }
 
    
@@ -130,6 +151,9 @@ if (user) {
         });
 
 }
+
+
+
 
 
 const { data: users, error: usersError } = await supabase
