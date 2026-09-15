@@ -573,7 +573,12 @@ transform: translateY(-4px);
         display: grid;
         grid-template-columns: repeat(2,1fr);
         gap: 8px;
+        margin: 15px;
     }
+    .filter-buttons button{
+    width: 140px;
+    padding: 7px 10px;
+}
     .filters h2{
         font-size: 40px;
     }
@@ -589,7 +594,7 @@ transform: translateY(-4px);
  }
 
  .priceP{
-     display: grid;
+        display: grid;
         grid-template-columns: repeat(2,1fr);
         gap: 8px;
  }
@@ -623,3 +628,130 @@ transform: translateY(-4px);
 
 }
 
+@media (max-width: 380px) {
+
+    .market {
+        width: 96%;
+        padding: 15px 10px;
+    }
+
+    .market-header {
+        margin-bottom: 35px;
+    }
+
+    .market-header h1 {
+        font-size: 2rem;
+    }
+
+    .market-header p {
+        font-size: 1.1rem;
+        margin-bottom: 25px;
+    }
+
+    .search-box {
+        gap: 8px;
+    }
+
+    .search-box input {
+        height: 48px;
+        font-size: 14px;
+        padding: 0 16px;
+    }
+
+    .search-box button {
+        max-width: 160px;
+        height: 45px;
+        font-size: 14px;
+    }
+
+    .categories {
+        margin-top: 40px;
+    }
+
+    .categories h2 {
+        font-size: 1.5rem;
+    }
+
+    .category-list {
+        gap: 8px;
+    }
+
+    .category-btn {
+        padding: 10px 6px;
+        font-size: 13px;
+    }
+
+    .filters {
+        margin: 15px 0;
+    }
+
+    .filters h2,
+    #prod {
+        font-size: 28px;
+    }
+
+    .filter-buttons {
+        margin: 10px 0;
+        gap: 6px;
+    }
+
+    .filter-buttons button {
+        width: 100%;
+        font-size: 13px;
+        padding: 8px 6px;
+    }
+
+    .categoriesS,
+    .titleT,
+    .priceP {
+        width: 100%;
+        padding: 12px;
+        margin: 20px auto;
+        gap: 6px;
+    }
+
+    .categoriesS button,
+    .titleT button,
+    .priceP button {
+        padding: 9px 8px;
+        font-size: 12px;
+    }
+
+    .categoriesS input,
+    .titleT input,
+    .priceP input {
+        width: 100%;
+        height: 38px;
+        font-size: 13px;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .product-card {
+        border-radius: 13px;
+    }
+
+    .product-card img {
+        height: 125px;
+    }
+
+    .product-card h3 {
+        font-size: 13px;
+        margin: 8px 6px 4px;
+        line-height: 1.3;
+    }
+
+    .product-card p {
+        font-size: 13px;
+        margin: 0 6px 8px;
+    }
+
+    .product-card button {
+        margin: 8px;
+        height: 36px;
+        font-size: 12px;
+    }
+}
