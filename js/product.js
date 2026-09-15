@@ -29,24 +29,32 @@ const { data: product , error : productError } = await supabase
     .select("*")
     .eq("id", id)
     .single();
+    if (productError) {
+        console.error(productError);
+     } 
 
     const { data : products , error : productsError} = await supabase.from("products").select("*");
     if(productsError){
         window.alert(productsError);
     }
-if (productError) {
-    console.error(productError);
-} else {
+
+      const { data : sellerUsername , error:sellerUsernameError } = await supabase.from("users").select("username").eq("id",product.user_id).single();
+
+         if(sellerUsernameError){
+           console.log(sellerUsernameError);
+           }
+
+
     productImage.src = product.image;
     productTitle.textContent = product.title;
     productPrice.textContent = `$${product.price}`;
     productDescription.textContent = product.description;
     productCondition.textContent = product.condition;
     productLocation.textContent = product.location;
-    sellerName.textContent = product.seller;
+    sellerName.textContent =sellerUsername.username;
     sellerPhone.textContent = product.phone;
     productCategory.textContent = product.category;
-}
+
 
 console.log("ID from URL:", id);
 console.log("Product:", product);

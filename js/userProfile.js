@@ -17,20 +17,27 @@ if (!user) {
       const profilejoined = document.getElementById("profilejoined");
       const aboutAvatarImg = document.getElementById("aboutAvatarImg");
       const settingsAvatarImg = document.getElementById("settingsAvatarImg");
-      const { data : AvatarImg , error : AvatarImgError} = await supabase.from("users").select("Avatar_url").eq("id",user.id).single();
-      if(AvatarImgError){
-        console.log(AvatarImgError);
-      }
-      if(!AvatarImg.Avatar_url){
+    
+      const { data: profile, error: profileError } =
+             await supabase
+                  .from("users")
+                  .select("username, Avatar_url,email")
+                   .eq("id", user.id)
+                    .single();
+
+          if (profileError) {
+               console.log(profileError);
+              }
+      if(!profile.Avatar_url){
         aboutAvatarImg.src = ("/AvatarImg/defaultAvatar.png");
         settingsAvatarImg.src = ("/AvatarImg/defaultAvatar.png");
       } 
       else{
-        aboutAvatarImg.src= AvatarImg.Avatar_url;
-       settingsAvatarImg.src= AvatarImg.Avatar_url;
+        aboutAvatarImg.src= profile.Avatar_url;
+       settingsAvatarImg.src= profile.Avatar_url;
       }
-      profileUsername.textContent = user.user_metadata.username;
-      profilemail.textContent = user.email;
+      profileUsername.textContent = profile.username;
+      profilemail.textContent = profile.email;
      
      const joinedDate = new Date(user.created_at);
      
@@ -1002,12 +1009,19 @@ saveProfileBtn.addEventListener("click" , async()=> {
               if(error){
                 console.log(error);
               }
-              const { data : NewUsername , error : NewUsernameError} = await supabase.from("users").select("username").eq("id",user.id).single();
-              if(NewUsernameError){
-                console.log(NewUsernameError);
-              }
-               console.log(NewUsername.username);
-              profileUsername.textContent = NewUsername.username;
+            
+              const { data: profile, error: profileError } =
+                       await supabase
+                          .from("users")
+                            .select("username")
+                               .eq("id", user.id)
+                                  .single();
+
+               if (profileError) {
+                    console.log(profileError);
+                    return;
+               }
+              profileUsername.textContent = profile.username;
             navUsername.textContent = settingsUsername.value;
      
              const toast = Toast(
@@ -1031,12 +1045,14 @@ saveProfileBtn.addEventListener("click" , async()=> {
 
            if (settingsEmail.value) {
 
-            const { error } = await supabase.auth.updateUser({
-                email: settingsEmail.value,
-                options: {
-                    emailRedirectTo: `${window.location.origin}/verified.html`
+          const { error } = await supabase.auth.updateUser(
+                {
+                    email: settingsEmail.value
+                },
+                {
+                 emailRedirectTo: `${window.location.origin}/verified.html`
                 }
-            });
+            );
 
             if (error) {
                 console.log(error);

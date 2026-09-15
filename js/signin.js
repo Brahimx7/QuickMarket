@@ -3,7 +3,6 @@ import { Toast } from "./components/toast.js";
 
 const signed = document.getElementById("signinform");
 const successful_email_panel = document.getElementById("successful_email_panel");
-const resend_email = document.getElementById("resend_email");
  const close = document.getElementById("close");
  
 
@@ -91,39 +90,6 @@ signed?.addEventListener("submit", async (e) => {
  });
 
 
-resend_email?.addEventListener("click", async () => { 
-    
-    const email = localStorage.getItem("pendingVerificationEmail");
-    
-    if (!email) { 
-        
-        showToast("No verification email found.");
-         return; 
-
-        } 
-        try { 
-            
-            const { error } = await supabase.auth.resend
-            ({ type: "signup", email: email });
-            
-            if (error) { console.error("Resend error:", error); 
-                
-                showToast(error.message); 
-                return;
-             } 
-             
-             showToast("Verification email sent again!");
-            
-            } 
-            
-            catch (error) {
-                
-                console.error("Resend error:", error);
-                 showToast("Could not resend the verification email.");
-                 } 
-                
-                
-                });
 
                 close?.addEventListener("click", () => { 
                     

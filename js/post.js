@@ -19,12 +19,13 @@ const editProductId = params.get("editproduct");
   if(productInfoError){
     console.log(productInfoError);
   }
+
+
  const title = document.getElementById('title');
  const price = document.getElementById('price');
  const category = document.getElementById('category');
  const condition = document.getElementById('condition');
  const location = document.getElementById('location');
- const seller = document.getElementById('seller');
  const description = document.getElementById('description');
  const phone = document.getElementById('phone');
  const imagelabel =  document.getElementById('imagelabel'); 
@@ -36,7 +37,6 @@ const editProductId = params.get("editproduct");
    category.value=productInfo.category;
    condition.value=productInfo.condition;
    location.value=productInfo.location;
-   seller.value=productInfo.seller;
    phone.value=productInfo.phone;
    currentImage = productInfo.image;
    description.value=productInfo.description;
@@ -70,7 +70,6 @@ const form = document.getElementById('productForm');
                         const category = document.getElementById('category').value;
                         const condition = document.getElementById('condition').value;
                         const location = document.getElementById('location').value;
-                        const seller = document.getElementById('seller').value;
                         const description = document.getElementById('description').value;
                         const phone = document.getElementById('phone').value;
                         const imageFile = document.getElementById('image').files[0];
@@ -109,7 +108,6 @@ const form = document.getElementById('productForm');
            category,
            condition,
            location,
-           seller,
            description,
            phone,
            image: imageUrl,
@@ -159,7 +157,6 @@ else{
                                    category,
                                    condition,
                                    location,
-                                   seller,
                                    description,
                                    phone,
                                    image: imageUrl,
