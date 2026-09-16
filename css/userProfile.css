@@ -630,6 +630,7 @@ body{
     background: hsl(216, 71%, 31%);
 }
 
+
 #settingsAvatarImg {
     width: 120px;
     height: 120px;
@@ -748,6 +749,42 @@ body{
 #logoutBtn.danger:hover {
     background: rgba(239, 68, 68, 0.15);
     border-color: rgba(239, 68, 68, 0.4);
+}
+
+
+#settingsBio {
+    width: 97%;
+    min-height: 90px;
+
+    padding: 12px 14px;
+
+    margin-top: 8px;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+
+   
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 12px;
+    line-height: 1.5;
+
+    resize: vertical;
+
+    outline: none;
+
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#settingsBio::placeholder {
+    color: #77778d;
+}
+
+#settingsBio:focus {
+    border-color: #4f7cff;
+    background: rgba(79, 124, 255, 0.05);
+    box-shadow: 0 0 0 3px rgba(79, 124, 255, 0.1);
 }
 
 
@@ -949,7 +986,7 @@ body{
     #conversationList:not(.hidden) {
         width: 100%;
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+         grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
         gap: 8px;
     }
 
@@ -1123,7 +1160,7 @@ body{
     }
 
     #conversationList:not(.hidden) {
-        grid-template-columns: 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
     }
 
     .conversation:not(.hidden) {

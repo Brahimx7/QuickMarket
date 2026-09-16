@@ -219,3 +219,7 @@ if(!user){
 
 
 
+sellerName.addEventListener("click", async()=>{
+    const sellerId = product.user_id;
+   window.location.href = `SellerProfile.html?SellerId=${sellerId}`;
+});

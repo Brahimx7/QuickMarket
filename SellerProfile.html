@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Seller Profile</title>
+
+    <link rel="stylesheet" href="./css/nav.css">
+    <link rel="stylesheet" href="./css/SellerProfile.css">
+    <link rel="stylesheet" href="./css/footer.css">
+</head>
+
+<body>
+
+     <div id="nav"></div>
+        <div class="sellerProfile">
+           <div class="sellerUsernameImg">
+              <img src="./AvatarImg/defaultAvatar.png" alt="AvatarImg" id="SellerProfilePicture">
+              <h2 id="SellerUsername">Jamal</h2>
+            </div>
+
+            <div class="sellerInfos">
+              <h2><strong>Email:</strong><p id="SellerEmail">Jamal123@gmail.com</p></h2>
+              <h2><strong>Joined : </strong><p id="Created_at">2026/12/5 </p></h2>
+              <h2><strong>Uploads:</strong><p id="SellerProductsUploaded">0 Products </p></h2>
+            </div>
+            <div class="bio">
+              <p id="SellerBio">No bio yet </p>
+            </div>
+
+        </div>
+
+        <div class="ProductsSection" id="products">
+
+        </div>
+
+   
+
+    <div id="footer"></div>
+
+     <script  src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+     <script type="module" src="js/supabase.js"></script>
+    <script type="module" src="./js/SellerProfile.js"></script>
+    <script type="module" src="js/main.js"></script>
+</body>
+
+
+</html>
+

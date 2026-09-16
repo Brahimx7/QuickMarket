@@ -1,0 +1,413 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root{
+  --bg: hsl(244, 88%, 7%);
+  --card: #070f2f;        
+  --text: #ffffff;        
+  --muted: #d9dfea;    
+  --primary: #b9c0e5;    
+  --primary-glow: rgba(1, 21, 124, 0.895);
+  --primary-light: #0d1c52; 
+  --border: #15213b;    
+  --radius: 20px;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+*{
+  box-sizing: border-box;
+}
+
+body{
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+}
+
+#footer{
+  margin-top: auto;
+}
+
+
+.sellerProfile{
+  max-width: 900px;
+  width: 92%;
+  margin: 40px auto 30px auto;
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  animation: fadeIn 0.4s ease;
+}
+
+
+.sellerUsernameImg{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+#SellerProfilePicture{
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--border);
+  box-shadow: 0 0 20px var(--primary-glow);
+  background: #1a223f;
+}
+
+#SellerUsername{
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+
+.sellerInfos{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.sellerInfos h2{
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--muted);
+  background: #171f38;
+  border: 1px solid var(--border);
+  padding: 14px 16px;
+  border-radius: 12px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  line-height: 1.4;
+}
+
+.sellerInfos h2 strong{
+  color: var(--text);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.sellerInfos h2 p {
+  margin: 0;
+  color: var(--muted);
+  display: inline;
+}
+
+
+
+
+
+.bio{
+  background: #171f38;
+  border: 1px dashed var(--border);
+  border-radius: 14px;
+  padding: 20px 22px;
+  position: relative;
+}
+
+.bio p{
+  margin: 0;
+  color: var(--muted);
+  font-style: italic;
+  line-height: 1.6;
+  font-size: 0.98rem;
+}
+
+.bio::before{
+  content: 'Bio';
+  position: absolute;
+  top: -10px;
+  left: 18px;
+  background: var(--card);
+  padding: 0 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+.ProductsSection{
+
+    margin: 30px auto;
+    display: grid;
+
+     grid-template-columns: repeat(3, 300px);
+
+    gap: 20px;
+    
+    
+
+}
+
+.product-card{
+
+    background: #17143d;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(255,255,255,.08);
+
+    transition: .3s;
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+.product-card:hover{
+
+    transform: translateY(-8px);
+
+    border-color: #3f6cff;
+
+    box-shadow: 0 12px 30px rgba(63,108,255,.25);
+
+    cursor: pointer;
+}
+
+.product-card img{
+
+    width: 100%;
+
+    height: 220px;
+
+    object-fit: cover;
+
+}
+
+.product-card h3{
+
+    font-size: 1.3rem;
+
+    margin-left: 7px;
+
+}
+
+.product-card p{
+
+    color: #edf2fc;
+
+    font-size: 1.2rem;
+
+    font-weight: bold;
+
+   margin-left: 7px;
+
+}
+
+
+.product-card button{
+
+    margin: auto 20px 20px;
+
+    height: 45px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: hsl(243, 68%, 21%);
+
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: .3s;
+
+}
+
+.product-card button:hover{
+transform: translateY(-4px);
+ box-shadow: 0 10px 25px rgba(79, 124, 255, 0.25);
+}
+
+@keyframes fadeIn{
+  from{ opacity: 0; transform: translateY(10px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
+
+
+@media (max-width: 768px) {
+
+    .sellerProfile {
+        width: 92%;
+        margin: 30px auto 25px;
+        padding: 25px;
+        gap: 22px;
+    }
+
+    .sellerUsernameImg {
+        gap: 16px;
+        padding-bottom: 20px;
+    }
+
+    #SellerProfilePicture {
+        width: 90px;
+        height: 90px;
+    }
+
+    #SellerUsername {
+        font-size: 1.6rem;
+    }
+
+    .sellerInfos {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .sellerInfos h2 {
+        font-size: 0.9rem;
+    }
+
+    .bio {
+        padding: 18px 20px;
+    }
+
+
+    /* Products */
+
+    .ProductsSection {
+        width: 92%;
+        margin: 25px auto 50px;
+
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: 15px;
+    }
+
+    .product-card img {
+        height: 190px;
+    }
+
+    .product-card h3 {
+        font-size: 1.1rem;
+    }
+
+    .product-card p {
+        font-size: 1rem;
+    }
+
+    .product-card button {
+        margin: auto 15px 15px;
+        height: 42px;
+    }
+}
+
+
+/* =========================
+   SMALL PHONES
+   ========================= */
+
+@media (max-width: 380px) {
+
+    .sellerProfile {
+        width: 94%;
+        padding: 18px;
+        margin-top: 20px;
+        gap: 18px;
+    }
+
+    .sellerUsernameImg {
+        gap: 12px;
+    }
+
+    #SellerProfilePicture {
+        width: 70px;
+        height: 70px;
+        border-width: 2px;
+    }
+
+    #SellerUsername {
+        font-size: 1.3rem;
+    }
+
+    .sellerInfos h2 {
+        padding: 12px;
+        font-size: 0.78rem;
+    }
+
+    .sellerInfos h2 strong {
+        white-space: normal;
+    }
+
+    .bio {
+        padding: 17px 15px;
+    }
+
+    .bio p {
+        font-size: 0.88rem;
+    }
+
+
+    /* Products */
+
+    .ProductsSection {
+    width: 92%;
+    max-width: 750px;
+    margin: 30px auto 50px;
+
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}.product-card {
+    background: #17143d;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.08);
+    transition: .3s;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card img {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+}
+
+.product-card h3 {
+    font-size: 1.1rem;
+    margin: 12px 8px 5px;
+}
+
+.product-card p {
+    color: #edf2fc;
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 5px 8px;
+}
+
+.product-card button {
+    margin: auto 15px 15px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    background: hsl(243, 68%, 21%);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .3s;
+}
+}

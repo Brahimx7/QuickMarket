@@ -954,7 +954,7 @@ const settingsMsg = document.getElementById("settingsMsg");
 const settingsAvatarEmoji = document.getElementById("settingsAvatarEmoji");
 const navUserImg = document.getElementById("navUserImg");
 const navUsername = document.getElementById("navUsername");
-
+const settingsBio = document.getElementById("settingsBio");
 settingsBtn.addEventListener("click", () => {
   
     
@@ -1085,6 +1085,31 @@ saveProfileBtn.addEventListener("click" , async()=> {
 
             return;
         }
+
+      if(settingsBio.value){
+        const { error : BioError} = await supabase.from("users").update({
+            userBio : settingsBio.value
+        }).eq("id",user.id);
+        if(BioError){
+            console.log(BioError);
+        }
+          const toast = Toast(
+                "Bio updated successfully."
+            );
+
+            document.body.appendChild(toast);   
+
+            const button = toast.querySelector("button");
+
+            button.addEventListener("click", () => {
+                toast.remove();
+            });
+        
+            setTimeout(() => {
+                toast.remove();
+           }, 10000);
+        settingsBio.value="";
+      }
 
 
       
