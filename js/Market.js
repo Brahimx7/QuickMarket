@@ -1,7 +1,15 @@
-//import { products } from "./data/products.js";
 import { supabase } from "./supabase.js";
 
 const productsGrid = document.getElementById("productsGrid");
+
+const { data: products, error } = await supabase
+    .from("products")
+    .select("*");
+
+    
+    if (error) {
+    console.error(error);
+} 
 
 function renderProducts(productsArray){
 
@@ -37,7 +45,7 @@ function renderProducts(productsArray){
                  productsGrid.innerHTML = html;
 
 
-                     const detailsButtons = document.querySelectorAll(".details-btn");
+                 const detailsButtons = document.querySelectorAll(".details-btn");
 
                  detailsButtons.forEach(button => {
 
@@ -51,10 +59,9 @@ function renderProducts(productsArray){
 
                  });
 
-
-
 }
 
+renderProducts(products);
 
 /*
 const userProducts = JSON.parse(localStorage.getItem("products")) || [];
@@ -62,16 +69,8 @@ const allProducts = [...products, ...userProducts];
 renderProducts(allProducts);
 */
 
-const { data: products, error } = await supabase
-    .from("products")
-    .select("*");
-
+ 
     
-    if (error) {
-    console.error(error);
-} else {
-    console.log(products);
-    renderProducts(products);
 
    const searchInput = document.getElementById("searchInput");
    const searchBtn = document.getElementById("searchBtn");
@@ -85,7 +84,17 @@ const { data: products, error } = await supabase
 
         renderProducts(filteredProducts);
     });
-}
+
+     searchInput?.addEventListener("keydown",(e)=>{
+          if(e.key === "Enter"){
+            const value = searchInput.value.toLowerCase();
+              const filteredProducts = products.filter(product =>
+                   product.title.toLowerCase().includes(value)
+                  );
+                  renderProducts(filteredProducts);
+          }
+     });
+
 
 // home page Search 
 const params = new URLSearchParams(window.location.search);
@@ -101,14 +110,7 @@ if (searchValue) {
 
     document.getElementById("searchInput").value = searchValue;
 
-} else {
-
-    renderProducts(products);
-
-}
-
-
-
+} 
 
 
 const buttons = document.querySelectorAll(".category-btn");
@@ -164,41 +166,6 @@ if (selectedCategory) {
    
 }
 
-/*
-const userchoice = document.getElementById("sortProducts");
-const originalProducts = [...products];
-userchoice.addEventListener("change" , ()=> {
-
-if(userchoice.value === "low-high"){
-      products.sort((productA, productB) => {
-               return productA.price - productB.price;
-              });
-              renderProducts(products);
-} 
-else if( userchoice.value === "high-low" ){
-   products.sort((productA, productB) => {
-    return productB.price - productA.price;
-         });
-         renderProducts(products);
-}
-else if ( userchoice.value === "az" ){
-   products.sort((productA, productB) => { 
-   return  productA.title.localeCompare(productB.title);
-   });
-   renderProducts(products);
-}
-else if( userchoice.value === "za" ){
-    products.sort((productA, productB) => { 
-   return  productB.title.localeCompare(productA.title);
-   });
-   renderProducts(products);
-}
-else{
-renderProducts(originalProducts);
-}
-
-
-});*/
 
 
 const categoryBtn = document.getElementById("categoryBtn");

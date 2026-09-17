@@ -58,10 +58,6 @@ async function init() {
        
 
         if (newEmail) {
-              console.log("EMAIL UPDATE FLOW STARTED");
-              console.log("PENDING EMAIL:", newEmail);
-              console.log("AUTH USER ID:", user.id);
-              console.log("AUTH EMAIL:", user.email);
 
                const { error: dbError } = await supabase
               .from("users")
@@ -80,18 +76,10 @@ async function init() {
 
             localStorage.setItem("NewEmailverificationComplete", "true");
             localStorage.removeItem("pendingEmailUpdate");
-           console.log("USER:", user);
-           console.log("USERNAME:", username);
-           console.log("Email Updated SUCCESSFULLY");
-           console.log("USER EMAIL:", user.email);
            loadingCard.classList.add("hidden");
            successCard.classList.remove("hidden");
           
            welcomeMsg.textContent = `email updated Successfuly`; 
-
-    
-           console.log("AUTH USER:", user);
-           console.log("AUTH EMAIL:", user.email);
       
       } else {
 

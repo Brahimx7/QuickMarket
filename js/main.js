@@ -45,8 +45,8 @@ const {
 } = await supabase.auth.getUser();
 
  
-if (postBtn) {
-    postBtn.addEventListener("click", () => {
+
+    postBtn?.addEventListener("click", () => {
         console.log("Button clicked!");
         if (!user) {
         const toast = Toast(
@@ -65,7 +65,7 @@ if (postBtn) {
        }
         window.location.href = "postproduct.html";
     });
-}
+
 /*
 const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
@@ -115,42 +115,35 @@ if (user) {
        
     if (error) {
         console.error(error);
-    } else {
+    } 
        
         signupLink.href = "userProfile.html";
         loginLink.textContent = "Logout";
 
-       if(profile.Avatar_url){
-           signupLink.innerHTML ="";
-           signupLink.innerHTML =  `
-            <div class="user"> 
-            <img id="navUserImg" src="${profile.Avatar_url}" alt="Avatar"> <p id="navUsername">${profile.username}</p>
-            </div>
-         `;
-       }
-       else{
-           signupLink.innerHTML =  `
-              <div class="user"> 
-                <img id="navUserImg" src="./AvatarImg/defaultAvatar.png" alt="Avatar"> <p id="navUsername">${profile.username}</p>
-               </div>
-           `;
-       }
+          const avatar = profile.Avatar_url?  profile.Avatar_url : "./AvatarImg/defaultAvatar.png" ; 
+            signupLink.innerHTML = `
+              <div class="user">
+                 <img id="navUserImg" src="${avatar}" alt="Avatar">
+                  <p id="navUsername">${profile.username}</p>
+              </div>
+             `;
+
+
+               loginLink.addEventListener("click", async (e) => {
+                    e.preventDefault();
+
+                    await supabase.auth.signOut();
+                     window.location.href = "index.html";
+         });
+
 
        
-
-    
     }
 
    
-    loginLink.addEventListener("click", async (e) => {
-    e.preventDefault();
+  
 
-   
-     await supabase.auth.signOut();
-    window.location.href = "index.html";
-        });
 
-}
 
 
 
@@ -191,14 +184,12 @@ if (productsNumber) {
 
 const homeSearch = document.getElementById("homeSearch");
 
-if (homeSearch) {
-
-    homeSearch.addEventListener("keydown", (e) => {
+    homeSearch?.addEventListener("keydown", (e) => {
+        console.log(e.key);
         
         if (e.key === "Enter") {
                 
              if(homeSearch.value.trim() === ""){
-                   console.log("nahh");
                    const toast = Toast("We couldn't find any products matching your search.");
                    document.body.appendChild(toast);
                    const button = toast.querySelector("button");
@@ -221,14 +212,13 @@ if (homeSearch) {
 
     });
 
-}
+
 
 const categories = document.querySelectorAll(".usercat");
 
 categories.forEach(categorie => {
     categorie.addEventListener("click", () => {
-        console.log("Clicked:", categorie.textContent);
-
+        
         const catvalue = categorie.textContent.trim();
 
         window.location.href = `Market.html?category=${encodeURIComponent(catvalue)}`;

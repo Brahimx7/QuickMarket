@@ -219,11 +219,9 @@ body{
     display: none;
 }
 
-.shown {
-    display : block ; 
-    animation: slideRight 0.8s ease 0.2s both;
+.shown{
+    display: block;
 }
-
 
 .profile-menu{ background:linear-gradient(to right,hsl(244,88%,16%),hsl(244,88%,31%)); width:fit-content; max-width:100%; height:auto; padding:15px; border:2px solid hsl(245,97%,28%); border-radius:10px; display:flex; align-items:center; justify-content:center; gap:15px; margin:0 auto 20px auto; flex-wrap:wrap; animation:fadeUp 0.8s ease 0.2s both; }
 .profile-menu button{ background:linear-gradient(to right,rgb(0,0,81),rgb(21,21,91)); padding:10px; border:1px solid hsl(240,100%,15%); border-radius:10px; font-size:18px; cursor:pointer; color:white; }
@@ -241,7 +239,7 @@ body{
     margin-top: 30px;
     display: flex;
     gap: 150px;
-
+    animation: slideRight 0.8s ease 0.2s both;
 }
 
 .typesendmessages{
@@ -377,7 +375,8 @@ body{
     top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
-
+  display: flex;
+  flex-direction: column;
     width: 420px;
 
     padding: 30px;
@@ -397,7 +396,9 @@ body{
     justify-content: center;
     gap: 15px;
 }
-
+.deleteButtons{
+    display: flex;
+}
 #deleteModal.hidden {
     display: none;
 }
@@ -415,13 +416,12 @@ body{
     height: 60px;
     font-size: 15px;
     font-weight: 600;
-    
     cursor: pointer;
     transition: 0.2s ease;
 }
 
 #cancelDelete {
-    margin-right: 10px;
+    margin-right: 40px;
     background: linear-gradient(to right,#2c1346,#2d2656);
     color: white;
 }
@@ -451,7 +451,7 @@ body{
 
 #deleteModal h2 {
     margin-bottom: 15px;
-      background: linear-gradient(to right , hsl(208, 39%, 53%),hsl(208, 39%, 18%));
+      background: linear-gradient(to right , hsl(207, 18%, 78%),hsl(209, 20%, 73%));
      -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-size: 1.7rem;

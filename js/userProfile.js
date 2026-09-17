@@ -40,8 +40,6 @@ if (!user) {
       profilemail.textContent = profile.email;
      
      const joinedDate = new Date(user.created_at);
-     
-
      profilejoined.textContent = joinedDate.toLocaleString();
 
 
@@ -52,7 +50,7 @@ await supabase.from("products").select("*").eq("user_id",user.id);
 if (productsError) {
     console.error(productsError);
 }
-console.log(products);
+
 
 if (products.length === 0) {
     productdiv.innerHTML = "<p>You haven't posted any products yet.</p>";
@@ -137,8 +135,6 @@ deleteButtons.forEach(button => {
 
         productToDelete = currentProductID;
 
-        console.log("Deleting product:", productToDelete);
-
         deleteModal.classList.remove("hidden");
     });
 });
@@ -199,7 +195,7 @@ confirmDelete.addEventListener("click", async () => {
                 return;
             }
 
-            // Close modal and refresh
+      
             deleteModal.classList.add("hidden");
             productToDelete = null;
             window.location.reload();
@@ -554,7 +550,6 @@ function addMessage(message) {
      if (message.sender_id === user.id) {
              p.classList.add("my-message");
 
-
             p.addEventListener("contextmenu", (event) => {
             event.preventDefault();
             showMessageMenu(message,p,event.clientX,event.clientY);
@@ -586,6 +581,8 @@ function addMessage(message) {
     messagesContainer.appendChild(p);
     
 }
+
+
 
 document.addEventListener("click", (event) => {
 
@@ -688,33 +685,18 @@ await updateTotalUnread();
 
 async function openMessages() {
   
-    
-                      console.log("clicked");
-                         if (messagesSection.classList.contains("shown")) {
-                             chatArea.classList.remove("chatphone");
-                              chatArea.classList.add("hidden");
-                                return;
-                             }
-                            
-                           
-                      
-                      conversationList.classList.remove("hidden");
-                      chatArea.classList.remove("chatphone");
-                        chatArea.classList.add("hidden");
-                      messagesBtn.classList.add("active");
-                      favoritesBtn.classList.remove("active");
-                      aboutBtn.classList.remove("active");
-
-                    const wasHiddenmessages = messagesSection.classList.contains("hidden");
-
+           
+                     removeActiveClasses();
+                    const wasHiddenmessages = messagesSection.classList.contains("hidden");       
                     hideSections();
 
                     if (wasHiddenmessages) {
                           messagesSection.classList.remove("hidden");
-                        messagesSection.classList.add("shown");
                         messagesSection.classList.add("section");
                                             }
-                                          
+                      if (!wasHiddenmessages) {
+                            return;
+                            }                    
                                             
 
                    
@@ -739,6 +721,7 @@ async function openMessages() {
                 const { data : conversationMessages , error : conversationMessagesErorr} = 
                 await supabase.from("messages").select("*").
                 eq("conversation_id",conversation.id).order("created_at",{ ascending : true});
+
                 if(conversationMessagesErorr){
                     console.log(conversationMessagesErorr);
                     return;
@@ -863,6 +846,7 @@ async function openMessages() {
                         console.log(messagesError);
                          return;
                      }
+                     messagesContainer.innerHTML = "";
                      messages.forEach(message =>{
                         addMessage(message);
                      });
@@ -881,7 +865,15 @@ async function openMessages() {
 
 
 
-        sendBtn.addEventListener("click", async () =>      {
+      
+                                                         
+           messagesContainer.scrollTop = messagesContainer.scrollHeight;
+           console.log("Send button clicked");
+          
+        
+}
+
+  sendBtn.addEventListener("click", async () =>      {
 
               if (!currentConversation) {
               alert("Select a conversation first.");
@@ -924,20 +916,13 @@ async function openMessages() {
            messagesContainer.scrollTop = messagesContainer.scrollHeight;
        });                                                  
 
-                                                         
-           messagesContainer.scrollTop = messagesContainer.scrollHeight;
-           console.log("Send button clicked");
-          
-        
-}
-
-
 messagesBtn.addEventListener("click", openMessages);
 
-                                          if (conversationId) {
-                                           await openMessages();
-                                        }
+ if (conversationId) {  await openMessages(); }
                                                          
+
+
+
 
 // ===== SETTINGS =====
 const settingsUsername = document.getElementById("settingsUsername");

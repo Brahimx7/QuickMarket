@@ -1,8 +1,6 @@
 import { supabase } from "./supabase.js";
 
 const postBtn = document.getElementById("postBtn");
-//const currentuser = localStorage.getItem("currentUser");
-
 
 const params = new URLSearchParams(window.location.search);
 const editProductId = params.get("editproduct");

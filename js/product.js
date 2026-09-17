@@ -1,14 +1,6 @@
-//import { products } from "./data/products.js";
 import  { supabase } from "./supabase.js"
 import { Toast } from "./components/toast.js" ; 
 
-/*
-const id = Number(params.get("id"));
-
-const userProducts = JSON.parse(localStorage.getItem("products")) || [];
-
-const allProducts = [...products, ...userProducts];
-*/
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
@@ -56,14 +48,15 @@ const { data: product , error : productError } = await supabase
     productCategory.textContent = product.category;
 
 
-console.log("ID from URL:", id);
-console.log("Product:", product);
+   const contactBtn = document.getElementById("contactBtn");
+   const saveBtn = document.getElementById("saveBtn");
+   
 
-const contactBtn = document.getElementById("contactBtn");
 
 const {
     data: { user }
 } = await supabase.auth.getUser();
+
 contactBtn.addEventListener("click", async () => {
 
       if(!user){
@@ -98,6 +91,8 @@ if (user.id === product.user_id) {
     return;
 }
 
+
+
 const { data: conversation, error: conversationError } = await supabase
     .from("conversations")
     .select("*")
@@ -128,32 +123,31 @@ const { data: newConversation, error: newConversationError } = await supabase
     return;
    }  
     
-    console.log("button clicked");
     window.location.href = `userProfile.html?tab=messages&conversation=${newConversation.id}`;
 });
 
-const saveBtn = document.getElementById("saveBtn");
 
+     
 if(user){
 
 async function isproductSaved(){
- const { data, error } = await supabase
-  .from("savedproducts")
-  .select("*")
-  .eq("user_id", user.id)
-  .eq("product_id", id)
-  .maybeSingle();
+      const { data, error } = await supabase
+          .from("savedproducts")
+             .select("*")
+               .eq("user_id", user.id)
+                  .eq("product_id", id)
+                     .maybeSingle();
    
-   if (error) {
-    console.log(error);
-    return;
-}
-if(data){
-    return true;
-}
-else{
-    return false;
-}
+        if (error) {
+         console.log(error);
+         return;
+         }     
+     if(data){
+         return true;
+     }
+     else{
+         return false;
+     }
 }
   
 const answer = await isproductSaved();
