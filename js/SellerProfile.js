@@ -12,12 +12,16 @@ const SellerProductsUploaded = document.getElementById("SellerProductsUploaded")
 const SellerBio = document.getElementById("SellerBio");
 
 
+const { data: SellerData, error: SellerDataError } =
+    await supabase.rpc("get_public_profile", {
+        seller_id: SellerId
+    });
 
-const { data : SellerData , error : SellerDataError} = await supabase.from("users").select("*").eq("id",SellerId).single();
-
-if( SellerDataError){
-    console.log( SellerDataError);
+if (SellerDataError) {
+    console.log(SellerDataError);
 }
+
+const Seller = SellerData?.[0];
 
 const {data : ProductsUploaded , error : productsUploadedError} = await supabase.from("products").select("*").eq("user_id",SellerId);
 if(productsUploadedError){
@@ -25,8 +29,8 @@ if(productsUploadedError){
 }
 
 
-if(SellerData.Avatar_url){
-    SellerProfilePicture.src=SellerData.Avatar_url;
+if(Seller.Avatar_url){
+    SellerProfilePicture.src=Seller.Avatar_url;
 }
 if(ProductsUploaded.length > 0){
     if(ProductsUploaded.length == 1){
@@ -36,15 +40,15 @@ if(ProductsUploaded.length > 0){
              SellerProductsUploaded.innerHTML = `${ProductsUploaded.length} products` ;
     }
 }
-if(SellerData.userBio){
-    SellerBio.textContent = SellerData.userBio;
+if(Seller.userBio){
+    SellerBio.textContent =Seller.userBio;
 }
 
-  const joinedDate = new Date(SellerData.created_at);
+  const joinedDate = new Date(Seller.created_at);
   Created_at.textContent = joinedDate.toLocaleString();
 
-SellerUsername.textContent=SellerData.username ;
-SellerEmail.textContent=SellerData.email;
+SellerUsername.textContent=Seller.username ;
+SellerEmail.textContent=Seller.email;
 
 const productsSection = document.getElementById("products");
 

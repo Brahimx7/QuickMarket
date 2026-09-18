@@ -762,14 +762,17 @@ async function openMessages() {
                       else{
                         otherUserId = conversation.seller_id;
                       }
-                      const { data : otheruserName , error : otheruserNameError } 
-                    = await supabase.from("users").select("*").eq("id",otherUserId).single();
+                   const { data: otheruserName, error: otheruserNameError } =
+                                  await supabase.rpc("get_public_profile", {
+                                      seller_id: otherUserId
+                                  });
 
-                      if(otheruserNameError){
-                          console.log(otheruserNameError);
-                        return;
-                      }
-                        div.textContent = otheruserName.username ; 
+                              if (otheruserNameError) {
+                                  console.log(otheruserNameError);
+                                  return;
+                              }
+
+                              div.textContent = otheruserName[0].username;
 
                            const { data: unreadMessages, error: unreadMessagesError } =
                              await supabase
@@ -880,7 +883,6 @@ async function openMessages() {
               return;
               }
               if(messageInput.value.trim() === ""){
-                  console.log("nahh");
                   return;
               }
 

@@ -30,11 +30,16 @@ const { data: product , error : productError } = await supabase
         window.alert(productsError);
     }
 
-      const { data : sellerUsername , error:sellerUsernameError } = await supabase.from("users").select("username").eq("id",product.user_id).single();
+     const { data: sellerUsername, error: sellerUsernameError } =
+    await supabase.rpc("get_public_profile", {
+        seller_id: product.user_id
+    });
 
-         if(sellerUsernameError){
-           console.log(sellerUsernameError);
-           }
+if (sellerUsernameError) {
+    console.log(sellerUsernameError);
+}
+
+const sellerProfile = sellerUsername[0];
 
 
     productImage.src = product.image;
@@ -43,7 +48,7 @@ const { data: product , error : productError } = await supabase
     productDescription.textContent = product.description;
     productCondition.textContent = product.condition;
     productLocation.textContent = product.location;
-    sellerName.textContent =sellerUsername.username;
+    sellerName.textContent =sellerProfile.username
     sellerPhone.textContent = product.phone;
     productCategory.textContent = product.category;
 

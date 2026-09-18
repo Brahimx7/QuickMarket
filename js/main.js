@@ -148,13 +148,17 @@ if (user) {
 
 
 
-
-const { data: users, error: usersError } = await supabase
-    .from("users")
-    .select("*");
+const { data: usersCount, error: usersError } =
+    await supabase.rpc("get_users_count");
 
 if (usersError) {
     console.error(usersError);
+}
+
+const usersNumber = document.getElementById("usersCount");
+
+if (usersNumber) {
+    usersNumber.textContent = usersCount;
 }
 
 
@@ -166,14 +170,7 @@ if (productsError) {
     console.error(productsError);
 }
 
-
-
-const usersNumber = document.getElementById("usersCount");
 const productsNumber = document.getElementById("productsCount");
-
-if (usersNumber) {
-    usersNumber.textContent = users.length;
-}
 
 if (productsNumber) {
     productsNumber.textContent = products.length;
