@@ -184,7 +184,16 @@ confirmDelete.addEventListener("click", async () => {
                 return;
             }
 
-            // Delete product
+            const { error: savedProductsDeleteError } = await supabase
+               .rpc("remove_saved_products_for_product", {
+                   product_id_to_delete: productToDelete
+               });
+           
+           if (savedProductsDeleteError) {
+               console.error(savedProductsDeleteError);
+               return;
+           }
+
             const { error: productDeleteError } = await supabase
                 .from("products")
                 .delete()
@@ -716,7 +725,9 @@ async function openMessages() {
             let conversationsWithLatestMessageInOrder ;
 
            for(const conversation of conversations){
-               
+                 
+                 
+                 console.log("CLICKED CONVERSATION:", conversation.id);
 
                 const { data : conversationMessages , error : conversationMessagesErorr} = 
                 await supabase.from("messages").select("*").
@@ -799,6 +810,7 @@ async function openMessages() {
                       conversationList.appendChild(div);
 
                   div.addEventListener("click", async () => {
+                      console.log("CLICKED CONVERSATION:", conversation.id);
                          sendBtn.classList.add("shown");
                          messageInput.classList.add("shown");
                          chatArea.classList.remove("hidden");
@@ -841,10 +853,11 @@ async function openMessages() {
                            return;
                           }
                           updateTotalUnread();
-
+                      console.log("CURRENT CONVERSATION:", currentConversation);
+                      console.log("CONVERSATION ID:", currentConversation.id); 
                     const{ data: messages, error: messagesError } = await supabase.from("messages").
                     select("*").eq("conversation_id",currentConversation.id).order("created_at", { ascending: true });
-                   
+                     console.log("MESSAGES LOADED:", messages);
                      if(messagesError){
                         console.log(messagesError);
                          return;

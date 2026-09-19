@@ -179,6 +179,27 @@ const saved = await isproductSaved();
   }
   else{
 
+    const { data : products , error : productsError } = await supabase.from("products").select("*").eq("user_id",user.id).eq("id",id).maybeSingle();
+    if(productsError){
+        console.log(productsError);
+    }
+    if(products){
+         const toast = Toast( "You can´t save your own product.");
+                
+                 document.body.appendChild(toast);
+                const button = toast.querySelector("button");
+                 button.addEventListener("click", () => { 
+                      toast.remove();
+                      return;
+                 });
+                 setTimeout( () => {
+                    toast.remove();
+                 },10000);
+                 return;
+               
+    }
+
+
    const { error : savedError} = await supabase.from("savedproducts").insert (
         {
             user_id : user.id,
